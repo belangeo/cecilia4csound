@@ -976,8 +976,7 @@ class EntryUnit(wx.Panel):
         self.value = val
         self.selected = False
         self.new = ''
-        self.Refresh() # need by Windows
-        self.OnPaint(wx.PaintEvent(wx.ID_ANY)) # need by OS X
+        wx.CallAfter(self.Refresh)
 
 class RangeEntryUnit(wx.Panel):
     def __init__(self, parent, value=[0,0], unit='', size=(130,20), valtype='float', outFunction=None, colour=None):
@@ -1164,8 +1163,7 @@ class RangeEntryUnit(wx.Panel):
         self.value = val
         self.selected = False
         self.new = ''
-        self.Refresh() # need by Windows
-        self.OnPaint(wx.PaintEvent(wx.ID_ANY)) # need by OS X
+        wx.CallAfter(self.Refresh)
 
 #---------------------------
 # ListEntry
@@ -1241,8 +1239,7 @@ class ListEntry(wx.Panel):
 
     def setValue(self, val):
         self.value = val
-        self.Refresh() # need by Windows
-        self.OnPaint(wx.PaintEvent(wx.ID_ANY)) # need by OS X
+        wx.CallAfter(self.Refresh)
 
     def getValue(self):
         return self.value
