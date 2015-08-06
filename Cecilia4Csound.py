@@ -28,8 +28,8 @@ from Resources.constants import *
 import Resources.CeciliaLib as CeciliaLib
 
 def GetRoundBitmap( w, h, r ):
-    maskColor = wx.Color(0,0,0)
-    shownColor = wx.Color(5,5,5)
+    maskColor = wx.Colour(0,0,0)
+    shownColor = wx.Colour(5,5,5)
     b = wx.EmptyBitmap(w,h)
     dc = wx.MemoryDC(b)
     dc.SetBrush(wx.Brush(maskColor))
