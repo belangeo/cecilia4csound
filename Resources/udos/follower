@@ -1,0 +1,11 @@
+;cslider slew -label Follower Lag -unit sec -res float -min 0.001 -max .25 -init .1 -col red -help Time resolution
+;cslider mult -label Follower Gain -rel lin -res float -min 0.01 -max 4 -init .5 -col red -help Post gain of follower envelope
+
+opcode follower, k, a
+ain xin
+
+afol follow2 ain, gkslew, gkslew*4
+kfree downsamp afol*0.0002*gkmult
+
+xout kfree
+endop

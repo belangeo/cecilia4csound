@@ -1,0 +1,119 @@
+<CeciliaInfo>
+moduleName = Untitled
+
+
+
+</CeciliaInfo>
+
+<CeciliaInterface>
+
+</CeciliaInterface>
+
+<5.1>
+
+</5.1>
+
+<Custom...>
+
+</Custom...>
+
+<Mono>
+
+</Mono>
+
+<Octo>
+
+</Octo>
+
+<Quad>
+
+</Quad>
+
+<Stereo>
+
+
+massign 1, 1
+turnon 1
+
+gamidiout00 init 0
+gamidiout01 init 0
+gamidiout10 init 0
+gamidiout11 init 0
+
+gaout0 init 0
+gaout1 init 0
+
+instr 1
+kcps cpsmidib 2
+kbasecps pow 1.0594633, 60
+kbasecps = kbasecps * 8.175798
+kpit = kcps / kbasecps
+iamp ampmidi 1
+irealamp = iamp
+kvo ctrl7 1, 7, 0, 1
+kvol port kvo, .02
+xtratim 2
+krel init 0
+krel release
+if (krel == 1) kgoto rel
+kamp1 linseg 0, .002, 1, 50, 1
+kamp = kamp1 * kvol * iamp
+kgoto done
+rel:
+kamp2 linseg 1, 2, 0
+kamp = kamp1*kamp2*kvol*iamp
+done:
+a00 foscili 32000*0.5, 100*kpit, 1, 0.498, 5, 1
+gamidiout00 = (a00) * 1.0 * sqrt(1 - 0) + gamidiout00
+gamidiout10 = (a00) * 1.0 * sqrt(0) + gamidiout10
+a01 foscili 32000*0.5, 50*kpit, 1, 0.498, 5, 1
+gamidiout01 = (a01) * 1.0 * sqrt(1 - 1) + gamidiout01
+gamidiout11 = (a01) * 1.0 * sqrt(1) + gamidiout11
+a00 pluck 32000*0.5, 100*kpit, 20, 0, 6
+a00 butterlp a00, 3000
+gamidiout00 = (a00) * 1.0 * sqrt(1 - 0.5) + gamidiout00
+gamidiout10 = (a00) * 1.0 * sqrt(0.5) + gamidiout10
+gaout0 = gaout0 + (gamidiout00+gamidiout01)*kamp
+gaout1 = gaout1 + (gamidiout10+gamidiout11)*kamp
+gamidiout00 = 0
+gamidiout10 = 0
+gamidiout01 = 0
+gamidiout11 = 0
+endin
+
+instr 10000
+aout0 = gaout0
+aout1 = gaout1
+outc aout0, aout1
+gaout0 = 0
+gaout1 = 0
+endin
+
+
+
+</Stereo>
+
+
+<CeciliaScore>
+
+f0 60000
+f1 0 8192 10 1
+f2 0 8192 10 1 0 .33 0 .2 0 .143 0 .111
+f3 0 8192 10 1 .5 .33 .25 .2 .175 .143 .125 .111 .1
+f4 0 8192 11 1
+f5 0 8192 9 0.5 1 0
+f6 0 8192 20 2
+f7 0 8193 9 0.25 1 0
+f8 0 64 -2 -1009 -1103 -1123 -1281 -1289 -1307 -1361 -1409 -1429 -1543 -1583 -1601 -1613 -1709 -1801 -1949 -2003 -2111 -2203 -2341 -2411 -2591 -2609 -2749 -2801 -2903 -3001 -3109 -3203 -3301 -3407 -3539 0.82 0.81 0.8 0.79 0.78 0.77 0.76 0.75 0.74 0.73 0.72 0.71 0.7 0.69 0.68 0.67 0.66 0.65 0.64 0.63 0.62 0.61 0.6 0.59 0.58 0.57 0.56 0.55 0.54 0.53 0.52 0.51
+f9 0 16 -2 -179 -223 -233 -311 -347 -409 -433 -509 0.76 0.74 0.72 0.7 0.68 0.64 0.62 0.6
+f10 0 8192 10 1 0 0 .3 0 .2 0 0 .1
+f11 0 8192 7 1 8192 1
+i10000 0 -1
+e
+
+
+</CeciliaScore>
+
+<CeciliaData>
+nchnls = 2
+</CeciliaData>

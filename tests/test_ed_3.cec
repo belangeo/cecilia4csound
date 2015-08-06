@@ -1,0 +1,69 @@
+<CeciliaInfo>
+moduleName = Untitled
+
+</CeciliaInfo>
+
+<CeciliaInterface>
+
+</CeciliaInterface>
+
+<5.1>
+
+</5.1>
+
+<Custom...>
+
+</Custom...>
+
+<Mono>
+
+</Mono>
+
+<Octo>
+
+</Octo>
+
+<Quad>
+
+</Quad>
+
+<Stereo>
+; test file checking if comments are strip before parsing text
+
+instr 1
+; simple oscillator
+asig oscil 10000, p4, 1
+outs asig, asig
+endin 
+
+; a second instrument
+instr 2
+; line on the pitch
+kline line 100, p3, 400
+asig oscil 10000, kline, 1
+outs asig, asig
+endin
+</Stereo>
+
+
+<CsoundScore>
+; sine table
+f1 0 8192 10 1
+; now the events
+i1 0 2 220
+i1 2 2 330
+i2 4 10
+</CsoundScore>
+
+
+<PythonScore>
+
+</PythonScore>
+
+
+<CeciliaData>
+***last save
+nchnls = 2
+duration = 30.000000
+activeScore = Csound
+</CeciliaData>

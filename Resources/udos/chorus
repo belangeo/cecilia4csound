@@ -1,0 +1,70 @@
+;cpopup CECCHORUSchor  -label Chorus -value None Flange Chorus/Small Chorus/Big Slap Echoes -init None -help Modulation type -col chorusyellow
+;cslider CECCHORUSmodu -label Chorus Modulation -unit % -min 0.001 -max 1. -init .2 -help Depth of modulation -col chorusyellow
+
+opcode chorus, a, a
+ain,  xin 
+
+giup	ftgen 2984,0,8192,10,1
+
+ain init 0
+kspeed init 0
+kdel init 0
+kfeed init 0
+amod init 0
+kscale init 0
+koffset init 0
+
+kran randomi .8, 1.2, .4
+amod oscili 1, kspeed*kran, giup
+amod = amod + koffset
+amod = amod * kdel * kscale * gkCECCHORUSmodu
+
+adel upsamp kdel
+adel butterlp adel, 10
+
+aout flanger ain, (adel+amod)*0.001, kfeed, 2
+
+if gkCECCHORUSchor == 0 then
+	aout = ain
+	goto outnomix
+
+elseif gkCECCHORUSchor == 1 then
+	koffset = 0
+	kdel = 3
+	kfeed = .5
+	kspeed = .05
+    kscale = 1
+elseif gkCECCHORUSchor == 2 then
+	koffset = 0
+	kdel = 25
+	kfeed = .25
+	kspeed = .5
+    kscale = .1
+elseif gkCECCHORUSchor == 3 then
+	koffset = 0
+	kdel = 25
+	kfeed = .55
+	kspeed = .57
+  	kscale = .2
+elseif gkCECCHORUSchor == 4 then
+	koffset = 1
+	kdel = 500
+	kfeed = 0
+	kspeed = 0
+    kscale = 1
+elseif gkCECCHORUSchor == 5 then
+	koffset = 1
+	kdel = 500
+	kfeed = .7
+	kspeed = 0
+   	kscale = 1
+endif
+
+outer:
+aout = aout * .707 + ain * .707
+
+outnomix:
+xout aout
+endop
+
+

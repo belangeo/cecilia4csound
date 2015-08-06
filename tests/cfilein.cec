@@ -1,0 +1,88 @@
+<CeciliaInterface>
+cslider pit -label Pitch -min .1 -max 2 -init 1 -rel lin -unit Hz -res float
+cslider amp -label Amplitude -min 0 -max 1 -init 1 -rel lin -unit x -res float
+cslider ffreq -label Filter freq -min 200 -max 15000 -init 1500 -rel log -unit Hz
+cslider fq -label Bandwidth -min 5 -max 1000 -init 800 -rel lin
+cgraph env -label Envelope -gen 12 -rel lin -min 0.0001 -max 1 -func "0 0.0001 .5 1 1 0.0001"
+cfilein son -label Son
+</CeciliaInterface>
+
+<5.1>
+
+
+
+
+</5.1>
+
+<Custom...>
+
+
+
+
+</Custom...>
+
+<Mono>
+
+
+
+
+</Mono>
+
+<Octo>
+
+
+
+
+</Octo>
+
+<Quad>
+
+
+
+
+</Quad>
+
+<Stereo>
+;git ftgen 666, 0, [gensizeson], -1, [son], [offson], 0, 1
+
+
+
+instr 1
+    aenv    oscili   1, .25, 12
+    asig, asir    diskin2   [son], gkpit, 0, 1 
+
+ 
+
+    asig    butterbp    asig, gkffreq, gkfq
+    asir    butterbp    asir, gkffreq, gkfq
+
+
+
+    outs    asig * aenv * gkamp, asir * aenv * gkamp
+endin
+</Stereo>
+
+
+<CsoundScore>
+f1 0 8192 10 1
+f2 0 [gensizeson] -1 [son] [offson] 0 1
+i1 0 [total_time]
+
+e
+
+
+</CsoundScore>
+
+
+<PythonScore>
+
+</PythonScore>
+
+
+<CeciliaOpen>
+scoreType=Csound
+
+</CeciliaOpen>
+
+<CeciliaData>
+</CeciliaData>

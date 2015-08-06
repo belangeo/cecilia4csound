@@ -1,0 +1,29 @@
+;cslider CECVARFILTERlowp -label Filter Freq -rel log -unit Hz  -min 20. -max 18000. -init 18000. -col filterred -help Filter cutoff or center frequency
+;cpopup CECVARFILTERtype  -label Filter -value None lowpass/soft hipass/soft bpass/soft breject/soft lowpass/sharp hipass/sharp bpass/sharp breject/sharp -init lowpass/soft -col filterred -help Filter type
+
+
+opcode	varfilter, a, a
+ain	xin 
+kres init 1
+
+gkCECVARFILTERlowp limit gkCECVARFILTERlowp, 20, 18000
+if gkCECVARFILTERtype > 4 then
+	kres = 10
+else
+	kres = 1
+endif
+
+if gkCECVARFILTERtype == 0 then
+	aout = ain
+elseif gkCECVARFILTERtype == 1 || gkCECVARFILTERtype == 5 then
+ 	aout bqrez ain*0.5, gkCECVARFILTERlowp, kres, 0
+elseif gkCECVARFILTERtype == 2 || gkCECVARFILTERtype == 6 then
+ 	aout bqrez ain*0.5, gkCECVARFILTERlowp, kres, 1
+elseif gkCECVARFILTERtype == 3 || gkCECVARFILTERtype == 7 then
+ 	aout bqrez ain*0.05, gkCECVARFILTERlowp, kres, 2
+elseif gkCECVARFILTERtype == 4 || gkCECVARFILTERtype == 8 then
+ 	aout bqrez ain*0.7, gkCECVARFILTERlowp, kres, 3
+endif
+
+	xout	aout
+endop

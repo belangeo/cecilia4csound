@@ -1,0 +1,52 @@
+<CeciliaInfo>
+moduleName = Untitled
+
+</CeciliaInfo>
+
+<CeciliaInterface>
+csampler son -label Son
+</CeciliaInterface>
+
+<5.1>
+
+</5.1>
+
+<Custom...>
+
+</Custom...>
+
+<Mono>
+
+</Mono>
+
+<Octo>
+
+</Octo>
+
+<Quad>
+
+</Quad>
+
+<Stereo>
+instr 1
+
+kgainlfo randomi .1, 1, 1
+ktranslfo oscili .05, 5, 1
+ktranslfo = ktranslfo + 1
+a1, a2 sampler [son], 1, 1
+
+outs a1, a2
+
+endin
+</Stereo>
+
+
+<CeciliaScore>
+f1 0 8192 10 1
+i1 0 [total_time]
+e
+</CeciliaScore>
+
+<CeciliaData>
+nchnls = 2
+</CeciliaData>

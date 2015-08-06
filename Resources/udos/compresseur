@@ -1,0 +1,36 @@
+;cpopup limit -label Compress -value None A-Bit Quite-a-Bit Tons -init None -help Compressor quality -col compblue
+
+opcode compresseur, a, a
+ain xin
+
+kgain init 0
+klow init 30
+khi init 70
+kratio init 4
+
+asig compress ain, ain, 0, klow, khi, kratio, .005, .05, .05    
+asig = asig * kgain
+
+if gklimit == 0 then
+	asig = ain * 0.5
+elseif  gklimit == 1 then
+	kratio = 3
+	klow = 50
+	khi = 60
+	kgain = 8
+elseif gklimit == 2 then
+	kratio = 10
+	klow = 40
+	khi = 50
+	kgain = 40
+elseif gklimit == 3 then
+	kratio = 40
+	klow = 30
+	khi = 40
+	kgain = 150
+endif
+
+xout asig
+endop
+
+

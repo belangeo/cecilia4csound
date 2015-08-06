@@ -1,0 +1,62 @@
+<CeciliaInfo>
+moduleName = Untitled
+
+</CeciliaInfo>
+
+<CeciliaInterface>
+
+</CeciliaInterface>
+
+<5.1>
+
+</5.1>
+
+<Custom...>
+
+</Custom...>
+
+<Mono>
+
+</Mono>
+
+<Octo>
+
+</Octo>
+
+<Quad>
+
+</Quad>
+
+<Stereo>
+instr 1
+asig oscil 10000, p4, 1
+outs asig, asig
+endin 
+
+instr 2
+kline line 100, p3, 400
+asig oscil 10000, kline, 1
+outs asig, asig
+endin
+</Stereo>
+
+
+<CsoundScore>
+f1 0 8192 10 1
+i1 0 2 220
+i1 2 2 330
+i2 4 10
+</CsoundScore>
+
+
+<PythonScore>
+
+</PythonScore>
+
+
+<CeciliaData>
+***last save
+nchnls = 2
+duration = 30.000000
+activeScore = Csound
+</CeciliaData>

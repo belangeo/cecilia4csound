@@ -1,0 +1,61 @@
+<CeciliaInfo>
+moduleName = Untitled
+
+</CeciliaInfo>
+
+<CeciliaInterface>
+cfilein son -label Son
+
+cslider crossfade -label Crossfade -min 0 -max 2 -init .05
+cslider inloop -label Loop In -min 0 -max 2 -init 0
+cslider outloop -label Loop Out -min 0 -max 10 -init 5
+cslider gain -label Gain -min -48 -max 12 -init 0
+cslider trans -label Transpo -min 0 -max 4 -init 1
+</CeciliaInterface>
+
+<5.1>
+
+</5.1>
+
+<Custom...>
+
+</Custom...>
+
+<Mono>
+
+</Mono>
+
+<Octo>
+
+</Octo>
+
+<Quad>
+
+</Quad>
+
+<Stereo>
+instr 1
+    
+    
+    ilen  filelen		[son]
+    print ilen
+    
+    asig flooper2   ampdbfs(gkgain), gktrans, gkinloop, gkoutloop, gkcrossfade, 1, 0, 0
+    outs asig, asig
+    
+endin
+</Stereo>
+
+
+<CeciliaScore>
+f1 0 0 1 [son] 0 4 1
+i1 0 [total_time]
+e
+</CeciliaScore>
+
+<CeciliaData>
+nchnls = 2
+duration = 30.000000
+masterVolume = 0.000000
+userInputs = {'snd': {'path': '', 'type': 'cfilein', 'offset': 0.0}, 'son': {'path': '/Users/iact/Desktop/StochasticGrains.aiff', 'type': 'cfilein', 'offset': 0.0}}
+</CeciliaData>

@@ -1,0 +1,54 @@
+<CeciliaInfo>
+moduleName = Untitled
+
+</CeciliaInfo>
+
+<CeciliaInterface>
+
+</CeciliaInterface>
+
+<5.1>
+
+</5.1>
+
+<Custom...>
+
+</Custom...>
+
+<Mono>
+
+</Mono>
+
+<Octo>
+
+</Octo>
+
+<Quad>
+
+</Quad>
+
+<Stereo>
+instr 1
+asig oscil 10000, 440, 1
+outs asig, asig
+endin
+</Stereo>
+
+
+<CsoundScore>
+f1 0 8192 10 1
+i1 0 5
+</CsoundScore>
+
+
+<PythonScore>
+
+</PythonScore>
+
+
+<CeciliaData>
+***last save
+nchnls = 2
+duration = 30.000000
+activeScore = Csound
+</CeciliaData>

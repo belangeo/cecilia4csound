@@ -1,0 +1,70 @@
+<CeciliaInterface>
+
+</CeciliaInterface>
+
+<5.1>
+
+</5.1>
+
+<Custom...>
+
+</Custom...>
+
+<Mono>
+
+</Mono>
+
+<Octo>
+
+</Octo>
+
+<Quad>
+
+</Quad>
+
+<Stereo>
+; test file checking score shortcuts
+
+        instr 1
+; simple oscillator
+asig    oscil   4000, p4, 1
+        outs    asig, asig
+        endin 
+
+        instr 2
+        ; second instr to check interleaved scrore statements
+asig    oscil   4000, p4, 1
+        outs    asig, asig
+        endin
+</Stereo>
+
+
+<CsoundScore>
+;#   p1   p2   p3      p4      p5   
+; sine table
+f    1    0    8192    10      1    
+; now the events
+i    1    0    2       220     
+i    2    0    3       1000    
+i    1    +    .       >       
+i    2    +    .       >       
+i    1    +    .       >       
+i    2    +    .       >       
+i    1    +    .       >       
+i    1    +    .       660     
+i    2    +    .       1500       
+</CsoundScore>
+
+
+<PythonScore>
+
+</PythonScore>
+
+
+<CeciliaData>
+***last save
+duration = 30.0
+activeScore = Csound
+nchnls = 2
+
+</CeciliaData>

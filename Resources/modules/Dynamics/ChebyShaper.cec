@@ -1,0 +1,126 @@
+<CeciliaInterface>
+;cmodule dump -label Waveshaping of an audio signal with a dynamic transfer function that gives precise control over the harmonic content of the output. 
+csampler snd   -label AUdio In
+cgraph env -label Envelope -unit x -rel lin -min 0 -max 1 -col red -func 0 0 .001 1 .999 1 1 0
+cslider gai -label PreGain -min 0 -max 3 -init 1 -col blue
+cslider co1 -label Coeff-1 -min -1 -max 1.0 -init 1 -col royalblue -help Coefficient 1
+cslider co2 -label Coeff-2 -min -1 -max 1.0 -init -.25 -col royalblue -help Coefficient 2
+cslider co3 -label Coeff-3 -min -1 -max 1.0 -init -.333 -col royalblue -help Coefficient 3
+cslider co4 -label Coeff-4 -min -1 -max 1.0 -init .66 -col royalblue -help Coefficient 4
+cslider co5 -label Coeff-5 -min -1 -max 1.0 -init -.33 -col royalblue -help Coefficient 5
+cslider co6 -label Coeff-6 -min -1 -max 1.0 -init -.33 -col royalblue -help Coefficient 6
+cslider co7 -label Coeff-7 -min -1 -max 1.0 -init -.66 -col royalblue -help Coefficient 7
+cslider co8 -label Coeff-8 -min -1 -max 1.0 -init .125 -col royalblue -help Coefficient 8
+ctoggle bal -label Restore Amp -init 1 -col blue
+</CeciliaInterface>
+
+<5.1>
+
+</5.1>
+
+<Custom...>
+
+</Custom...>
+
+<Mono>
+
+
+
+
+opcode cheb,a,akkkkkkkk
+
+ax,k1,k2,k3,k4,k5,k6,k7,k8 xin
+ax1         =               ax /32768
+ay          chebyshevpoly   ax1,k1, k2, k3, k4, k5, k6,k7,k8
+ay          dcblock2        ay*32768
+            xout            ay
+
+endop
+
+
+            instr 1
+
+
+aOri1       sampler         [snd]
+aProc1      cheb            aOri1*gkgai,gkco1, gkco2, gkco3, gkco4, gkco5, gkco6,gkco7,gkco8
+
+if gkbal = 1 then
+aProc1     balance         aProc1,aOri1
+endif
+
+
+            out             aProc1*0.5*gkenv
+
+            endin
+
+
+</Mono>
+
+<Octo>
+
+</Octo>
+
+<Quad>
+
+</Quad>
+
+<Stereo>
+
+
+
+
+
+opcode cheb,a,akkkkkkkk
+
+ax,k1,k2,k3,k4,k5,k6,k7,k8 xin
+ax1             =               ax /32768
+ay              chebyshevpoly   ax1,k1, k2, k3, k4, k5, k6,k7,k8
+ay              dcblock2        ay*15000.
+                xout            ay
+
+endop
+
+
+                instr 1
+
+
+aOri1,aOri2     sampler     [snd]
+aProc1          cheb        aOri1*gkgai,gkco1, gkco2, gkco3, gkco4, gkco5, gkco6,gkco7,gkco8
+aProc2          cheb        aOri2*gkgai,gkco1, gkco2, gkco3, gkco4, gkco5, gkco6,gkco7,gkco8
+
+
+
+if gkbal = 1 then
+aProc1          balance     aProc1,aOri1
+aProc2          balance     aProc2,aOri2
+endif
+
+
+                outs        aProc1*0.5*gkenv,aProc2*0.5*gkenv
+
+                endin
+
+
+</Stereo>
+
+
+<CsoundScore>
+f1 0 32768 10 1    ; a sine wave
+
+i1 0 [total_time]
+e
+</CsoundScore>
+
+
+<PythonScore>
+
+</PythonScore>
+
+
+<CeciliaOpen>
+scoreType=Csound
+
+</CeciliaOpen>
+
+<CeciliaData>
+</CeciliaData>
