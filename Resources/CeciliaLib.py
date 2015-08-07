@@ -2337,7 +2337,8 @@ def start(flagsLine):
 
     try:
         if getPlatform() == 'win32':
-            file = codecs.open(csdPath, 'wt', 'cp1252')
+            #file = codecs.open(csdPath, 'wt', 'cp1252')
+            file = open(csdPath, 'wt')
         else:    
             file = codecs.open(csdPath, 'wt', 'utf-8')
     except:

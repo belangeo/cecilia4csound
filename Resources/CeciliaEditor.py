@@ -775,8 +775,8 @@ class EditorPanel(wx.Panel):
         
         # Sets the title of the panel
         self.title = wx.StaticText(self, -1, label = ('  ' + self.tag + '  '))
-        font = wx.Font(CeciliaLib.getEditorSubTitleFont(), wx.NORMAL, 
-                       wx.NORMAL, wx.NORMAL, face=FONT_FACE)
+        font = wx.Font(CeciliaLib.getEditorSubTitleFont(), wx.FONTFAMILY_DEFAULT, 
+                              wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, face=FONT_FACE)
         self.title.SetFont(font)
         self.title.SetForegroundColour(WHITE_COLOUR)
         self.hbox.Add(self.title, 0, wx.ALIGN_CENTER_VERTICAL)
