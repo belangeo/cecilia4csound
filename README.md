@@ -31,7 +31,7 @@ To download the latest version of Cecilia4Csound, go to
 Then, download and extract sources for cecilia4csound and run in a terminal 
 (or command prompt on Windows):
 
-    cd cecilia4csound
+    cd path/to/folder/cecilia4csound/
     python Cecilia4Csound.py
 
 
