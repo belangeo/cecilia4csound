@@ -155,7 +155,7 @@ class CustomMenu(wx.Panel):
         gc.SetPen(wx.Pen(WIDGET_BORDER_COLOUR, width=1))
         gc.DrawRoundedRectangle(rec[0], rec[1], rec[2]-2, rec[3]-2, 3)
 
-        font = wx.Font(MENU_FONT, wx.NORMAL, wx.NORMAL, wx.NORMAL, face=FONT_FACE)
+        font = wx.Font(MENU_FONT, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, face=FONT_FACE)
         dc.SetFont(font)
         if self._enable:
             gc.SetBrush(wx.Brush(POPUP_LABEL_COLOUR, wx.SOLID))
@@ -291,7 +291,7 @@ class FolderPopup(wx.Panel):
         gc.SetPen(wx.Pen(WIDGET_BORDER_COLOUR, width=1))
         gc.DrawRoundedRectangle(rec[0], rec[1], rec[2]-1, rec[3]-1, 3)
 
-        font = wx.Font(MENU_FONT, wx.NORMAL, wx.NORMAL, wx.NORMAL, face=FONT_FACE)
+        font = wx.Font(MENU_FONT, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, face=FONT_FACE)
         dc.SetFont(font)
         gc.SetBrush(wx.Brush(POPUP_LABEL_COLOUR, wx.SOLID))
         gc.SetPen(wx.Pen(POPUP_LABEL_COLOUR, width=1, style=wx.SOLID))  
@@ -348,10 +348,10 @@ class MainLabel(wx.Panel):
             dc.SetFont(self.font)
         else:
             if self.italic:
-                font = wx.Font(LABEL_FONT, wx.NORMAL, wx.ITALIC, wx.LIGHT, face=FONT_FACE)
+                font = wx.Font(LABEL_FONT, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_ITALIC, wx.FONTWEIGHT_LIGHT, face=FONT_FACE)
                 dc.SetFont(font)
             else:
-                font = wx.Font(LABEL_FONT, wx.NORMAL, wx.NORMAL, wx.NORMAL, face=FONT_FACE)
+                font = wx.Font(LABEL_FONT, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, face=FONT_FACE)
                 dc.SetFont(font)
 
         # Draw background
@@ -495,7 +495,7 @@ class FrameLabel(wx.Panel):
         if self.font:
             dc.SetFont(self.font)
         else:
-            font = wx.Font(LABEL_FONT, wx.NORMAL, wx.NORMAL, wx.NORMAL, face=FONT_FACE)
+            font = wx.Font(LABEL_FONT, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, face=FONT_FACE)
             dc.SetFont(font)
 
         # Draw background
@@ -542,7 +542,7 @@ class AboutLabel(wx.Panel):
         if self.font:
             dc.SetFont(self.font)
         else:
-            font = wx.Font(LABEL_FONT, wx.NORMAL, wx.NORMAL, wx.NORMAL, face=FONT_FACE)
+            font = wx.Font(LABEL_FONT, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, face=FONT_FACE)
             dc.SetFont(font)
 
         # Draw background
@@ -750,7 +750,7 @@ class Clocker(wx.Panel):
         if borderColour: self.borderColour = borderColour
         else: self.borderColour = WIDGET_BORDER_COLOUR
         self.time = '00:00:00'
-        self.font = wx.Font(CLOCKER_FONT, wx.NORMAL, wx.NORMAL, wx.BOLD, face=FONT_FACE)
+        self.font = wx.Font(CLOCKER_FONT, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_BOLD, face=FONT_FACE)
         self.colour = CONTROLSLIDER_BACK_COLOUR
 
         self.Bind(wx.EVT_PAINT, self.OnPaint)
@@ -813,8 +813,8 @@ class EntryUnit(wx.Panel):
         self.oldValue = value
         self.increment = 0.001
         self.new = ''
-        self.font = wx.Font(ENTRYUNIT_FONT, wx.NORMAL, wx.NORMAL, wx.NORMAL, face=FONT_FACE)
-        self.unitFont = wx.Font(ENTRYUNIT_FONT, wx.ROMAN, wx.ITALIC, wx.LIGHT, face=FONT_FACE)
+        self.font = wx.Font(ENTRYUNIT_FONT, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, face=FONT_FACE)
+        self.unitFont = wx.Font(ENTRYUNIT_FONT, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_ITALIC, wx.FONTWEIGHT_LIGHT, face=FONT_FACE)
         self.entryRect = wx.Rect(20, 2, 50, self.GetSize()[1]-4)
         if sys.platform == 'win32':
             self.starttext = 65
@@ -993,8 +993,8 @@ class RangeEntryUnit(wx.Panel):
         self.oldValue = value
         self.increment = 0.001
         self.new = ''
-        self.font = wx.Font(ENTRYUNIT_FONT, wx.NORMAL, wx.NORMAL, wx.NORMAL, face=FONT_FACE)
-        self.unitFont = wx.Font(ENTRYUNIT_FONT, wx.ROMAN, wx.ITALIC, wx.LIGHT, face=FONT_FACE)
+        self.font = wx.Font(ENTRYUNIT_FONT, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, face=FONT_FACE)
+        self.unitFont = wx.Font(ENTRYUNIT_FONT, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_ITALIC, wx.FONTWEIGHT_LIGHT, face=FONT_FACE)
         self.entryRect = wx.Rect(20, 2, 80, self.GetSize()[1]-4)
         if sys.platform == 'win32':
             self.starttext = 65
@@ -1176,7 +1176,7 @@ class ListEntry(wx.Panel):
         self.SetBackgroundColour(BACKGROUND_COLOUR)
         self.value = value
         self.new = ''
-        self.font = wx.Font(ENTRYUNIT_FONT, wx.NORMAL, wx.NORMAL, wx.NORMAL, face=FONT_FACE)
+        self.font = wx.Font(ENTRYUNIT_FONT, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, face=FONT_FACE)
         if colour:
             self.backColour = colour
         else:
@@ -1257,7 +1257,7 @@ class ListEntryPopupFrame(wx.Frame):
         else:
             self.SetRoundShape()
 
-        self.font = wx.Font(ENTRYUNIT_FONT, wx.NORMAL, wx.NORMAL, wx.NORMAL, face=FONT_FACE)
+        self.font = wx.Font(ENTRYUNIT_FONT, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, face=FONT_FACE)
 
         panel = wx.Panel(self, -1)
         w, h = self.GetSize()
@@ -1305,7 +1305,7 @@ class TextPopupFrame(wx.Frame):
         else:
             self.SetRoundShape()
 
-        self.font = wx.Font(MENU_FONT, wx.NORMAL, wx.NORMAL, wx.NORMAL, face=FONT_FACE)
+        self.font = wx.Font(MENU_FONT, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, face=FONT_FACE)
 
         panel = wx.Panel(self, -1)
         w, h = self.GetSize()
@@ -1351,7 +1351,7 @@ class CmdLinePreviewPopupFrame(wx.Frame):
         else:
             self.SetRoundShape()
 
-        self.font = wx.Font(ENTRYUNIT_FONT, wx.NORMAL, wx.NORMAL, wx.NORMAL, face=FONT_FACE)
+        self.font = wx.Font(ENTRYUNIT_FONT, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, face=FONT_FACE)
 
         panel = wx.Panel(self, -1)
         w, h = self.GetSize()
@@ -1398,9 +1398,9 @@ class AboutPopupFrame(wx.Frame):
 
         if CeciliaLib.getPlatform() in ['win32', 'linux2']:
             self.SetSize((600,450))
-            self.font = wx.Font(8, wx.NORMAL, wx.NORMAL, wx.NORMAL, face=FONT_FACE)
+            self.font = wx.Font(8, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, face=FONT_FACE)
         else:
-            self.font = wx.Font(13, wx.NORMAL, wx.NORMAL, wx.NORMAL, face=FONT_FACE)
+            self.font = wx.Font(13, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, face=FONT_FACE)
                 
         if wx.Platform == '__WXGTK__':
             self.Bind(wx.EVT_WINDOW_CREATE, self.SetRoundShape)
@@ -1437,13 +1437,13 @@ class AboutPopupFrame(wx.Frame):
 
         self.rtc.Newline()
         self.rtc.BeginTextColour((0, 0, 0))
-        self.rtc.WriteText("Jean PichÃ© ")
+        self.rtc.WriteText("Jean Piché ")
         self.rtc.BeginTextColour((255, 255, 255))
-        self.rtc.WriteText("conceived, designed, and programmed Cecilia in 1995 to replace racks full of analog audio gear in a musique concrÃ¨te studio.")
+        self.rtc.WriteText("conceived, designed, and programmed Cecilia in 1995 to replace racks full of analog audio gear in a musique concrète studio.")
 
         self.rtc.Newline()
         self.rtc.BeginTextColour((0, 0, 0))
-        self.rtc.WriteText("Olivier BÃ©langer ")
+        self.rtc.WriteText("Olivier Bélanger ")
         self.rtc.BeginTextColour((255, 255, 255))
         self.rtc.WriteText("does all the programming and contributed heavily on design issues. He recoded Cecilia in Python from the ground up in 2008. Olivier is now the keeper of the program.")
 
@@ -1686,7 +1686,7 @@ class ControlKnob(wx.Panel):
         dc.SetPen(wx.Pen(BACKGROUND_COLOUR, width=self.borderWidth, style=wx.SOLID))
         dc.DrawRectangle(0, 0, w, h)
 
-        dc.SetFont(wx.Font(CONTROLSLIDER_FONT, wx.ROMAN, wx.NORMAL, wx.NORMAL, face=FONT_FACE))
+        dc.SetFont(wx.Font(CONTROLSLIDER_FONT, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, face=FONT_FACE))
         dc.SetTextForeground(CONTROLSLIDER_TEXT_COLOUR)
 
         # Draw text label
@@ -1712,12 +1712,12 @@ class ControlKnob(wx.Panel):
         dc.DrawCircle(X+22, Y+33, 2)
 
         if not self.midiLearn:
-            dc.SetFont(wx.Font(CONTROLSLIDER_FONT-1, wx.ROMAN, wx.NORMAL, wx.NORMAL, face=FONT_FACE))    
+            dc.SetFont(wx.Font(CONTROLSLIDER_FONT-1, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, face=FONT_FACE))    
             dc.DrawLabel(self.midictlLabel, wx.Rect(2, 12, 40, 40), wx.ALIGN_CENTER)
         else:
             dc.DrawLabel("?...", wx.Rect(2, 12, 40, 40), wx.ALIGN_CENTER)
 
-        dc.SetFont(wx.Font(CONTROLSLIDER_FONT, wx.ROMAN, wx.NORMAL, wx.NORMAL, face=FONT_FACE))
+        dc.SetFont(wx.Font(CONTROLSLIDER_FONT, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, face=FONT_FACE))
         # Draw text value
         if self.selected and self.new:
             val = self.new
@@ -2390,7 +2390,7 @@ class ApplyToolBox(wx.Panel):
             gc.SetPen(wx.Pen("#FFFFFF", width=1))
             rec = self.rectList[i]
             gc.DrawRoundedRectangle(rec[0]+2, rec[1], rec[2]-5, rec[3]-1, 3)
-            dc.SetFont(wx.Font(LABEL_FONT, wx.NORMAL, wx.NORMAL, wx.NORMAL, face=FONT_FACE))
+            dc.SetFont(wx.Font(LABEL_FONT, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, face=FONT_FACE))
             dc.SetTextForeground(textColour)
             dc.DrawLabel(self.tools[i], self.rectList[i], wx.ALIGN_CENTER)
 
@@ -2487,7 +2487,7 @@ class CloseBox(wx.Panel):
         gc.SetBrush(wx.Brush(self._insideColour))
         gc.SetPen(wx.Pen("#FFFFFF", width=1))
         gc.DrawRoundedRectangle(2, 0, w-5, h-1, 3)
-        dc.SetFont(wx.Font(LABEL_FONT+self.textMagnify, wx.NORMAL, wx.NORMAL, wx.NORMAL, face=FONT_FACE))
+        dc.SetFont(wx.Font(LABEL_FONT+self.textMagnify, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, face=FONT_FACE))
         dc.SetTextForeground(textColour)
         dc.DrawLabel(self.label, wx.Rect(2, 0, w-4, h), wx.ALIGN_CENTER)
 
@@ -2666,7 +2666,7 @@ class RandomFrame(wx.Frame):
 
         interpBox = wx.BoxSizer(wx.HORIZONTAL)
         interpLabel = wx.StaticText(panel, -1, "Interpolation")
-        interpLabel.SetFont(wx.Font(TEXT_LABELFORWIDGET_FONT, wx.NORMAL, wx.NORMAL, wx.NORMAL, face=FONT_FACE))
+        interpLabel.SetFont(wx.Font(TEXT_LABELFORWIDGET_FONT, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, face=FONT_FACE))
         interpLabel.SetForegroundColour(WHITE_COLOUR)
         interpBox.Add(interpLabel, 0, wx.ALIGN_CENTER_VERTICAL | wx.LEFT, 114)
         self.interpMenu = CustomMenu(panel, self.interpList, self.interpList[0])
@@ -2676,7 +2676,7 @@ class RandomFrame(wx.Frame):
         slidersBox = wx.FlexGridSizer(5, 2, 5, 5)
 
         ptsLabel = wx.StaticText(panel, -1, "Points")
-        ptsLabel.SetFont(wx.Font(TEXT_LABELFORWIDGET_FONT, wx.NORMAL, wx.NORMAL, wx.NORMAL, face=FONT_FACE))
+        ptsLabel.SetFont(wx.Font(TEXT_LABELFORWIDGET_FONT, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, face=FONT_FACE))
         ptsLabel.SetForegroundColour(WHITE_COLOUR)
         self.ptsSlider = ControlSlider(panel, 5, 1000, 50, size=(235, 15), integer=True, backColour=BACKGROUND_COLOUR)
         self.ptsSlider.setSliderHeight(10)
@@ -2685,7 +2685,7 @@ class RandomFrame(wx.Frame):
                             (self.ptsSlider, 0, wx.RIGHT, 5)])
 
         minLabel = wx.StaticText(panel, -1, "Min")
-        minLabel.SetFont(wx.Font(TEXT_LABELFORWIDGET_FONT, wx.NORMAL, wx.NORMAL, wx.NORMAL, face=FONT_FACE))
+        minLabel.SetFont(wx.Font(TEXT_LABELFORWIDGET_FONT, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, face=FONT_FACE))
         minLabel.SetForegroundColour(WHITE_COLOUR)
         self.minSlider = ControlSlider(panel, 0, 1, 0, size=(235, 15), backColour=BACKGROUND_COLOUR)
         self.minSlider.setSliderHeight(10)
@@ -2694,7 +2694,7 @@ class RandomFrame(wx.Frame):
                             (self.minSlider, 0, wx.RIGHT, 5)])
 
         maxLabel = wx.StaticText(panel, -1, "Max")
-        maxLabel.SetFont(wx.Font(TEXT_LABELFORWIDGET_FONT, wx.NORMAL, wx.NORMAL, wx.NORMAL, face=FONT_FACE))
+        maxLabel.SetFont(wx.Font(TEXT_LABELFORWIDGET_FONT, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, face=FONT_FACE))
         maxLabel.SetForegroundColour(WHITE_COLOUR)
         self.maxSlider = ControlSlider(panel, 0, 1, 1, size=(235, 15), backColour=BACKGROUND_COLOUR)
         self.maxSlider.setSliderHeight(10)
@@ -2703,7 +2703,7 @@ class RandomFrame(wx.Frame):
                             (self.maxSlider, 0, wx.RIGHT, 5)])
 
         x1Label = wx.StaticText(panel, -1, "x1")
-        x1Label.SetFont(wx.Font(TEXT_LABELFORWIDGET_FONT, wx.NORMAL, wx.NORMAL, wx.NORMAL, face=FONT_FACE))
+        x1Label.SetFont(wx.Font(TEXT_LABELFORWIDGET_FONT, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, face=FONT_FACE))
         x1Label.SetForegroundColour(WHITE_COLOUR)
         self.x1Slider = ControlSlider(panel, 0, 1, .5, size=(235, 15), backColour=BACKGROUND_COLOUR)
         self.x1Slider.setSliderHeight(10)
@@ -2712,7 +2712,7 @@ class RandomFrame(wx.Frame):
                             (self.x1Slider, 0, wx.RIGHT, 5)])
 
         x2Label = wx.StaticText(panel, -1, "x2")
-        x2Label.SetFont(wx.Font(TEXT_LABELFORWIDGET_FONT, wx.NORMAL, wx.NORMAL, wx.NORMAL, face=FONT_FACE))
+        x2Label.SetFont(wx.Font(TEXT_LABELFORWIDGET_FONT, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, face=FONT_FACE))
         x2Label.SetForegroundColour(WHITE_COLOUR)
         self.x2Slider = ControlSlider(panel, 0, 1, .5, size=(235, 15), backColour=BACKGROUND_COLOUR)
         self.x2Slider.setSliderHeight(10)
@@ -2723,7 +2723,7 @@ class RandomFrame(wx.Frame):
 
         distBox = wx.BoxSizer(wx.HORIZONTAL)
         distLabel = wx.StaticText(panel, -1, "Distribution")
-        distLabel.SetFont(wx.Font(TEXT_LABELFORWIDGET_FONT, wx.NORMAL, wx.NORMAL, wx.NORMAL, face=FONT_FACE))
+        distLabel.SetFont(wx.Font(TEXT_LABELFORWIDGET_FONT, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, face=FONT_FACE))
         distLabel.SetForegroundColour(WHITE_COLOUR)
         distBox.Add(distLabel, 0, wx.ALIGN_CENTER_VERTICAL | wx.LEFT, 120)
         self.distMenu = CustomMenu(panel, self.distList, self.distList[0], outFunction=self.onDistribution)
@@ -2988,7 +2988,7 @@ class WavesFrame(wx.Frame):
         slidersBox = wx.FlexGridSizer(5, 2, 5, 5)
 
         ptsLabel = wx.StaticText(panel, -1, "Points")
-        ptsLabel.SetFont(wx.Font(TEXT_LABELFORWIDGET_FONT, wx.NORMAL, wx.NORMAL, wx.NORMAL, face=FONT_FACE))
+        ptsLabel.SetFont(wx.Font(TEXT_LABELFORWIDGET_FONT, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, face=FONT_FACE))
         ptsLabel.SetForegroundColour(WHITE_COLOUR)
         self.ptsSlider = ControlSlider(panel, 5, 1000, 50, size=(235, 15), integer=True, backColour=BACKGROUND_COLOUR)
         self.ptsSlider.setSliderHeight(10)
@@ -2997,7 +2997,7 @@ class WavesFrame(wx.Frame):
                             (self.ptsSlider, 0, wx.RIGHT, 5)])
 
         ampLabel = wx.StaticText(panel, -1, "Amp")
-        ampLabel.SetFont(wx.Font(TEXT_LABELFORWIDGET_FONT, wx.NORMAL, wx.NORMAL, wx.NORMAL, face=FONT_FACE))
+        ampLabel.SetFont(wx.Font(TEXT_LABELFORWIDGET_FONT, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, face=FONT_FACE))
         ampLabel.SetForegroundColour(WHITE_COLOUR)
         self.ampSlider = ControlSlider(panel, 0, 1, 1, size=(235, 15), backColour=BACKGROUND_COLOUR)
         self.ampSlider.setSliderHeight(10)
@@ -3006,7 +3006,7 @@ class WavesFrame(wx.Frame):
                             (self.ampSlider, 0, wx.RIGHT, 5)])
 
         freqLabel = wx.StaticText(panel, -1, "Freq")
-        freqLabel.SetFont(wx.Font(TEXT_LABELFORWIDGET_FONT, wx.NORMAL, wx.NORMAL, wx.NORMAL, face=FONT_FACE))
+        freqLabel.SetFont(wx.Font(TEXT_LABELFORWIDGET_FONT, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, face=FONT_FACE))
         freqLabel.SetForegroundColour(WHITE_COLOUR)
         self.freqSlider = ControlSlider(panel, 0, 100, 1, size=(235, 15), backColour=BACKGROUND_COLOUR)
         self.freqSlider.setSliderHeight(10)
@@ -3015,7 +3015,7 @@ class WavesFrame(wx.Frame):
                             (self.freqSlider, 0, wx.RIGHT, 5)])
 
         phaseLabel = wx.StaticText(panel, -1, "Phase")
-        phaseLabel.SetFont(wx.Font(TEXT_LABELFORWIDGET_FONT, wx.NORMAL, wx.NORMAL, wx.NORMAL, face=FONT_FACE))
+        phaseLabel.SetFont(wx.Font(TEXT_LABELFORWIDGET_FONT, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, face=FONT_FACE))
         phaseLabel.SetForegroundColour(WHITE_COLOUR)
         self.phaseSlider = ControlSlider(panel, 0, 1, 0, size=(235, 15), backColour=BACKGROUND_COLOUR)
         self.phaseSlider.setSliderHeight(10)
@@ -3024,7 +3024,7 @@ class WavesFrame(wx.Frame):
                             (self.phaseSlider, 0, wx.RIGHT, 5)])
 
         widthLabel = wx.StaticText(panel, -1, "Width")
-        widthLabel.SetFont(wx.Font(TEXT_LABELFORWIDGET_FONT, wx.NORMAL, wx.NORMAL, wx.NORMAL, face=FONT_FACE))
+        widthLabel.SetFont(wx.Font(TEXT_LABELFORWIDGET_FONT, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, face=FONT_FACE))
         widthLabel.SetForegroundColour(WHITE_COLOUR)
         self.widthSlider = ControlSlider(panel, 0, 1, .5, size=(235, 15), backColour=BACKGROUND_COLOUR)
         self.widthSlider.setSliderHeight(10)
@@ -3035,7 +3035,7 @@ class WavesFrame(wx.Frame):
 
         distBox = wx.BoxSizer(wx.HORIZONTAL)
         distLabel = wx.StaticText(panel, -1, "Shape")
-        distLabel.SetFont(wx.Font(TEXT_LABELFORWIDGET_FONT, wx.NORMAL, wx.NORMAL, wx.NORMAL, face=FONT_FACE))
+        distLabel.SetFont(wx.Font(TEXT_LABELFORWIDGET_FONT, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, face=FONT_FACE))
         distLabel.SetForegroundColour(WHITE_COLOUR)
         distBox.Add(distLabel, 0, wx.ALIGN_CENTER_VERTICAL | wx.LEFT, 147)
         self.distMenu = CustomMenu(panel, self.distList, self.distList[0], outFunction=self.onDistribution)
@@ -3240,14 +3240,14 @@ class ProcessFrame(wx.Frame):
 
         interpBox = wx.BoxSizer(wx.HORIZONTAL)
         interpLabel = wx.StaticText(panel, -1, "Interpolation")
-        interpLabel.SetFont(wx.Font(TEXT_LABELFORWIDGET_FONT, wx.NORMAL, wx.NORMAL, wx.NORMAL, face=FONT_FACE))
+        interpLabel.SetFont(wx.Font(TEXT_LABELFORWIDGET_FONT, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, face=FONT_FACE))
         interpLabel.SetForegroundColour(WHITE_COLOUR)
         interpBox.Add(interpLabel, 0, wx.ALIGN_CENTER_VERTICAL | wx.LEFT, 113)
         self.interpMenu = CustomMenu(panel, self.interpList, self.interpList[0])
         interpBox.Add(self.interpMenu, 0, wx.LEFT | wx.RIGHT, 5)
 
         ptsLabel = wx.StaticText(panel, -1, "Points")
-        ptsLabel.SetFont(wx.Font(TEXT_LABELFORWIDGET_FONT, wx.NORMAL, wx.NORMAL, wx.NORMAL, face=FONT_FACE))
+        ptsLabel.SetFont(wx.Font(TEXT_LABELFORWIDGET_FONT, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, face=FONT_FACE))
         ptsLabel.SetForegroundColour(WHITE_COLOUR)
         self.ptsSlider = ControlSlider(panel, 5, 1000, 50, size=(225, 15), integer=True, backColour=BACKGROUND_COLOUR)
         self.ptsSlider.setSliderHeight(10)
@@ -3255,7 +3255,7 @@ class ProcessFrame(wx.Frame):
                             (self.ptsSlider, 0, wx.RIGHT, 5)])
 
         self.scatXLabel = wx.StaticText(panel, -1, "Scatt X")
-        self.scatXLabel.SetFont(wx.Font(TEXT_LABELFORWIDGET_FONT, wx.NORMAL, wx.NORMAL, wx.NORMAL, face=FONT_FACE))
+        self.scatXLabel.SetFont(wx.Font(TEXT_LABELFORWIDGET_FONT, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, face=FONT_FACE))
         self.scatXLabel.SetForegroundColour(WHITE_COLOUR)
         self.scatXSlider = ControlSlider(panel, 0, 0.5, 0.005, size=(225, 15), backColour=BACKGROUND_COLOUR)
         self.scatXSlider.setSliderHeight(10)
@@ -3263,7 +3263,7 @@ class ProcessFrame(wx.Frame):
                             (self.scatXSlider, 0, wx.RIGHT, 5)])
 
         self.scatYLabel = wx.StaticText(panel, -1, "Scatt Y")
-        self.scatYLabel.SetFont(wx.Font(TEXT_LABELFORWIDGET_FONT, wx.NORMAL, wx.NORMAL, wx.NORMAL, face=FONT_FACE))
+        self.scatYLabel.SetFont(wx.Font(TEXT_LABELFORWIDGET_FONT, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, face=FONT_FACE))
         self.scatYLabel.SetForegroundColour(WHITE_COLOUR)
         self.scatYSlider = ControlSlider(panel, 0, 0.5, 0.05, size=(225, 15), backColour=BACKGROUND_COLOUR)
         self.scatYSlider.setSliderHeight(10)
@@ -3271,7 +3271,7 @@ class ProcessFrame(wx.Frame):
                             (self.scatYSlider, 0, wx.RIGHT, 5)])
 
         offXLabel = wx.StaticText(panel, -1, "Offset X")
-        offXLabel.SetFont(wx.Font(TEXT_LABELFORWIDGET_FONT, wx.NORMAL, wx.NORMAL, wx.NORMAL, face=FONT_FACE))
+        offXLabel.SetFont(wx.Font(TEXT_LABELFORWIDGET_FONT, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, face=FONT_FACE))
         offXLabel.SetForegroundColour("#FFFFFF")
         self.offXSlider = ControlSlider(panel, -0.5, 0.5, 0, size=(225, 15), backColour=BACKGROUND_COLOUR)
         self.offXSlider.setSliderHeight(10)
@@ -3279,7 +3279,7 @@ class ProcessFrame(wx.Frame):
                             (self.offXSlider, 0, wx.RIGHT, 5)])
 
         offYLabel = wx.StaticText(panel, -1, "Offset Y")
-        offYLabel.SetFont(wx.Font(TEXT_LABELFORWIDGET_FONT, wx.NORMAL, wx.NORMAL, wx.NORMAL, face=FONT_FACE))
+        offYLabel.SetFont(wx.Font(TEXT_LABELFORWIDGET_FONT, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, face=FONT_FACE))
         offYLabel.SetForegroundColour("#FFFFFF")
         self.offYSlider = ControlSlider(panel, -0.5, 0.5, 0, size=(225, 15), backColour=BACKGROUND_COLOUR)
         self.offYSlider.setSliderHeight(10)
@@ -3288,7 +3288,7 @@ class ProcessFrame(wx.Frame):
 
         distBox = wx.BoxSizer(wx.HORIZONTAL)
         distLabel = wx.StaticText(panel, -1, "Processor")
-        distLabel.SetFont(wx.Font(TEXT_LABELFORWIDGET_FONT, wx.NORMAL, wx.NORMAL, wx.NORMAL, face=FONT_FACE))
+        distLabel.SetFont(wx.Font(TEXT_LABELFORWIDGET_FONT, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, face=FONT_FACE))
         distLabel.SetForegroundColour(WHITE_COLOUR)
         distBox.Add(distLabel, 0, wx.ALIGN_CENTER_VERTICAL | wx.LEFT, 131)
         self.distMenu = CustomMenu(panel, self.distList, self.distList[0], outFunction=self.onDistribution)
@@ -3711,7 +3711,6 @@ class Transport(wx.Panel):
 
     def OnPaint(self, event):
         w,h = self.GetSize()
-        dc = wx.AutoBufferedPaintDC(self)
         dc = self.dcref(self)
         gc = wx.GraphicsContext_Create(dc)
 

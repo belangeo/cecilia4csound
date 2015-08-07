@@ -17,6 +17,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with Cecilia 4.  If not, see <http://www.gnu.org/licenses/>.
 """
+import csnd6
 import wx
 import sys, os, time, threading, re, math, codecs
 from types import ListType, TupleType
@@ -24,8 +25,6 @@ import CeciliaLib
 from constants import *
 from subprocess import Popen, PIPE
 from pyo import pa_get_output_devices, pa_get_default_output, pa_get_input_devices, pa_get_default_input, pm_get_input_devices, pm_get_default_input, sndinfo
-
-import csnd6
 
 # TODO: This is no more correct...
 if '/Cecilia.app' in os.getcwd():

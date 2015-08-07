@@ -344,7 +344,7 @@ class NonePlugin(Plugin):
         self.sizer.Add(self.knob3)
         
         plugChoiceText = wx.StaticText(self, -1, 'Effects:')
-        plugChoiceText.SetFont(wx.Font(CONTROLSLIDER_FONT, wx.ROMAN, wx.NORMAL, wx.NORMAL, face=FONT_FACE))
+        plugChoiceText.SetFont(wx.Font(CONTROLSLIDER_FONT, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, face=FONT_FACE))
         plugChoiceText.SetForegroundColour(TEXT_LABELFORWIDGET_COLOUR)
         revMenuBox.Add(plugChoiceText, 0, wx.TOP, 0)
         self.choice = CustomMenu(self, choice=PLUGINS_CHOICE, init='None', size=(93,18), colour=GREY_COLOUR, outFunction=choiceFunc)
@@ -352,7 +352,7 @@ class NonePlugin(Plugin):
         revMenuBox.Add(self.choice, 0, wx.TOP, 2)
         
         plugChoicePreset = wx.StaticText(self, -1, 'Type:')
-        plugChoicePreset.SetFont(wx.Font(CONTROLSLIDER_FONT, wx.ROMAN, wx.NORMAL, wx.NORMAL, face=FONT_FACE))
+        plugChoicePreset.SetFont(wx.Font(CONTROLSLIDER_FONT, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, face=FONT_FACE))
         plugChoicePreset.SetForegroundColour(TEXT_LABELFORWIDGET_COLOUR)
         revMenuBox.Add(plugChoicePreset, 0, wx.TOP, 6)
         self.preset = CustomMenu(self, choice=['None'], init='None', size=(93,18), colour=CONTROLLABEL_BACK_COLOUR)
@@ -386,7 +386,7 @@ class ReverbPlugin(Plugin):
         self.sizer.Add(self.knob3)
         
         plugChoiceText = wx.StaticText(self, -1, 'Effects:')
-        plugChoiceText.SetFont(wx.Font(CONTROLSLIDER_FONT, wx.ROMAN, wx.NORMAL, wx.NORMAL, face=FONT_FACE))
+        plugChoiceText.SetFont(wx.Font(CONTROLSLIDER_FONT, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, face=FONT_FACE))
         plugChoiceText.SetForegroundColour(TEXT_LABELFORWIDGET_COLOUR)
         revMenuBox.Add(plugChoiceText, 0, wx.TOP, 0)
         self.choice = CustomMenu(self, choice=PLUGINS_CHOICE, init='Reverb', size=(93,18), colour=GREY_COLOUR, outFunction=choiceFunc)
@@ -394,7 +394,7 @@ class ReverbPlugin(Plugin):
         revMenuBox.Add(self.choice, 0, wx.TOP, 2)
         
         plugChoicePreset = wx.StaticText(self, -1, 'Type:')
-        plugChoicePreset.SetFont(wx.Font(CONTROLSLIDER_FONT, wx.ROMAN, wx.NORMAL, wx.NORMAL, face=FONT_FACE))
+        plugChoicePreset.SetFont(wx.Font(CONTROLSLIDER_FONT, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, face=FONT_FACE))
         plugChoicePreset.SetForegroundColour(TEXT_LABELFORWIDGET_COLOUR)
         revMenuBox.Add(plugChoicePreset, 0, wx.TOP, 6)
         self.preset = CustomMenu(self, choice=['Bypass', 'Active'], init='Active', size=(93,18), colour=CONTROLLABEL_BACK_COLOUR, outFunction=self.onChangePreset)
@@ -442,7 +442,7 @@ class FilterPlugin(Plugin):
         self.sizer.Add(self.knob3)
 
         plugChoiceText = wx.StaticText(self, -1, 'Effects:')
-        plugChoiceText.SetFont(wx.Font(CONTROLSLIDER_FONT, wx.ROMAN, wx.NORMAL, wx.NORMAL, face=FONT_FACE))
+        plugChoiceText.SetFont(wx.Font(CONTROLSLIDER_FONT, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, face=FONT_FACE))
         plugChoiceText.SetForegroundColour(TEXT_LABELFORWIDGET_COLOUR)
         revMenuBox.Add(plugChoiceText, 0, wx.TOP, 0)
         self.choice = CustomMenu(self, choice=PLUGINS_CHOICE, init='Filter', size=(93,18), colour=GREY_COLOUR, outFunction=choiceFunc)
@@ -450,7 +450,7 @@ class FilterPlugin(Plugin):
         revMenuBox.Add(self.choice, 0, wx.TOP, 2)
 
         plugChoicePreset = wx.StaticText(self, -1, 'Type:')
-        plugChoicePreset.SetFont(wx.Font(CONTROLSLIDER_FONT, wx.ROMAN, wx.NORMAL, wx.NORMAL, face=FONT_FACE))
+        plugChoicePreset.SetFont(wx.Font(CONTROLSLIDER_FONT, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, face=FONT_FACE))
         plugChoicePreset.SetForegroundColour(TEXT_LABELFORWIDGET_COLOUR)
         revMenuBox.Add(plugChoicePreset, 0, wx.TOP, 6)
         self.preset = CustomMenu(self, choice=['Bypass', 'Lowpass', 'Highpass', 'Bandpass', 'Bandreject'], init='Lowpass', size=(93,18), 
@@ -518,7 +518,7 @@ class EQPlugin(Plugin):
         self.sizer.Add(self.knob3)
 
         plugChoiceText = wx.StaticText(self, -1, 'Effects:')
-        plugChoiceText.SetFont(wx.Font(CONTROLSLIDER_FONT, wx.ROMAN, wx.NORMAL, wx.NORMAL, face=FONT_FACE))
+        plugChoiceText.SetFont(wx.Font(CONTROLSLIDER_FONT, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, face=FONT_FACE))
         plugChoiceText.SetForegroundColour(TEXT_LABELFORWIDGET_COLOUR)
         revMenuBox.Add(plugChoiceText, 0, wx.TOP, 0)
         self.choice = CustomMenu(self, choice=PLUGINS_CHOICE, init='Para EQ', size=(93,18), colour=GREY_COLOUR, outFunction=choiceFunc)
@@ -526,7 +526,7 @@ class EQPlugin(Plugin):
         revMenuBox.Add(self.choice, 0, wx.TOP, 2)
 
         plugChoicePreset = wx.StaticText(self, -1, 'Type:')
-        plugChoicePreset.SetFont(wx.Font(CONTROLSLIDER_FONT, wx.ROMAN, wx.NORMAL, wx.NORMAL, face=FONT_FACE))
+        plugChoicePreset.SetFont(wx.Font(CONTROLSLIDER_FONT, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, face=FONT_FACE))
         plugChoicePreset.SetForegroundColour(TEXT_LABELFORWIDGET_COLOUR)
         revMenuBox.Add(plugChoicePreset, 0, wx.TOP, 6)
         self.preset = CustomMenu(self, choice=['Bypass', 'Active'], init='Active', size=(93,18), 
@@ -573,7 +573,7 @@ class EQ3BPlugin(Plugin):
         self.sizer.Add(self.knob3)
 
         plugChoiceText = wx.StaticText(self, -1, 'Effects:')
-        plugChoiceText.SetFont(wx.Font(CONTROLSLIDER_FONT, wx.ROMAN, wx.NORMAL, wx.NORMAL, face=FONT_FACE))
+        plugChoiceText.SetFont(wx.Font(CONTROLSLIDER_FONT, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, face=FONT_FACE))
         plugChoiceText.SetForegroundColour(TEXT_LABELFORWIDGET_COLOUR)
         revMenuBox.Add(plugChoiceText, 0, wx.TOP, 0)
         self.choice = CustomMenu(self, choice=PLUGINS_CHOICE, init='3 Bands EQ', size=(93,18), colour=GREY_COLOUR, outFunction=choiceFunc)
@@ -581,7 +581,7 @@ class EQ3BPlugin(Plugin):
         revMenuBox.Add(self.choice, 0, wx.TOP, 2)
 
         plugChoicePreset = wx.StaticText(self, -1, 'Type:')
-        plugChoicePreset.SetFont(wx.Font(CONTROLSLIDER_FONT, wx.ROMAN, wx.NORMAL, wx.NORMAL, face=FONT_FACE))
+        plugChoicePreset.SetFont(wx.Font(CONTROLSLIDER_FONT, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, face=FONT_FACE))
         plugChoicePreset.SetForegroundColour(TEXT_LABELFORWIDGET_COLOUR)
         revMenuBox.Add(plugChoicePreset, 0, wx.TOP, 6)
         self.preset = CustomMenu(self, choice=['Bypass', 'Active'], init='Active', size=(93,18), 
@@ -630,7 +630,7 @@ class ChorusPlugin(Plugin):
         self.sizer.Add(self.knob3)
 
         plugChoiceText = wx.StaticText(self, -1, 'Effects:')
-        plugChoiceText.SetFont(wx.Font(CONTROLSLIDER_FONT, wx.ROMAN, wx.NORMAL, wx.NORMAL, face=FONT_FACE))
+        plugChoiceText.SetFont(wx.Font(CONTROLSLIDER_FONT, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, face=FONT_FACE))
         plugChoiceText.SetForegroundColour(TEXT_LABELFORWIDGET_COLOUR)
         revMenuBox.Add(plugChoiceText, 0, wx.TOP, 0)
         self.choice = CustomMenu(self, choice=PLUGINS_CHOICE, init='Chorus', size=(93,18), colour=GREY_COLOUR, outFunction=choiceFunc)
@@ -638,7 +638,7 @@ class ChorusPlugin(Plugin):
         revMenuBox.Add(self.choice, 0, wx.TOP, 2)
 
         plugChoicePreset = wx.StaticText(self, -1, 'Type:')
-        plugChoicePreset.SetFont(wx.Font(CONTROLSLIDER_FONT, wx.ROMAN, wx.NORMAL, wx.NORMAL, face=FONT_FACE))
+        plugChoicePreset.SetFont(wx.Font(CONTROLSLIDER_FONT, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, face=FONT_FACE))
         plugChoicePreset.SetForegroundColour(TEXT_LABELFORWIDGET_COLOUR)
         revMenuBox.Add(plugChoicePreset, 0, wx.TOP, 6)
         self.preset = CustomMenu(self, choice=['Bypass', 'Flange', 'Chorus/Small', 'Chorus/Big', 'Slap', 'Echoes'], init='Flange', size=(93,18), 
@@ -748,7 +748,7 @@ class CompressPlugin(Plugin):
         self.sizer.Add(self.knob3)
 
         plugChoiceText = wx.StaticText(self, -1, 'Effects:')
-        plugChoiceText.SetFont(wx.Font(CONTROLSLIDER_FONT, wx.ROMAN, wx.NORMAL, wx.NORMAL, face=FONT_FACE))
+        plugChoiceText.SetFont(wx.Font(CONTROLSLIDER_FONT, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, face=FONT_FACE))
         plugChoiceText.SetForegroundColour(TEXT_LABELFORWIDGET_COLOUR)
         revMenuBox.Add(plugChoiceText, 0, wx.TOP, 0)
         self.choice = CustomMenu(self, choice=PLUGINS_CHOICE, init='Compress', size=(93,18), colour=GREY_COLOUR, outFunction=choiceFunc)
@@ -756,7 +756,7 @@ class CompressPlugin(Plugin):
         revMenuBox.Add(self.choice, 0, wx.TOP, 2)
 
         plugChoicePreset = wx.StaticText(self, -1, 'Type:')
-        plugChoicePreset.SetFont(wx.Font(CONTROLSLIDER_FONT, wx.ROMAN, wx.NORMAL, wx.NORMAL, face=FONT_FACE))
+        plugChoicePreset.SetFont(wx.Font(CONTROLSLIDER_FONT, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, face=FONT_FACE))
         plugChoicePreset.SetForegroundColour(TEXT_LABELFORWIDGET_COLOUR)
         revMenuBox.Add(plugChoicePreset, 0, wx.TOP, 6)
         self.preset = CustomMenu(self, choice=['Bypass', 'Active'], init='Active', size=(93,18), 
@@ -804,7 +804,7 @@ class GatePlugin(Plugin):
         self.sizer.Add(self.knob3)
 
         plugChoiceText = wx.StaticText(self, -1, 'Effects:')
-        plugChoiceText.SetFont(wx.Font(CONTROLSLIDER_FONT, wx.ROMAN, wx.NORMAL, wx.NORMAL, face=FONT_FACE))
+        plugChoiceText.SetFont(wx.Font(CONTROLSLIDER_FONT, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, face=FONT_FACE))
         plugChoiceText.SetForegroundColour(TEXT_LABELFORWIDGET_COLOUR)
         revMenuBox.Add(plugChoiceText, 0, wx.TOP, 0)
         self.choice = CustomMenu(self, choice=PLUGINS_CHOICE, init='Gate', size=(93,18), colour=GREY_COLOUR, outFunction=choiceFunc)
@@ -812,7 +812,7 @@ class GatePlugin(Plugin):
         revMenuBox.Add(self.choice, 0, wx.TOP, 2)
 
         plugChoicePreset = wx.StaticText(self, -1, 'Type:')
-        plugChoicePreset.SetFont(wx.Font(CONTROLSLIDER_FONT, wx.ROMAN, wx.NORMAL, wx.NORMAL, face=FONT_FACE))
+        plugChoicePreset.SetFont(wx.Font(CONTROLSLIDER_FONT, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, face=FONT_FACE))
         plugChoicePreset.SetForegroundColour(TEXT_LABELFORWIDGET_COLOUR)
         revMenuBox.Add(plugChoicePreset, 0, wx.TOP, 6)
         self.preset = CustomMenu(self, choice=['Bypass', 'Active'], init='Active', size=(93,18), 
@@ -876,7 +876,7 @@ class DistoPlugin(Plugin):
         self.sizer.Add(self.knob3)
 
         plugChoiceText = wx.StaticText(self, -1, 'Effects:')
-        plugChoiceText.SetFont(wx.Font(CONTROLSLIDER_FONT, wx.ROMAN, wx.NORMAL, wx.NORMAL, face=FONT_FACE))
+        plugChoiceText.SetFont(wx.Font(CONTROLSLIDER_FONT, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, face=FONT_FACE))
         plugChoiceText.SetForegroundColour(TEXT_LABELFORWIDGET_COLOUR)
         revMenuBox.Add(plugChoiceText, 0, wx.TOP, 0)
         self.choice = CustomMenu(self, choice=PLUGINS_CHOICE, init='Disto', size=(93,18), colour=GREY_COLOUR, outFunction=choiceFunc)
@@ -884,7 +884,7 @@ class DistoPlugin(Plugin):
         revMenuBox.Add(self.choice, 0, wx.TOP, 2)
 
         plugChoicePreset = wx.StaticText(self, -1, 'Type:')
-        plugChoicePreset.SetFont(wx.Font(CONTROLSLIDER_FONT, wx.ROMAN, wx.NORMAL, wx.NORMAL, face=FONT_FACE))
+        plugChoicePreset.SetFont(wx.Font(CONTROLSLIDER_FONT, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, face=FONT_FACE))
         plugChoicePreset.SetForegroundColour(TEXT_LABELFORWIDGET_COLOUR)
         revMenuBox.Add(plugChoicePreset, 0, wx.TOP, 6)
         self.preset = CustomMenu(self, choice=['Bypass', 'Active'], init='Active', size=(93,18), 
@@ -932,7 +932,7 @@ class AmpModPlugin(Plugin):
         self.sizer.Add(self.knob3)
 
         plugChoiceText = wx.StaticText(self, -1, 'Effects:')
-        plugChoiceText.SetFont(wx.Font(CONTROLSLIDER_FONT, wx.ROMAN, wx.NORMAL, wx.NORMAL, face=FONT_FACE))
+        plugChoiceText.SetFont(wx.Font(CONTROLSLIDER_FONT, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, face=FONT_FACE))
         plugChoiceText.SetForegroundColour(TEXT_LABELFORWIDGET_COLOUR)
         revMenuBox.Add(plugChoiceText, 0, wx.TOP, 0)
         self.choice = CustomMenu(self, choice=PLUGINS_CHOICE, init='AmpMod', size=(93,18), colour=GREY_COLOUR, outFunction=choiceFunc)
@@ -940,7 +940,7 @@ class AmpModPlugin(Plugin):
         revMenuBox.Add(self.choice, 0, wx.TOP, 2)
 
         plugChoicePreset = wx.StaticText(self, -1, 'Type:')
-        plugChoicePreset.SetFont(wx.Font(CONTROLSLIDER_FONT, wx.ROMAN, wx.NORMAL, wx.NORMAL, face=FONT_FACE))
+        plugChoicePreset.SetFont(wx.Font(CONTROLSLIDER_FONT, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, face=FONT_FACE))
         plugChoicePreset.SetForegroundColour(TEXT_LABELFORWIDGET_COLOUR)
         revMenuBox.Add(plugChoicePreset, 0, wx.TOP, 6)
         self.preset = CustomMenu(self, choice=['Bypass', 'Amplitude', 'RingMod'], init='Amplitude', size=(93,18), 
@@ -1013,7 +1013,7 @@ class PhaserPlugin(Plugin):
         self.sizer.Add(self.knob3)
 
         plugChoiceText = wx.StaticText(self, -1, 'Effects:')
-        plugChoiceText.SetFont(wx.Font(CONTROLSLIDER_FONT, wx.ROMAN, wx.NORMAL, wx.NORMAL, face=FONT_FACE))
+        plugChoiceText.SetFont(wx.Font(CONTROLSLIDER_FONT, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, face=FONT_FACE))
         plugChoiceText.SetForegroundColour(TEXT_LABELFORWIDGET_COLOUR)
         revMenuBox.Add(plugChoiceText, 0, wx.TOP, 0)
         self.choice = CustomMenu(self, choice=PLUGINS_CHOICE, init='Phaser', size=(93,18), colour=GREY_COLOUR, outFunction=choiceFunc)
@@ -1021,7 +1021,7 @@ class PhaserPlugin(Plugin):
         revMenuBox.Add(self.choice, 0, wx.TOP, 2)
 
         plugChoicePreset = wx.StaticText(self, -1, 'Type:')
-        plugChoicePreset.SetFont(wx.Font(CONTROLSLIDER_FONT, wx.ROMAN, wx.NORMAL, wx.NORMAL, face=FONT_FACE))
+        plugChoicePreset.SetFont(wx.Font(CONTROLSLIDER_FONT, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, face=FONT_FACE))
         plugChoicePreset.SetForegroundColour(TEXT_LABELFORWIDGET_COLOUR)
         revMenuBox.Add(plugChoicePreset, 0, wx.TOP, 6)
         self.preset = CustomMenu(self, choice=['Bypass', 'Active'], init='Active', size=(93,18), 
