@@ -1,7 +1,7 @@
 <CeciliaInterface>
 csampler snd -label Audio
-cgraph env -label Envelope -unit x -rel lin -min 0 -max 1 -func 0 0 .01 1 .99 1 1 0
-cslider thresh -label Threshold -min 0 -max 30000 -init 1000 -unit x -col red
+cgraph env -label Envelope -unit x -rel lin -min 0 -max 1  -col blue -func 0 0 .01 1 .99 1 1 0
+cslider thresh -label Threshold -min -90 -max 0 -init -30 -rel lin -unit dB -col red
 cslider rampup -label Up ramp -min 0.001 -max 1 -init 0.01 -rel log -unit sec -col blue
 cslider rampdown -label Down ramp -min 0.001 -max 1 -init 0.1 -rel log -unit sec -col blue
 cpoly poly -label voices -min 1 -max 10 -init 1
@@ -101,8 +101,8 @@ endop
 aOri1,aOri2     sampler         [snd],1,p4
 
 
-aGauche gater aOri1, gkthresh, gkrampup, gkrampdown
-aDroite gater aOri2, gkthresh, gkrampup, gkrampdown
+aGauche gater aOri1, ampdbfs(gkthresh), gkrampup, gkrampdown
+aDroite gater aOri2, ampdbfs(gkthresh), gkrampup, gkrampdown
 
 aGauche         =               aGauche * 0.25 * gkenv / (ampdb(p5)/10)
 aDroite         =               aDroite * 0.25 * gkenv / (ampdb(p5)/10)
@@ -149,6 +149,8 @@ i2    0    [total_time]
 
 <CeciliaOpen>
 scoreType=Csound
+totalTime=30.000000
+masterVolume=0.000000
 
 </CeciliaOpen>
 

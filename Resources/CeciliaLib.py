@@ -2591,23 +2591,31 @@ def parseInterfaceText(text, udolines=[]):
                         widget['name'] = line[0:]
                         line = ''
                         break
-                                    
+
             # Go over each flag and create an entry in the dictionary
             while line != '':
                 commentPos = line.find(';')
-                sepPos = line.find(' -')
-                
-                if sepPos == -1 or (commentPos!=-1 and commentPos < sepPos):
+                m = re.search('(?<=-)[a-zA-Z]+', line)
+                if m:
+                    sepPos = m.start()
+                else:
+                    sepPos = -1
+
+                if sepPos == -1 or (commentPos != -1 and commentPos < sepPos):
                     break
                 
                 else:
-                    line = line[sepPos+2:]
+                    line = line[sepPos:]
                     spacePos = line.find(' ')
                     if spacePos != -1:
-                        key = line[0:spacePos]
+                        key = m.group(0)
                         line = line[spacePos+1:]
                         commentPos = line.find(';')
-                        nextSepPos = line.find(' -')
+                        m = re.search('(?<=-)[a-zA-Z]+', line)
+                        if m:
+                            nextSepPos = m.start() - 1
+                        else:
+                            nextSepPos = -1
                         if nextSepPos != -1 and key != 'func':
                             if commentPos != -1 and commentPos < nextSepPos:
                                 value = line[0:commentPos]
@@ -2621,7 +2629,6 @@ def parseInterfaceText(text, udolines=[]):
                             else:
                                 value = line[0:]
                             line = ''
-                           
                         value = value.strip() 
                         widget[key] = value
             

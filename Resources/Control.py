@@ -1085,9 +1085,11 @@ class CSampler(Cfilein):
         CeciliaLib.getUserInputs()[self.name]['off%s' % self.name] = self.getOffset()
         CeciliaLib.getUserInputs()[self.name]['path'] = self.filePath
 
-        for line in CeciliaLib.getGrapher().plotter.getData():
-            if line.getName() == self.samplerFrame.loopInSlider.getCName() or line.getName() == self.samplerFrame.loopOutSlider.getCName():
-                line.changeYrange((0, self.duration))
+        if CeciliaLib.getGrapher():
+            for line in CeciliaLib.getGrapher().plotter.getData():
+                if line.getName() == self.samplerFrame.loopInSlider.getCName() or \
+                        line.getName() == self.samplerFrame.loopOutSlider.getCName():
+                    line.changeYrange((0, self.duration))
     
     def getSamplerInfo(self):
         info = {}

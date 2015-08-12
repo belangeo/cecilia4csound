@@ -4095,7 +4095,7 @@ class VuMeter(wx.Panel):
 
     def setAmplitude(self, amplitudeList=[]):
         if amplitudeList[0] < 0: 
-            return
+            self.amplitude = [0 for i in range(self.nchnls)]
         if not amplitudeList:
             self.amplitude = [0 for i in range(self.nchnls)]                
         else:
@@ -4104,7 +4104,7 @@ class VuMeter(wx.Panel):
         if self.seekPeak():
             CeciliaLib.getControlPanel().updatePeak(self.peak)
 
-        self.Refresh()
+        wx.CallAfter(self.Refresh)
         
     def OnPaint(self, event):
         w,h = self.GetSize()
@@ -4125,7 +4125,7 @@ class VuMeter(wx.Panel):
 
     def reset(self):
         self.amplitude = [0 for i in range(self.nchnls)]
-        self.Refresh()
+        wx.CallAfter(self.Refresh)
 
     def seekPeak(self):
         newPeak = False

@@ -1338,8 +1338,9 @@ def buildHorizontalSlidersBox(parent, list):
                 CeciliaLib.showErrorDialog('Error when building interface!', "-rel option choices are 'lin' or 'log'.")
             if linlog == 'log': log = True
             else: log = False
-            if log and mini == 0 or maxi == 0:
-                CeciliaLib.showErrorDialog('Error when building interface!', "-min or -max options can't be 0 for a logarithmic slider.")
+            if log:
+                if mini == 0 or maxi == 0:
+                    CeciliaLib.showErrorDialog('Error when building interface!', "-min or -max options can't be 0 for a logarithmic slider.")
             name = widget['name']
             if name.startswith('-'):
                 CeciliaLib.showErrorDialog('Error when building interface!', "Missing name. First argument of cslider can't be %s." % widget['name'])
