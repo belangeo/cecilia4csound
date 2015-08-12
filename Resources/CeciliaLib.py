@@ -2492,50 +2492,34 @@ def listenSoundfile(filename):
         showErrorDialog("Preferences not set", "Choose a soundfile player first.")
         loadPlayerEditor('player')
     if os.path.isfile(filename):
-        name = ''
+        app = getSoundfilePlayerPath()
         if getPlatform() == 'darwin':
-            name = getSoundfilePlayerPath()
-            cmd = 'open -a ' + slashifyText(name) + ' ' + slashifyText(filename)
-            Popen(cmd, shell=True)
+            cmd = 'open -a ' + slashifyText(app) + ' ' + slashifyText(filename)
         elif getPlatform() == 'win32':
-            app = getSoundfilePlayerPath()
             cmd = '"' + os.path.join(app) + '" "' + slashifyText(filename) + '"'
-            try:
-                Popen(cmd, shell=True)
-            except OSError, OSError2:
-                print 'Unable to open desired software:\t' + app
         else:
-            app = getSoundfilePlayerPath()
             cmd = slashifyText(app) + ' ' + slashifyText(filename)
-            try:
-                Popen(cmd, shell=True)
-            except OSError, OSError2:
-                print 'Unable to open desired software:\t' + app
+        try:
+            Popen(cmd, shell=True)
+        except OSError, OSError2:
+            print 'Unable to open desired software: ' + app
 
 def editSoundfile(filename):
     if getSoundfileEditorPath() == '':
         showErrorDialog("Preferences not set", "Choose a soundfile editor first.")
         loadPlayerEditor('editor')
     if os.path.isfile(filename):
-        name = ''
+        app = getSoundfileEditorPath()
         if getPlatform() == 'darwin':
-            name = getSoundfileEditorPath()
-            cmd = 'open -a ' + slashifyText(name) + ' ' + slashifyText(filename)
-            Popen(cmd, shell=True)
+            cmd = 'open -a ' + slashifyText(app) + ' ' + slashifyText(filename)
         elif getPlatform() == 'win32':
-            app = getSoundfileEditorPath()
             cmd = '"' + os.path.join(app) + '" "' + slashifyText(filename) + '"'
-            try:
-                Popen(cmd, shell=True)
-            except OSError, OSError2:
-                print 'Unable to open desired software:\t' + app
         else:
-            app = getSoundfileEditorPath()
             cmd = slashifyText(app) + ' ' + slashifyText(filename)
-            try:
-                Popen(cmd, shell=True)
-            except OSError, OSError2:
-                print 'Unable to open desired software:\t' + app
+        try:
+            Popen(cmd, shell=True)
+        except OSError, OSError2:
+            print 'Unable to open desired software: ' + app
 
 def resetWidgetVariables():
     setGainSlider(None)
