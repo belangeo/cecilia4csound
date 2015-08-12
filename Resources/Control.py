@@ -1350,21 +1350,17 @@ class CfileinFrame(wx.Frame):
     def __init__(self, parent, name, pos=wx.DefaultPosition):
         style = ( wx.CLIP_CHILDREN | wx.FRAME_NO_TASKBAR | wx.FRAME_SHAPED | wx.NO_BORDER | wx.FRAME_FLOAT_ON_PARENT)
         wx.Frame.__init__(self, parent, title='', pos=pos, style=style)
+        self.SetBackgroundColour(BACKGROUND_COLOUR)
         self.parent = parent
         self.name = name
-        
-        if wx.Platform == '__WXGTK__':
-            self.Bind(wx.EVT_WINDOW_CREATE, self.SetRoundShape)
-        else:
-            self.SetRoundShape()
-            
+	self.SetClientSize((385, 143))
+
         panel = wx.Panel(self, -1)
         w, h = self.GetSize()
         panel.SetBackgroundColour(BACKGROUND_COLOUR)
         box = wx.BoxSizer(wx.VERTICAL)
         
         # Header
-        
         self.title = FrameLabel(panel, '', size=(w-2, 50))
         box.Add(self.title, 0, wx.ALL, 1)
   
@@ -1443,33 +1439,25 @@ class CfileinFrame(wx.Frame):
         header += '%0.2f sec - %s - %dBit - %d ch. - %2.1fkHz' % (self.dur, self.type, self.bitDepth, self.chanNum, self.sampRate)
         return header
     
-    def SetRoundShape(self, event=None):
-        w, h = self.GetSizeTuple()
-        self.SetShape(GetRoundShape(385, 143, 1))
-
 class SamplerFrame(wx.Frame):
-    def __init__(self, parent, name, tableNums, pos=wx.DefaultPosition, size=(385, 290)):
+    def __init__(self, parent, name, tableNums, pos=wx.DefaultPosition, size=(390, 295)):
         style = ( wx.CLIP_CHILDREN | wx.FRAME_NO_TASKBAR | wx.FRAME_SHAPED | wx.NO_BORDER | wx.FRAME_FLOAT_ON_PARENT)
         wx.Frame.__init__(self, parent, title='', pos=pos, style=style)
+        self.SetBackgroundColour(BACKGROUND_COLOUR)
         self.parent = parent
+	self.SetClientSize(size)
         self.size = size
         self.name = name
         self.tableNums = tableNums
         
-        if wx.Platform == '__WXGTK__':
-            self.Bind(wx.EVT_WINDOW_CREATE, self.SetRoundShape)
-        else:
-            self.SetRoundShape()
-            
         self.loopList = ['Off', 'Forward', 'Backward', 'Back & Forth']
             
         panel = wx.Panel(self, -1)
-        w, h = self.GetSize()
+        w, h = size
         panel.SetBackgroundColour(BACKGROUND_COLOUR)
         box = wx.BoxSizer(wx.VERTICAL)
         
         # Header
-        
         self.title = FrameLabel(panel, '', size=(w-2, 50))
         box.Add(self.title, 0, wx.ALL, 1)
 
@@ -1624,10 +1612,6 @@ class SamplerFrame(wx.Frame):
         header += '%0.2f sec - %s - %dBit - %d ch. - %2.1fkHz' % (self.dur, self.type, self.bitDepth, self.chanNum, self.sampRate)
         return header
     
-    def SetRoundShape(self, event=None):
-        w, h = self.size
-        self.SetShape(GetRoundShape(w, h, 1))
-  
     def setLoopMode(self, index):
         self.loopMenu.popup.setByIndex(index)
         

@@ -46,6 +46,149 @@ def toLog(t, v1, v2):
 def toExp(t, v1, v2):
     return math.pow(10, t * (math.log10(v2) - math.log10(v1)) + math.log10(v1))
 
+class PlayRecButtons(wx.Panel):
+    def __init__(self, parent, cecslider, id=wx.ID_ANY, pos=(0,0), size=(40,20)):
+        wx.Panel.__init__(self, parent=parent, id=wx.ID_ANY, pos=pos, size=size)
+        self.SetMaxSize(self.GetSize())
+        self.SetBackgroundStyle(wx.BG_STYLE_CUSTOM)  
+        self.SetBackgroundColour(BACKGROUND_COLOUR)
+        self.cecslider = cecslider
+        self.Bind(wx.EVT_PAINT, self.OnPaint)
+        self.Bind(wx.EVT_MOTION, self.OnMotion)
+        self.Bind(wx.EVT_LEAVE_WINDOW, self.OnLeave)
+        self.Bind(wx.EVT_LEFT_DOWN, self.MouseDown)
+        self.Bind(wx.EVT_LEFT_UP, self.MouseUp)
+        self.playColour = SLIDER_PLAY_COLOUR_HOT
+        self.recColour = SLIDER_REC_COLOUR_HOT
+        self.playOver = False
+        self.recOver = False
+        self.playOverWait = True
+        self.recOverWait = True
+        self.play = 0
+        self.rec = False
+
+        if CeciliaLib.getPlatform() == "win32":
+            self.dcref = wx.BufferedPaintDC
+        else:
+            self.dcref = wx.PaintDC
+
+    def setOverWait(self, which):
+        if which == 0:
+            self.playOverWait = False
+        elif which == 1:
+            self.recOverWait = False
+
+    def checkForOverReady(self, pos):
+        if not wx.Rect(2, 2, 17, 17).Contains(pos):
+            self.playOverWait = True
+        if not wx.Rect(21, 2, 38, 17).Contains(pos):
+            self.recOverWait = True
+                        
+    def MouseDown(self, evt):
+        pos = evt.GetPosition()
+        if wx.Rect(2, 2, 17, 17).Contains(pos):
+            self.play = (self.play + 1) % 3
+            if self.play == 0: 
+                self.playColour = SLIDER_PLAY_COLOUR_HOT
+            elif self.play == 1: 
+                self.playColour = SLIDER_PLAY_COLOUR_PRESSED
+            else:
+                self.playColour = SLIDER_PLAY_COLOUR_NO_BIND
+            self.setOverWait(0)
+        elif wx.Rect(21, 2, 38, 17).Contains(pos):
+            if self.rec: 
+                self.rec = False
+                self.recColour = SLIDER_REC_COLOUR_HOT
+            else: 
+                self.rec = True
+                self.recColour = SLIDER_REC_COLOUR_PRESSED
+            self.setOverWait(1)
+        self.playOver = False
+        self.recOver = False
+        self.Refresh()
+        self.CaptureMouse()
+        evt.Skip()
+
+    def MouseUp(self, evt):
+        if self.HasCapture():
+            self.ReleaseMouse()
+
+    def OnMotion(self, evt):
+        pos = evt.GetPosition()
+        if wx.Rect(2, 2, 17, 17).Contains(pos) and self.playOverWait:
+            self.playOver = True
+            self.recOver = False
+        elif wx.Rect(21, 2, 38, 17).Contains(pos) and self.recOverWait:
+            self.playOver = False
+            self.recOver = True
+        self.checkForOverReady(pos)
+        self.Refresh()
+        evt.Skip()
+
+    def OnLeave(self, evt):
+        self.playOver = False
+        self.recOver = False
+        self.playOverWait = True
+        self.recOverWait = True
+        self.Refresh()
+        evt.Skip()
+
+    def OnPaint(self, evt):
+        w,h = self.GetSize()
+        dc = self.dcref(self)
+        gc = wx.GraphicsContext_Create(dc)
+
+        dc.SetBrush(wx.Brush(BACKGROUND_COLOUR, wx.SOLID))
+        dc.Clear()
+
+        dc.SetPen(wx.Pen(BACKGROUND_COLOUR, width=0, style=wx.SOLID))
+        dc.DrawRectangle(0, 0, w, h)
+
+        if self.cecslider.getRate() == 'k' and self.cecslider.getUp() == 0:
+            # Draw triangle
+            if self.playOver: playColour = SLIDER_PLAY_COLOUR_OVER
+            else: playColour = self.playColour
+            gc.SetPen(wx.Pen(playColour, width=1, style=wx.SOLID))  
+            gc.SetBrush(wx.Brush(playColour, wx.SOLID))
+            tri = [(14,h/2), (9,4), (9,h-4), (14,h/2)]
+            gc.DrawLines(tri)
+    
+            dc.SetPen(wx.Pen('#333333', width=1, style=wx.SOLID))  
+            dc.DrawLine(w/2,4,w/2,h-4)
+            
+            # Draw circle
+            if self.recOver: recColour = SLIDER_REC_COLOUR_OVER
+            else: recColour = self.recColour
+            gc.SetPen(wx.Pen(recColour, width=1, style=wx.SOLID))  
+            gc.SetBrush(wx.Brush(recColour, wx.SOLID))
+            gc.DrawEllipse(w/4+w/2-4, h/2-4, 8, 8)
+
+        evt.Skip()
+
+    def setPlay(self, x):
+        self.play = x
+        if self.play == 0: 
+            self.playColour = SLIDER_PLAY_COLOUR_HOT
+        elif self.play == 1: 
+            self.playColour = SLIDER_PLAY_COLOUR_PRESSED
+        else:
+            self.playColour = SLIDER_PLAY_COLOUR_NO_BIND
+        self.Refresh()
+
+    def getPlay(self):
+        return self.play
+
+    def getRec(self):
+        return self.rec
+
+    def setRec(self, x):
+        if x == 0:
+            self.rec = False
+            self.recColour = SLIDER_REC_COLOUR_HOT
+        else:
+            self.rec = True
+            self.recColour = SLIDER_REC_COLOUR_PRESSED
+
 class Slider(wx.Panel):
     def __init__(self, parent, minvalue, maxvalue, init=None, pos=(0,0), size=(200,20), 
                  valtype='float', log=False, function=None, rate='k', cecslider=None):
@@ -288,149 +431,6 @@ class HSlider(Slider):
         if self.outFunction:
             self.outFunction(self.GetValue())
 
-class PlayRecButtons(wx.Panel):
-    def __init__(self, parent, cecslider, id=wx.ID_ANY, pos=(0,0), size=(40,20)):
-        wx.Panel.__init__(self, parent=parent, id=wx.ID_ANY, pos=pos, size=size)
-        self.SetMaxSize(self.GetSize())
-        self.SetBackgroundStyle(wx.BG_STYLE_CUSTOM)  
-        self.SetBackgroundColour(BACKGROUND_COLOUR)
-        self.cecslider = cecslider
-        self.Bind(wx.EVT_PAINT, self.OnPaint)
-        self.Bind(wx.EVT_MOTION, self.OnMotion)
-        self.Bind(wx.EVT_LEAVE_WINDOW, self.OnLeave)
-        self.Bind(wx.EVT_LEFT_DOWN, self.MouseDown)
-        self.Bind(wx.EVT_LEFT_UP, self.MouseUp)
-        self.playColour = SLIDER_PLAY_COLOUR_HOT
-        self.recColour = SLIDER_REC_COLOUR_HOT
-        self.playOver = False
-        self.recOver = False
-        self.playOverWait = True
-        self.recOverWait = True
-        self.play = 0
-        self.rec = False
-
-        if CeciliaLib.getPlatform() == "win32":
-            self.dcref = wx.BufferedPaintDC
-        else:
-            self.dcref = wx.PaintDC
-
-    def setOverWait(self, which):
-        if which == 0:
-            self.playOverWait = False
-        elif which == 1:
-            self.recOverWait = False
-
-    def checkForOverReady(self, pos):
-        if not wx.Rect(2, 2, 17, 17).Contains(pos):
-            self.playOverWait = True
-        if not wx.Rect(21, 2, 38, 17).Contains(pos):
-            self.recOverWait = True
-                        
-    def MouseDown(self, evt):
-        pos = evt.GetPosition()
-        if wx.Rect(2, 2, 17, 17).Contains(pos):
-            self.play = (self.play + 1) % 3
-            if self.play == 0: 
-                self.playColour = SLIDER_PLAY_COLOUR_HOT
-            elif self.play == 1: 
-                self.playColour = SLIDER_PLAY_COLOUR_PRESSED
-            else:
-                self.playColour = SLIDER_PLAY_COLOUR_NO_BIND
-            self.setOverWait(0)
-        elif wx.Rect(21, 2, 38, 17).Contains(pos):
-            if self.rec: 
-                self.rec = False
-                self.recColour = SLIDER_REC_COLOUR_HOT
-            else: 
-                self.rec = True
-                self.recColour = SLIDER_REC_COLOUR_PRESSED
-            self.setOverWait(1)
-        self.playOver = False
-        self.recOver = False
-        self.Refresh()
-        self.CaptureMouse()
-        evt.Skip()
-
-    def MouseUp(self, evt):
-        if self.HasCapture():
-            self.ReleaseMouse()
-
-    def OnMotion(self, evt):
-        pos = evt.GetPosition()
-        if wx.Rect(2, 2, 17, 17).Contains(pos) and self.playOverWait:
-            self.playOver = True
-            self.recOver = False
-        elif wx.Rect(21, 2, 38, 17).Contains(pos) and self.recOverWait:
-            self.playOver = False
-            self.recOver = True
-        self.checkForOverReady(pos)
-        self.Refresh()
-        evt.Skip()
-
-    def OnLeave(self, evt):
-        self.playOver = False
-        self.recOver = False
-        self.playOverWait = True
-        self.recOverWait = True
-        self.Refresh()
-        evt.Skip()
-
-    def OnPaint(self, evt):
-        w,h = self.GetSize()
-        dc = self.dcref(self)
-        gc = wx.GraphicsContext_Create(dc)
-
-        dc.SetBrush(wx.Brush(BACKGROUND_COLOUR, wx.SOLID))
-        dc.Clear()
-
-        dc.SetPen(wx.Pen(BACKGROUND_COLOUR, width=0, style=wx.SOLID))
-        dc.DrawRectangle(0, 0, w, h)
-
-        if self.cecslider.getRate() == 'k' and self.cecslider.getUp() == 0:
-            # Draw triangle
-            if self.playOver: playColour = SLIDER_PLAY_COLOUR_OVER
-            else: playColour = self.playColour
-            gc.SetPen(wx.Pen(playColour, width=1, style=wx.SOLID))  
-            gc.SetBrush(wx.Brush(playColour, wx.SOLID))
-            tri = [(14,h/2), (9,4), (9,h-4), (14,h/2)]
-            gc.DrawLines(tri)
-    
-            dc.SetPen(wx.Pen('#333333', width=1, style=wx.SOLID))  
-            dc.DrawLine(w/2,4,w/2,h-4)
-            
-            # Draw circle
-            if self.recOver: recColour = SLIDER_REC_COLOUR_OVER
-            else: recColour = self.recColour
-            gc.SetPen(wx.Pen(recColour, width=1, style=wx.SOLID))  
-            gc.SetBrush(wx.Brush(recColour, wx.SOLID))
-            gc.DrawEllipse(w/4+w/2-4, h/2-4, 8, 8)
-
-        evt.Skip()
-
-    def setPlay(self, x):
-        self.play = x
-        if self.play == 0: 
-            self.playColour = SLIDER_PLAY_COLOUR_HOT
-        elif self.play == 1: 
-            self.playColour = SLIDER_PLAY_COLOUR_PRESSED
-        else:
-            self.playColour = SLIDER_PLAY_COLOUR_NO_BIND
-        self.Refresh()
-
-    def getPlay(self):
-        return self.play
-
-    def getRec(self):
-        return self.rec
-
-    def setRec(self, x):
-        if x == 0:
-            self.rec = False
-            self.recColour = SLIDER_REC_COLOUR_HOT
-        else:
-            self.rec = True
-            self.recColour = SLIDER_REC_COLOUR_PRESSED
-
 class CECSlider:
     def __init__(self, parent, minvalue, maxvalue, init=None, 
                  label='slider', unit='', valtype='float', orientation='horizontal', 
@@ -469,9 +469,9 @@ class CECSlider:
         if self.up == 1:
             self.slider.setFillColour('#BBBBBB', '#999999')
             
-        self.label = Label(parent, label, size=(120,16), outFunction=self.onLabelClick)
+        self.label = Label(parent, label, size=(100,16), outFunction=self.onLabelClick)
         self.label.SetToolTip(CECTooltip(TT_SLIDER_LABEL))
-        self.entryUnit = EntryUnit(parent, self.slider.GetValue(), unit, size=(130,16),
+        self.entryUnit = EntryUnit(parent, self.slider.GetValue(), unit, size=(120,16),
                                    valtype=valtype, outFunction=self.entryReturn)
         self.entryUnit.SetToolTip(CECTooltip(TT_SLIDER_DISPLAY))                           
         self.buttons = PlayRecButtons(parent, self, size=(40,16))
@@ -1002,9 +1002,9 @@ class CECRange:
         if self.up == 1:
             self.slider.setFillColour('#BBBBBB', '#999999')
 
-        self.label = Label(parent, label, size=(120,16), outFunction=self.onLabelClick)
+        self.label = Label(parent, label, size=(100,16), outFunction=self.onLabelClick)
         self.label.SetToolTip(CECTooltip(TT_RANGE_LABEL))
-        self.entryUnit = RangeEntryUnit(parent, self.slider.GetValue(), unit, size=(130,16),
+        self.entryUnit = RangeEntryUnit(parent, self.slider.GetValue(), unit, size=(120,16),
                                    valtype=valtype, outFunction=self.entryReturn)
         self.entryUnit.SetToolTip(CECTooltip(TT_SLIDER_DISPLAY))                           
         self.buttons = PlayRecButtons(parent, self, size=(40,16))

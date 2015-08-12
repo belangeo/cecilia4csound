@@ -799,7 +799,7 @@ class Clocker(wx.Panel):
 # EntryUnit
 # --------------------------
 class EntryUnit(wx.Panel):
-    def __init__(self, parent, value=0, unit='', size=(130,20), valtype='float', outFunction=None, colour=None):
+    def __init__(self, parent, value=0, unit='', size=(120,20), valtype='float', outFunction=None, colour=None):
         wx.Panel.__init__(self, parent, -1, size=size, style=wx.WANTS_CHARS)
         self.SetMaxSize(self.GetSize())
         self.SetBackgroundStyle(wx.BG_STYLE_CUSTOM)
@@ -815,11 +815,11 @@ class EntryUnit(wx.Panel):
         self.new = ''
         self.font = wx.Font(ENTRYUNIT_FONT, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, face=FONT_FACE)
         self.unitFont = wx.Font(ENTRYUNIT_FONT, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_ITALIC, wx.FONTWEIGHT_LIGHT, face=FONT_FACE)
-        self.entryRect = wx.Rect(20, 2, 50, self.GetSize()[1]-4)
+        self.entryRect = wx.Rect(40, 1, 52, self.GetSize()[1]-2)
         if sys.platform == 'win32':
-            self.starttext = 65
+            self.starttext = 80
         else:    
-            self.starttext = 70
+            self.starttext = 90
         if colour:
             self.backColour = colour
         else:
@@ -839,7 +839,6 @@ class EntryUnit(wx.Panel):
         dc = wx.MemoryDC(self.backgroundBitmap)
         gc = wx.GraphicsContext_Create(dc)
         dc.SetBrush(wx.Brush(BACKGROUND_COLOUR, wx.SOLID))
-
         dc.SetTextForeground(LABEL_LABEL_COLOUR)
 
         # Draw background
@@ -859,13 +858,13 @@ class EntryUnit(wx.Panel):
 
         # Draw unit
         dc.SetFont(self.unitFont)
-        dc.DrawLabel(self.unit, wx.Rect(73, 0, w-73, h), wx.ALIGN_CENTER_VERTICAL)
+        dc.DrawLabel(self.unit, wx.Rect(95, 1, w-95, h), wx.ALIGN_CENTER_VERTICAL)
         dc.SelectObject(wx.NullBitmap)
 
     def setBackColour(self, colour):
         self.backColour = colour
         self.createBackgroundBitmap()
-        self.Refresh()
+        wx.CallAfter(self.Refresh)
 
     def LooseFocus(self, event):
         if self.new != '':
@@ -874,7 +873,7 @@ class EntryUnit(wx.Panel):
         self.selected = False
         if self.outFunction:
             self.outFunction(self.value)
-        self.Refresh()
+        wx.CallAfter(self.Refresh)
 
     def OnPaint(self, event):
         w,h = self.GetSize()
@@ -884,7 +883,6 @@ class EntryUnit(wx.Panel):
         dc.Clear()
 
         dc.SetTextForeground(LABEL_LABEL_COLOUR)
-
         dc.DrawBitmap(self.backgroundBitmap, 0, 0)
 
         # Draw value
@@ -900,10 +898,10 @@ class EntryUnit(wx.Panel):
         else:
             val = str(self.value)
         if sys.platform == 'linux2':
-            width = len(val) * (dc.GetCharWidth() - 3)
+            width = len(val) * (dc.GetCharWidth() - 1)
         else:
             width = len(val) * dc.GetCharWidth()
-        dc.DrawLabel(val, wx.Rect(self.starttext - width, 0, width, h), wx.ALIGN_CENTER_VERTICAL)
+        dc.DrawLabel(val, wx.Rect(self.starttext - width, 1, width, h), wx.ALIGN_CENTER_VERTICAL)
 
     def MouseDown(self, event):
         pos = event.GetPosition()
@@ -920,11 +918,11 @@ class EntryUnit(wx.Panel):
             elif offset <= 28:
                 self.increment = 1    
             else:
-                self.increment = 10                    
+                self.increment = 10 
             self.selected = True
             self.new = ''
             self.CaptureMouse()
-        self.Refresh()
+        wx.CallAfter(self.Refresh)
         event.Skip()
 
     def MouseMotion(self, evt):
@@ -937,7 +935,7 @@ class EntryUnit(wx.Panel):
                 self.value = self.oldValue + off    
                 if self.outFunction:
                     self.outFunction(self.value)
-            self.Refresh()
+            wx.CallAfter(self.Refresh)
 
     def MouseUp(self, evt):
         if self.HasCapture():
@@ -979,7 +977,7 @@ class EntryUnit(wx.Panel):
         wx.CallAfter(self.Refresh)
 
 class RangeEntryUnit(wx.Panel):
-    def __init__(self, parent, value=[0,0], unit='', size=(130,20), valtype='float', outFunction=None, colour=None):
+    def __init__(self, parent, value=[0,0], unit='', size=(120,20), valtype='float', outFunction=None, colour=None):
         wx.Panel.__init__(self, parent, -1, size=size, style=wx.WANTS_CHARS)
         self.SetMaxSize(self.GetSize())
         self.SetBackgroundStyle(wx.BG_STYLE_CUSTOM)
@@ -995,17 +993,18 @@ class RangeEntryUnit(wx.Panel):
         self.new = ''
         self.font = wx.Font(ENTRYUNIT_FONT, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, face=FONT_FACE)
         self.unitFont = wx.Font(ENTRYUNIT_FONT, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_ITALIC, wx.FONTWEIGHT_LIGHT, face=FONT_FACE)
-        self.entryRect = wx.Rect(20, 2, 80, self.GetSize()[1]-4)
+        self.entryRect = wx.Rect(16, 2, 75, self.GetSize()[1]-4)
         if sys.platform == 'win32':
-            self.starttext = 65
+            self.starttext = 80
+        elif sys.platform == 'linux2':
+            self.starttext = 70
         else:    
-            self.starttext = 100
+            self.starttext = 90
         if colour:
             self.backColour = colour
         else:
             self.backColour = ENTRYUNIT_BACK_COLOUR
         self.createBackgroundBitmap()
-
         self.Bind(wx.EVT_PAINT, self.OnPaint)
         self.Bind(wx.EVT_LEFT_DOWN, self.MouseDown)
         self.Bind(wx.EVT_MOTION, self.MouseMotion)
@@ -1039,13 +1038,13 @@ class RangeEntryUnit(wx.Panel):
 
         # Draw unit
         dc.SetFont(self.unitFont)
-        dc.DrawLabel(self.unit, wx.Rect(105, 0, w-105, h), wx.ALIGN_CENTER_VERTICAL)
+        dc.DrawLabel(self.unit, wx.Rect(95, 0, w-95, h), wx.ALIGN_CENTER_VERTICAL)
         dc.SelectObject(wx.NullBitmap)
 
     def setBackColour(self, colour):
         self.backColour = colour
         self.createBackgroundBitmap()
-        self.Refresh()
+        wx.CallAfter(self.Refresh)
 
     def LooseFocus(self, event):
         if self.new != '':
@@ -1054,7 +1053,7 @@ class RangeEntryUnit(wx.Panel):
         self.selected = False
         if self.outFunction:
             self.outFunction(self.value)
-        self.Refresh()
+        wx.CallAfter(self.Refresh)
 
     def OnPaint(self, event):
         w,h = self.GetSize()
@@ -1064,7 +1063,6 @@ class RangeEntryUnit(wx.Panel):
         dc.Clear()
 
         dc.SetTextForeground(LABEL_LABEL_COLOUR)
-
         dc.DrawBitmap(self.backgroundBitmap, 0, 0)
 
         # Draw value
@@ -1078,7 +1076,39 @@ class RangeEntryUnit(wx.Panel):
         if self.selected and self.new:
             val = self.new
         else:
-            val = str(self.value[0]) + ', ' + str(self.value[1])
+            if self.value[0] >= 10000:
+                v1 = str(int(self.value[0]))
+            elif self.value[0] >= 1000:
+                v1 = "%.1f" % self.value[0]
+            elif self.value[0] >= 100:
+                v1 = "%.1f" % self.value[0]
+            elif self.value[0] >= 10:
+                v1 = "%.2f" % self.value[0]
+            elif self.value[0] >= -100:
+                v1 = "%.2f" % self.value[0]
+            elif self.value[0] >= -1000:
+                v1 = "%.1f" % self.value[0]
+            elif self.value[0] >= -10000:
+                v1 = "%.1f" % self.value[0]
+            else:
+                v1 = str(int(self.value[0]))
+            if self.value[1] >= 10000:
+                v2 = str(int(self.value[1]))
+            elif self.value[1] >= 1000:
+                v2 = "%.1f" % self.value[1]
+            elif self.value[1] >= 100:
+                v2 = "%.1f" % self.value[1]
+            elif self.value[1] >= 10:
+                v2 = "%.2f" % self.value[1]
+            elif self.value[1] >= -100:
+                v2 = "%.2f" % self.value[1]
+            elif self.value[1] >= -1000:
+                v2 = "%.1f" % self.value[1]
+            elif self.value[1] >= -10000:
+                v2 = "%.1f" % self.value[1]
+            else:
+                v2 = str(int(self.value[1]))
+            val = "%s, %s" % (v1, v2)
         if sys.platform == 'linux2':
             width = len(val) * (dc.GetCharWidth() - 3)
         else:
@@ -1105,7 +1135,7 @@ class RangeEntryUnit(wx.Panel):
                 self.CaptureMouse()
             self.selected = True
             self.new = ''
-        self.Refresh()
+        wx.CallAfter(self.Refresh)
         event.Skip()
 
     def MouseMotion(self, evt):
@@ -1118,7 +1148,7 @@ class RangeEntryUnit(wx.Panel):
                 self.value = self.oldValue + off    
                 if self.outFunction:
                     self.outFunction(self.value)
-            self.Refresh()
+	    wx.CallAfter(self.Refresh)
 
     def MouseUp(self, evt):
         if self.HasCapture():
@@ -1157,7 +1187,7 @@ class RangeEntryUnit(wx.Panel):
                 self.selected = False
                 if self.outFunction:
                     self.outFunction(self.value)
-            self.Refresh()
+            wx.CallAfter(self.Refresh)
 
     def setValue(self, val):
         self.value = val
@@ -1232,10 +1262,8 @@ class ListEntry(wx.Panel):
     def MouseDown(self, event):
         pos = event.GetPosition()
         self.popup = ListEntryPopupFrame(self, self.value)
-        #self.popup.SetPosition((pos[0]+50, pos[1]-100))
         self.popup.CenterOnScreen()
         self.popup.Show()
-        #event.Skip()
 
     def setValue(self, val):
         self.value = val
@@ -2646,12 +2674,9 @@ class RandomFrame(wx.Frame):
     def __init__(self, parent):
         style = ( wx.CLIP_CHILDREN | wx.FRAME_NO_TASKBAR | wx.FRAME_SHAPED | wx.NO_BORDER | wx.FRAME_FLOAT_ON_PARENT )
         wx.Frame.__init__(self, parent, title='', style = style)
+        self.SetBackgroundColour(BACKGROUND_COLOUR)
         self.parent = parent
-        self.SetSize((300,275))
-        if wx.Platform == '__WXGTK__':
-            self.Bind(wx.EVT_WINDOW_CREATE, self.SetRoundShape)
-        else:
-            self.SetRoundShape()
+        self.SetClientSize((300,240))
         
         self.distList = ['Uniform', 'Gaussian', 'Weibull', 'Beta', 'Drunk', 'Loopseg', 'Repeater', 'DroneAndJump'] 
         self.interpList = ['Linear', 'Sample hold']
@@ -2753,10 +2778,6 @@ class RandomFrame(wx.Frame):
             win = CeciliaLib.getInterface()
             win.Raise()
 
-    def SetRoundShape(self, event=None):
-        w, h = self.GetSizeTuple()
-        self.SetShape(GetRoundShape(300, 233, 1))
-     
     def OnClose(self):
         self.Hide()
 
@@ -2968,12 +2989,9 @@ class WavesFrame(wx.Frame):
     def __init__(self, parent):
         style = ( wx.CLIP_CHILDREN | wx.FRAME_NO_TASKBAR | wx.FRAME_SHAPED | wx.NO_BORDER | wx.FRAME_FLOAT_ON_PARENT )
         wx.Frame.__init__(self, parent, title='', style = style)
+        self.SetBackgroundColour(BACKGROUND_COLOUR)
         self.parent = parent
-        self.SetSize((300,245))
-        if wx.Platform == '__WXGTK__':
-            self.Bind(wx.EVT_WINDOW_CREATE, self.SetRoundShape)
-        else:
-            self.SetRoundShape()
+        self.SetClientSize((300,210))
 
         self.distList = ['Sine', 'Square', 'Sawtooth'] 
   
@@ -3063,10 +3081,6 @@ class WavesFrame(wx.Frame):
         else:
             win = CeciliaLib.getInterface()
             win.Raise()
-
-    def SetRoundShape(self, event=None):
-        w, h = self.GetSizeTuple()
-        self.SetShape(GetRoundShape(300, 205, 1))
 
     def OnClose(self):
         self.Hide()
@@ -3216,12 +3230,9 @@ class ProcessFrame(wx.Frame):
     def __init__(self, parent):
         style = ( wx.CLIP_CHILDREN | wx.FRAME_NO_TASKBAR | wx.FRAME_SHAPED | wx.NO_BORDER | wx.FRAME_FLOAT_ON_PARENT )
         wx.Frame.__init__(self, parent, title='', style = style)
+        self.SetBackgroundColour(BACKGROUND_COLOUR)
         self.parent = parent
-        self.SetSize((300,267))
-        if wx.Platform == '__WXGTK__':
-            self.Bind(wx.EVT_WINDOW_CREATE, self.SetRoundShape)
-        else:
-            self.SetRoundShape()
+        self.SetClientSize((300,240))
 
         self.distList = ['Scatter', 'Jitter', 'Comp/Expand']
         self.interpList = ['Linear', 'Sample hold'] 
@@ -3317,10 +3328,6 @@ class ProcessFrame(wx.Frame):
         else:
             win = CeciliaLib.getInterface()
             win.Raise()
-
-    def SetRoundShape(self, event=None):
-        w, h = self.GetSizeTuple()
-        self.SetShape(GetRoundShape(300, 235, 1))
 
     def OnClose(self):
         self._oldState = None

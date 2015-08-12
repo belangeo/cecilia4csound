@@ -1,8 +1,7 @@
 <CeciliaInterface>
 cgraph enveloppe -label Envelope Shape -rel lin -min 0 -max 1 -gen 23 -col red -func 0 0 .001 1 .1 .7 .7 .6 1 0
 cgraph indexenveloppe -label Index Env Shape -rel log  -min .0001 -max 1 -init .5 -gen 27 -col green -func 0 .6 .1 .051 1 .0001
-
-cslider pit -label Transpose -unit semitones -min -48 -max 48 -init 0  -col blue
+cslider pit -label Transpose -unit semi -min -48 -max 48 -init 0  -col blue
 crange freq -label Frequency range -unit Hz -rel log -min 20 -max 20000 -init 100,3000  -col green
 crange speed -label Speed range -unit Hz -rel log -min 0.01 -max 100 -init 0.1, 50 -col orange
 crange intensity -label Intensity range -unit db -min 30 -max 90 -init 40.0, 70.0 -col royalblue
@@ -13,7 +12,6 @@ cslider mod -label Modulator Freq Mult -rel log -min 0.001 -max 10 -init 1.05 -c
 cslider ind -label Modulation Index -rel log -min 0.001 -max 15 -init 4 -col khaki
 cslider no_of_grains -label Number of grains -rate k -res int -min 1 -max 25 -init 8 -gliss 0 -col blue
 cslider seed -label Random Seed -rate i -min 0 -max 1 -init .51
-
 cpopup freqi -label Freq Noise Source -value rand bexprnd exprand poisson betarand weibull gauss -init weibull -col forestgreen
 cpopup duri -label Time Noise Source -value rand bexprnd exprand poisson betarand weibull gauss -init gauss -col orange
 cpopup inti -label Amp Noise Source -value rand bexprnd exprand poisson betarand weibull gauss -init poisson -col marineblue
@@ -404,6 +402,8 @@ for i in range(1,getUserValue("no_of_grains")):
 
 <CeciliaOpen>
 scoreType=Csound
+totalTime=30.000000
+masterVolume=0.000000
 
 </CeciliaOpen>
 
