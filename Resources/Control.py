@@ -23,7 +23,6 @@ import wx, os, time, math, sys
 from constants import *
 import CeciliaLib
 from Widgets import *
-from subprocess import Popen
 from types import ListType
 from TogglePopup import SamplerPopup, SamplerToggle  
 from Plugins import *
@@ -167,6 +166,12 @@ class CECControl(scrolled.ScrolledPanel):
         self.SetupScrolling(scroll_x = False)
 
         wx.CallAfter(self.updateOutputFormat)
+
+    def listenSoundfile(self):
+        CeciliaLib.listenSoundfile(self.outputFilename)
+
+    def editSoundfile(self):
+        CeciliaLib.editSoundfile(self.outputFilename)
 
     def OnLooseFocus(self, event):
         win = wx.FindWindowAtPointer()
@@ -631,82 +636,6 @@ class CECControl(scrolled.ScrolledPanel):
         formats.append('Custom...')
         
         return formats, selectedNCHNLS
-
-    def loadPlayerEditor(self, app_type):
-        if CeciliaLib.getPlatform() == 'win32':
-            wildcard =  "Executable files (*.exe)|*.exe|"     \
-                        "All files (*.*)|*.*"
-        elif CeciliaLib.getPlatform() == 'darwin':
-            wildcard =  "Application files (*.app)|*.app|"     \
-                        "All files (*.*)|*.*"
-        else:
-            wildcard = "All files (*.*)|*.*"
-        
-        path = ''
-        dlg = wx.FileDialog(self, message="Choose a soundfile %s..." % app_type,
-                                 defaultDir=os.path.expanduser('~'),
-                                 wildcard=wildcard,
-                                 style=wx.OPEN)
-    
-        if dlg.ShowModal() == wx.ID_OK:
-            path = dlg.GetPath()   
-        dlg.Destroy()
-
-        if path:
-            if app_type == 'player':
-                CeciliaLib.setSoundfilePlayerPath(path)
-            elif app_type == 'editor':
-                CeciliaLib.setSoundfileEditorPath(path)
-        
-    def listenSoundfile(self):
-        if CeciliaLib.getSoundfilePlayerPath() == '':
-            CeciliaLib.showErrorDialog("Preferences not set", "Choose a soundfile player first.")
-            self.loadPlayerEditor('player')
-        if os.path.isfile(self.outputFilename):
-            name = ''
-            if CeciliaLib.getPlatform() == 'darwin':
-                name = CeciliaLib.getSoundfilePlayerPath()
-                cmd = 'open -a ' + CeciliaLib.slashifyText(name) + ' ' + CeciliaLib.slashifyText(self.outputFilename)
-                Popen(cmd, shell=True)
-            elif CeciliaLib.getPlatform() == 'win32':
-                app = CeciliaLib.getSoundfilePlayerPath()
-                cmd = 'start /NORMAL ' + CeciliaLib.slashifyText(app) + ' "' + CeciliaLib.slashifyText(self.outputFilename) + '"'
-                try:
-                    Popen(cmd, shell=True)
-                except OSError, OSError2:
-                    print 'Unable to open desired software:\t' + app
-            else:
-                app = CeciliaLib.getSoundfilePlayerPath()
-                cmd = CeciliaLib.slashifyText(app) + ' ' + CeciliaLib.slashifyText(self.outputFilename)
-                try:
-                    Popen(cmd, shell=True)
-                except OSError, OSError2:
-                    print 'Unable to open desired software:\t' + app
-    
-    def editSoundfile(self):
-        if CeciliaLib.getSoundfileEditorPath() == '':
-            CeciliaLib.showErrorDialog("Preferences not set", "Choose a soundfile editor first.")
-            self.loadPlayerEditor('editor')
-        if os.path.isfile(self.outputFilename):
-            name = ''
-            if CeciliaLib.getPlatform() == 'darwin':
-                name = CeciliaLib.getSoundfileEditorPath()
-                cmd = 'open -a ' + CeciliaLib.slashifyText(name) + ' ' + CeciliaLib.slashifyText(self.outputFilename)
-                Popen(cmd, shell=True)
-            elif CeciliaLib.getPlatform() == 'win32':
-                app = CeciliaLib.getSoundfileEditorPath()
-                cmd = 'start /NORMAL ' + CeciliaLib.slashifyText(app) + ' "' + CeciliaLib.slashifyText(self.outputFilename) + '"'
-                try:
-                    Popen(cmd, shell=True)
-                except OSError, OSError2:
-                    print 'Unable to open desired software:\t' + app
-            else:
-                app = CeciliaLib.getSoundfileEditorPath()
-                cmd = CeciliaLib.slashifyText(app) + ' ' + CeciliaLib.slashifyText(self.outputFilename)
-                try:
-                    Popen(cmd, shell=True)
-                except OSError, OSError2:
-                    print 'Unable to open desired software:\t' + app
     
     def getTime(self):
         return self.time
@@ -893,7 +822,10 @@ class Cfilein(wx.Panel):
         line2.Add(self.fileMenu, 0, wx.ALIGN_CENTER | wx.TOP | wx.RIGHT, 1)
         line2.AddSpacer((5,5))
         self.toolbox = ToolBox(self, tools=['play','edit','load','open'],
-                               outFunction=[self.listenSoundfile,self.editSoundfile, self.onLoadFile, self.onShowSampler])
+                               outFunction=[self.listenSoundfile,
+                                                  self.editSoundfile, 
+                                                  self.onLoadFile, 
+                                                  self.onShowSampler])
         line2.Add(self.toolbox, 0, wx.ALIGN_RIGHT | wx.ALIGN_CENTER_VERTICAL | wx.RIGHT, 2)
         
         mainSizer.Add(line2, 1, wx.LEFT, 6)
@@ -906,6 +838,12 @@ class Cfilein(wx.Panel):
         CeciliaLib.getUserInputs()[self.name] = dict()
         CeciliaLib.getUserInputs()[self.name]['type'] = 'cfilein'
         CeciliaLib.getUserInputs()[self.name]['path'] = ''
+
+    def listenSoundfile(self):
+        CeciliaLib.listenSoundfile(self.filePath)
+
+    def editSoundfile(self):
+        CeciliaLib.editSoundfile(self.filePath)
 
     def createSamplerFrame(self):
         self.samplerFrame = CfileinFrame(self, self.name)
@@ -987,85 +925,6 @@ class Cfilein(wx.Panel):
         
         self.fileMenu.setChoice(files)
         self.fileMenu.setLabel(CeciliaLib.ensureNFD(os.path.split(path)[1]))
-
-    def loadPlayerEditor(self, app_type):
-        if CeciliaLib.getPlatform() == 'win32':
-            wildcard =  "Executable files (*.exe)|*.exe|"     \
-                        "All files (*.*)|*.*"
-        elif CeciliaLib.getPlatform() == 'darwin':
-            wildcard =  "Application files (*.app)|*.app|"     \
-                        "All files (*.*)|*.*"
-        else:
-            wildcard = "All files (*.*)|*.*"
-
-        path = ''
-        dlg = wx.FileDialog(self, message="Choose a soundfile %s..." % app_type,
-                                 defaultDir=os.path.expanduser('~'),
-                                 wildcard=wildcard,
-                                 style=wx.OPEN)
-
-        if dlg.ShowModal() == wx.ID_OK:
-            path = dlg.GetPath()   
-        dlg.Destroy()
-
-        if path:
-            if app_type == 'player':
-                CeciliaLib.setSoundfilePlayerPath(path)
-            elif app_type == 'editor':
-                CeciliaLib.setSoundfileEditorPath(path)
-
-    
-    def listenSoundfile(self):
-        if CeciliaLib.getSoundfilePlayerPath() == '':
-            CeciliaLib.showErrorDialog("Preferences not set", "Choose a soundfile player first.")
-            self.loadPlayerEditor('player')
-        if os.path.isfile(self.filePath):
-            name = ''
-            if CeciliaLib.getPlatform() == 'darwin':
-                name = CeciliaLib.getSoundfilePlayerPath()
-                cmd = 'open -a ' + CeciliaLib.slashifyText(name) + ' ' + CeciliaLib.slashifyText(self.filePath)
-                Popen(cmd, shell=True)
-            elif CeciliaLib.getPlatform() == 'win32':
-                app = CeciliaLib.getSoundfilePlayerPath()
-                cmd = 'start /NORMAL ' + ' "' + app + '" "' + self.filePath + '"'
-                try:
-                    Popen(cmd, shell=True)
-                except OSError, OSError2:
-                    print 'Unable to open desired software: ' + app        
-            else:
-                app = CeciliaLib.getSoundfilePlayerPath()
-                cmd = CeciliaLib.slashifyText(app) + ' ' + CeciliaLib.slashifyText(self.filePath)
-                try:
-                    Popen(cmd, shell=True)
-                except OSError, OSError2:
-                    print 'Unable to open desired software:\t' + app
-    
-    def editSoundfile(self):
-        if CeciliaLib.getSoundfileEditorPath() == '':
-            CeciliaLib.showErrorDialog("Preferences not set", "Choose a soundfile editor first.")
-            self.loadPlayerEditor('editor')
-        if os.path.isfile(self.filePath):
-            name = ''
-            if CeciliaLib.getPlatform() == 'darwin':
-                name = CeciliaLib.getSoundfileEditorPath()
-                cmd = 'open -a ' + CeciliaLib.slashifyText(name) + ' ' + CeciliaLib.slashifyText(self.filePath)
-                Popen(cmd, shell=True)
-          
-            elif CeciliaLib.getPlatform() == 'win32':
-                app = CeciliaLib.getSoundfileEditorPath()
-                cmd = 'start /NORMAL ' + ' "' + app + '" "' + self.filePath + '"'
-                try:
-                    Popen(cmd, shell=True)
-                except OSError, OSError2:
-                    print 'Unable to open desired software:\t' + app
-        
-            else:
-                app = CeciliaLib.getSoundfileEditorPath()
-                cmd = CeciliaLib.slashifyText(app) + ' ' + CeciliaLib.slashifyText(self.filePath)
-                try:
-                    Popen(cmd, shell=True)
-                except OSError, OSError2:
-                    print 'Unable to open desired software:\t' + app
                 
     def onOffsetSlider(self, value):
         CeciliaLib.getUserInputs()[self.name]['off%s' % self.name] = value
@@ -1144,7 +1003,10 @@ class CSampler(Cfilein):
         line2.AddSpacer((5,5))
 
         self.toolbox = ToolBox(self, tools=['play','edit','load','open'],
-                               outFunction=[self.listenSoundfile,self.editSoundfile, self.onLoadFile, self.onShowSampler],
+                               outFunction=[self.listenSoundfile,
+                                                  self.editSoundfile, 
+                                                  self.onLoadFile, 
+                                                  self.onShowSampler],
                                openSampler=True)
         self.toolbox.setOpen(False)
         line2.Add(self.toolbox, 0, wx.ALIGN_RIGHT | wx.ALIGN_CENTER_VERTICAL | wx.RIGHT, 2)
@@ -1353,7 +1215,7 @@ class CfileinFrame(wx.Frame):
         self.SetBackgroundColour(BACKGROUND_COLOUR)
         self.parent = parent
         self.name = name
-	self.SetClientSize((385, 143))
+        self.SetClientSize((385, 143))
 
         panel = wx.Panel(self, -1)
         w, h = self.GetSize()

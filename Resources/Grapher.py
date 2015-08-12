@@ -365,7 +365,7 @@ class Grapher(plot.PlotCanvas):
         self.Bind(wx.EVT_CHAR, self.OnKeyDown)
         self.canvas.Bind(wx.EVT_CHAR, self.OnKeyDown)
         self.canvas.Bind(wx.EVT_LEAVE_WINDOW, self.OnLooseFocus)
-        self.canvas.Bind(wx.EVT_ENTER_WINDOW, self.OnGrabFocus)
+        #self.canvas.Bind(wx.EVT_ENTER_WINDOW, self.OnGrabFocus)
 
     def OnLooseFocus(self, event):
         win = wx.FindWindowAtPointer()

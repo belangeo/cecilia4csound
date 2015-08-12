@@ -25,6 +25,7 @@ import Variables as vars
 from UDO import *
 import unicodedata
 from types import IntType
+from subprocess import Popen
 
 ceciliaEditor = None
 csound = None
@@ -2459,6 +2460,82 @@ def dialogSelectCustomNchnls(parent, msg = 'Set the numbers of channels for your
     dlg.Destroy()
     
     return nchnls
+
+def loadPlayerEditor(app_type):
+    if getPlatform() == 'win32':
+        wildcard =  "Executable files (*.exe)|*.exe|"     \
+                    "All files (*.*)|*.*"
+    elif getPlatform() == 'darwin':
+        wildcard =  "Application files (*.app)|*.app|"     \
+                    "All files (*.*)|*.*"
+    else:
+        wildcard = "All files (*.*)|*.*"
+    
+    path = ''
+    dlg = wx.FileDialog(None, message="Choose a soundfile %s..." % app_type,
+                             defaultDir=os.path.expanduser('~'),
+                             wildcard=wildcard,
+                             style=wx.OPEN)
+
+    if dlg.ShowModal() == wx.ID_OK:
+        path = dlg.GetPath()   
+    dlg.Destroy()
+
+    if path:
+        if app_type == 'player':
+            setSoundfilePlayerPath(path)
+        elif app_type == 'editor':
+            setSoundfileEditorPath(path)
+
+def listenSoundfile(filename):
+    if getSoundfilePlayerPath() == '':
+        showErrorDialog("Preferences not set", "Choose a soundfile player first.")
+        loadPlayerEditor('player')
+    if os.path.isfile(filename):
+        name = ''
+        if getPlatform() == 'darwin':
+            name = getSoundfilePlayerPath()
+            cmd = 'open -a ' + slashifyText(name) + ' ' + slashifyText(filename)
+            Popen(cmd, shell=True)
+        elif getPlatform() == 'win32':
+            app = getSoundfilePlayerPath()
+            cmd = '"' + os.path.join(app) + '" "' + slashifyText(filename) + '"'
+            try:
+                Popen(cmd, shell=True)
+            except OSError, OSError2:
+                print 'Unable to open desired software:\t' + app
+        else:
+            app = getSoundfilePlayerPath()
+            cmd = slashifyText(app) + ' ' + slashifyText(filename)
+            try:
+                Popen(cmd, shell=True)
+            except OSError, OSError2:
+                print 'Unable to open desired software:\t' + app
+
+def editSoundfile(filename):
+    if getSoundfileEditorPath() == '':
+        showErrorDialog("Preferences not set", "Choose a soundfile editor first.")
+        loadPlayerEditor('editor')
+    if os.path.isfile(filename):
+        name = ''
+        if getPlatform() == 'darwin':
+            name = getSoundfileEditorPath()
+            cmd = 'open -a ' + slashifyText(name) + ' ' + slashifyText(filename)
+            Popen(cmd, shell=True)
+        elif getPlatform() == 'win32':
+            app = getSoundfileEditorPath()
+            cmd = '"' + os.path.join(app) + '" "' + slashifyText(filename) + '"'
+            try:
+                Popen(cmd, shell=True)
+            except OSError, OSError2:
+                print 'Unable to open desired software:\t' + app
+        else:
+            app = getSoundfileEditorPath()
+            cmd = slashifyText(app) + ' ' + slashifyText(filename)
+            try:
+                Popen(cmd, shell=True)
+            except OSError, OSError2:
+                print 'Unable to open desired software:\t' + app
 
 def resetWidgetVariables():
     setGainSlider(None)

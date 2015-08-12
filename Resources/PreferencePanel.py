@@ -36,7 +36,7 @@ class PreferenceFrame(wx.Frame):
 
         self.font = wx.Font(MENU_FONT, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, face=FONT_FACE)
 
-        self.SetClientSize((350, 350))
+        self.SetClientSize((350, 355))
 
         panel = wx.Panel(self, -1)
         w, h = self.GetSize()

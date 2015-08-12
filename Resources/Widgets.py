@@ -1276,14 +1276,10 @@ class ListEntryPopupFrame(wx.Frame):
     def __init__(self, parent, value):
         style = ( wx.CLIP_CHILDREN | wx.FRAME_NO_TASKBAR | wx.FRAME_SHAPED | wx.NO_BORDER | wx.FRAME_FLOAT_ON_PARENT )
         wx.Frame.__init__(self, parent, title='', style = style)
+        self.SetBackgroundColour(BACKGROUND_COLOUR)
         self.parent = parent
         self.value = value
-        self.SetSize((320,120))
-
-        if wx.Platform == '__WXGTK__':
-            self.Bind(wx.EVT_WINDOW_CREATE, self.SetRoundShape)
-        else:
-            self.SetRoundShape()
+        self.SetClientSize((320, 90))
 
         self.font = wx.Font(ENTRYUNIT_FONT, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, face=FONT_FACE)
 
@@ -1309,10 +1305,6 @@ class ListEntryPopupFrame(wx.Frame):
 
         panel.SetSizerAndFit(box)
 
-    def SetRoundShape(self, event=None):
-        w, h = self.GetSizeTuple()
-        self.SetShape(GetRoundShape(320, 90, 1))
-
     def OnApply(self, event=None):
         self.parent.setValue(self.entry.GetValue())
         self.Destroy()
@@ -1324,14 +1316,10 @@ class TextPopupFrame(wx.Frame):
     def __init__(self, parent, text, pos=wx.DefaultPosition):
         style = ( wx.CLIP_CHILDREN | wx.FRAME_NO_TASKBAR | wx.FRAME_SHAPED | wx.NO_BORDER | wx.FRAME_FLOAT_ON_PARENT )
         wx.Frame.__init__(self, parent, pos=pos, title='', style = style)
+        self.SetBackgroundColour(BACKGROUND_COLOUR)
         self.parent = parent
         self.text = text
-        self.SetSize((300,150))
-
-        if wx.Platform == '__WXGTK__':
-            self.Bind(wx.EVT_WINDOW_CREATE, self.SetRoundShape)
-        else:
-            self.SetRoundShape()
+        self.SetClientSize((300,130))
 
         self.font = wx.Font(MENU_FONT, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, face=FONT_FACE)
 
@@ -1358,10 +1346,6 @@ class TextPopupFrame(wx.Frame):
         panel.SetSizerAndFit(box)
         self.Show()
 
-    def SetRoundShape(self, event=None):
-        w, h = self.GetSizeTuple()
-        self.SetShape(GetRoundShape(300, 150, 1))
-
     def OnClose(self):
         self.Destroy()
 
@@ -1369,15 +1353,12 @@ class CmdLinePreviewPopupFrame(wx.Frame):
     def __init__(self, parent, value, applyFunction, cancelFunction):
         style = ( wx.CLIP_CHILDREN | wx.FRAME_NO_TASKBAR | wx.FRAME_SHAPED | wx.NO_BORDER | wx.FRAME_FLOAT_ON_PARENT )
         wx.Frame.__init__(self, parent, title='', style = style)
+        self.SetBackgroundColour(BACKGROUND_COLOUR)
         self.parent = parent
         self.value = value
         self.applyFunction = applyFunction
         self.cancelFunction = cancelFunction
-
-        if wx.Platform == '__WXGTK__':
-            self.Bind(wx.EVT_WINDOW_CREATE, self.SetRoundShape)
-        else:
-            self.SetRoundShape()
+        self.SetClientSize((400, 90))
 
         self.font = wx.Font(ENTRYUNIT_FONT, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, face=FONT_FACE)
 
@@ -1406,10 +1387,6 @@ class CmdLinePreviewPopupFrame(wx.Frame):
         self.CenterOnScreen()
         self.Show()
 
-    def SetRoundShape(self, event=None):
-        w, h = self.GetSizeTuple()
-        self.SetShape(GetRoundShape(400, 90, 1))
-
     def OnApply(self, event=None):
         self.applyFunction(self.entry.GetValue())
         self.Destroy()
@@ -1423,18 +1400,14 @@ class AboutPopupFrame(wx.Frame):
         style = ( wx.CLIP_CHILDREN | wx.FRAME_NO_TASKBAR | wx.FRAME_SHAPED | wx.NO_BORDER | wx.FRAME_FLOAT_ON_PARENT )
         wx.Frame.__init__(self, parent, title='', pos=(-1,y_pos), style = style)
         self.parent = parent
+        self.SetBackgroundColour(BACKGROUND_COLOUR)
+        self.SetClientSize((600,420))
 
         if CeciliaLib.getPlatform() in ['win32', 'linux2']:
-            self.SetSize((600,450))
             self.font = wx.Font(8, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, face=FONT_FACE)
         else:
             self.font = wx.Font(13, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, face=FONT_FACE)
                 
-        if wx.Platform == '__WXGTK__':
-            self.Bind(wx.EVT_WINDOW_CREATE, self.SetRoundShape)
-        else:
-            self.SetRoundShape()
-
         panel = wx.Panel(self, -1)
         w, h = self.GetSize()
         panel.SetBackgroundColour(BACKGROUND_COLOUR)
@@ -1465,13 +1438,13 @@ class AboutPopupFrame(wx.Frame):
 
         self.rtc.Newline()
         self.rtc.BeginTextColour((0, 0, 0))
-        self.rtc.WriteText("Jean Piché ")
+        self.rtc.WriteText(CeciliaLib.ensureNFD("Jean Piché "))
         self.rtc.BeginTextColour((255, 255, 255))
-        self.rtc.WriteText("conceived, designed, and programmed Cecilia in 1995 to replace racks full of analog audio gear in a musique concrète studio.")
+        self.rtc.WriteText(CeciliaLib.ensureNFD("conceived, designed, and programmed Cecilia in 1995 to replace racks full of analog audio gear in a musique concrète studio."))
 
         self.rtc.Newline()
         self.rtc.BeginTextColour((0, 0, 0))
-        self.rtc.WriteText("Olivier Bélanger ")
+        self.rtc.WriteText(CeciliaLib.ensureNFD("Olivier Bélanger "))
         self.rtc.BeginTextColour((255, 255, 255))
         self.rtc.WriteText("does all the programming and contributed heavily on design issues. He recoded Cecilia in Python from the ground up in 2008. Olivier is now the keeper of the program.")
 
@@ -1491,8 +1464,8 @@ class AboutPopupFrame(wx.Frame):
     
         self.rtc.Newline()
         self.rtc.BeginStyle(urlStyle)
-        self.rtc.BeginURL("http://code.google.com/p/cecilia4/")
-        self.rtc.WriteText("The Cecilia Web Site on GoogleCode")
+        self.rtc.BeginURL("https://github.com/belangeo/cecilia4csound")
+        self.rtc.WriteText("The Cecilia4Csound Web Site on Github")
         self.rtc.EndURL();
         self.rtc.EndStyle();
         
@@ -1519,11 +1492,7 @@ class AboutPopupFrame(wx.Frame):
         self.Show()
 
     def OnURL(self, evt):
-        webbrowser.open_new_tab("http://code.google.com/p/cecilia4/")
-        
-    def SetRoundShape(self, event=None):
-        w, h = self.GetSizeTuple()
-        self.SetShape(GetRoundShape(600, 410, 1))
+        webbrowser.open_new_tab("https://github.com/belangeo/cecilia4csound")
 
     def OnClose(self):
         self.Destroy()
