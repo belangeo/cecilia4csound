@@ -1,6 +1,6 @@
 <CeciliaInterface>
 cgraph env -label Envelope -unit x -rel lin -min 0 -max 1 -col red -func 0 0 .001 1 .999 1 1 0
-cslider fund -label Base frequency -min 10. -max 1000. -init 100. -gliss 0 -rel log -unit Hz -col green
+cslider fund -label Base frequency -min 10. -max 1000. -init 100. -gliss 0.025 -rel log -unit Hz -col green
 cslider pspread -label Partiels spread -min 0.0001 -max 4. -init .001 -rel log -unit x -col green
 cslider randa -label Partiels Rand Amp -min .0001 -max 1. -init 0.001 -rel log -unit x -col orange
 cslider randf -label Partiels Rand Speed -unit Hz -min .01 -max 100. -init 10. -rel log  -col orange

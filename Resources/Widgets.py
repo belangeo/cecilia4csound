@@ -372,10 +372,12 @@ class MainLabel(wx.Panel):
         return self.label
 
 class Label(MainLabel):
-    def __init__(self, parent, label, size=(100,20), font=None, colour=None, outFunction=None):
+    def __init__(self, parent, label, size=(100,20), font=None, colour=None, outFunction=None, dclickFunction=None):
         MainLabel.__init__(self, parent=parent, label=label, size=size, font=font, colour=colour, outFunction=outFunction)
+        self.dclickFunction = dclickFunction
         self.Bind(wx.EVT_LEFT_DOWN, self.OnLeftDown)
         self.Bind(wx.EVT_RIGHT_DOWN, self.OnRightDown)
+        self.Bind(wx.EVT_LEFT_DCLICK, self.OnDoubleClick)
         
     def OnLeftDown(self, event):
         xsize = self.GetSize()[0]
@@ -403,6 +405,16 @@ class Label(MainLabel):
             else:
                 self.outFunction(self.label, alt=True, side=side)    
 
+    def OnDoubleClick(self, evt):
+        xsize = self.GetSize()[0]
+        xpos = evt.GetPosition()[0]
+        if xpos < (xsize/2):
+            side = 'left'
+        else:
+            side = 'right'
+        if self.dclickFunction != None:
+            self.dclickFunction(side)
+ 
 class OutputLabel(MainLabel):
     def __init__(self, parent, label, size=(100,20), font=None, colour=None, outFunction=None):
         MainLabel.__init__(self, parent=parent, label=label, size=size, font=font, colour=colour, outFunction=outFunction)
@@ -1305,6 +1317,84 @@ class ListEntryPopupFrame(wx.Frame):
 
     def OnApply(self, event=None):
         self.parent.setValue(self.entry.GetValue())
+        self.Destroy()
+
+    def OnCancel(self, event=None):
+        self.Destroy()
+
+class OSCPopupFrame(wx.Frame):
+    def __init__(self, parent, slider, side='left'):
+        style = ( wx.CLIP_CHILDREN | wx.FRAME_NO_TASKBAR | wx.FRAME_SHAPED | wx.NO_BORDER | wx.FRAME_FLOAT_ON_PARENT )
+        wx.Frame.__init__(self, parent, title='', style = style)
+        self.SetBackgroundColour(BACKGROUND_COLOUR)
+        self.parent = parent
+        self.slider = slider
+        self.side = side
+        self.value = init = outinit = ""
+        self.SetClientSize((320, 140))
+
+        self.font = wx.Font(LIST_ENTRY_FONT, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, face=FONT_FACE)
+
+        panel = wx.Panel(self, -1)
+        w, h = self.GetSize()
+        panel.SetBackgroundColour(BACKGROUND_COLOUR)
+        box = wx.BoxSizer(wx.VERTICAL)
+
+        title = FrameLabel(panel, "Open Sound Control Input (port:address)", size=(w-2, 24))
+        box.Add(title, 0, wx.ALL, 1)
+
+        if self.slider.openSndCtrl != None:
+            osc = self.slider.openSndCtrl
+            if self.slider.widget_type == "slider":
+                init = "%d:%s" % (osc[0], osc[1])
+            elif self.slider.widget_type == "range":
+                if side == 'left' and osc[0] != ():
+                    init = "%d:%s" % (osc[0][0], osc[0][1])
+                elif side == 'right' and osc[1] != ():
+                    init = "%d:%s" % (osc[1][0], osc[1][1])
+
+        if self.slider.OSCOut != None:
+            osc = self.slider.OSCOut
+            if self.slider.widget_type == "slider":
+                outinit = "%s:%d:%s" % (osc[0], osc[1], osc[2])
+            elif self.slider.widget_type == "range":
+                if side == 'left' and osc[0] != ():
+                    outinit = "%s:%d:%s" % (osc[0][0], osc[0][1], osc[0][2])
+                elif side == 'right' and osc[1] != ():
+                    outinit = "%s:%d:%s" % (osc[1][0], osc[1][1], osc[1][2])
+
+        self.entry = wx.TextCtrl(panel, -1, init, size=(300,18), style=wx.TE_PROCESS_ENTER|wx.NO_BORDER)
+        self.entry.SetFocus()
+        self.entry.SetBackgroundColour(GRAPHER_BACK_COLOUR)
+        self.entry.SetFont(self.font)       
+        self.entry.Bind(wx.EVT_TEXT_ENTER, self.OnApply)
+        box.Add(self.entry, 0, wx.ALL, 10)
+
+        outtext = wx.StaticText(panel, -1, label="OSC Output, optional (host:port:address)")
+        outtext.SetForegroundColour("#FFFFFF")
+        box.Add(outtext, 0, wx.LEFT, 10)
+        
+        self.entry2 = wx.TextCtrl(panel, -1, outinit, size=(300,18), style=wx.TE_PROCESS_ENTER|wx.NO_BORDER)
+        self.entry2.SetBackgroundColour(GRAPHER_BACK_COLOUR)
+        self.entry2.SetFont(self.font)       
+        box.Add(self.entry2, 0, wx.LEFT|wx.RIGHT|wx.BOTTOM, 10)
+        
+        applyBox = wx.BoxSizer(wx.HORIZONTAL)
+        apply = ApplyToolBox(panel, tools=['Cancel', 'Apply'], outFunction=[self.OnCancel, self.OnApply])
+        applyBox.Add(apply, 0, wx.LEFT, 210)
+        box.Add(applyBox)
+        box.AddSpacer(10)
+        panel.SetSizerAndFit(box)
+
+    def OnApply(self, event=None):
+        self.value = self.entry.GetValue()
+        outvalue = self.entry2.GetValue()
+        if self.slider.widget_type == "slider":
+            self.slider.setOSCInput(self.value)
+            self.slider.setOSCOutput(outvalue)
+        elif self.slider.widget_type == "range":
+            self.slider.setOSCInput(self.value, self.side)
+            self.slider.setOSCOutput(outvalue, self.side)
         self.Destroy()
 
     def OnCancel(self, event=None):

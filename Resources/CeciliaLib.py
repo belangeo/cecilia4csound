@@ -1891,7 +1891,8 @@ def parseUserScore(scoText, forCecilia=True):
      
     return scoText
 
-def createGlobalVariables(): 
+def createGlobalVariables():
+    oschandles = []
     header = ''
     if  getInterface():
         header += 'gicomb0 ftgen 0,0,64,-2,-1009,-1103,-1123,-1281,-1289,-1307,-1361,-1409,-1429,-1543,-1583,-1601,-1613,-1709,-1801,-1949,-2003,-2111,-2203,-2341,-2411,-2591,-2609,-2749,-2801,-2903,-3001,-3109,-3203,-3301,-3407,-3539,0.82,0.81,0.8,0.79,0.78,0.77,0.76,0.75,0.74,0.73,0.72,0.71,0.7,0.69,0.68,0.67,0.66,0.65,0.64,0.63,0.62,0.61,0.6,0.59,0.58,0.57,0.56,0.55,0.54,0.53,0.52,0.51\n'
@@ -1908,6 +1909,25 @@ def createGlobalVariables():
             header += 'gk%s init %f\n' % (slider.getCName(), slider.getValue())
     if getUserSliders():
         for slider in getUserSliders():
+	    if slider.getWithOSC():
+		if slider.widget_type == "slider":
+		    port = slider.getOpenSndCtrl()[0]
+		    if port not in oschandles:
+			oschandles.append(port)
+			header += 'giOSC%dhandle OSCinit %d\n' % (port, port)
+		elif slider.widget_type == "range":
+		    hndl = slider.getOpenSndCtrl()[0]
+		    if hndl:
+			port = hndl[0]
+			if port not in oschandles:
+			    oschandles.append(port)
+			    header += 'giOSC%dhandle OSCinit %d\n' % (port, port)
+		    hndl = slider.getOpenSndCtrl()[1]
+		    if hndl:
+			port = hndl[0]
+			if port not in oschandles:
+			    oschandles.append(port)
+			    header += 'giOSC%dhandle OSCinit %d\n' % (port, port)
             if slider.getRate() == 'k':
                 if type(slider.getValue()) in [ListType, TupleType]:
                     header += 'gk%smin init %f\n' % (slider.getName(), slider.getValue()[0])
@@ -2338,7 +2358,6 @@ def start(flagsLine):
 
     try:
         if getPlatform() == 'win32':
-            #file = codecs.open(csdPath, 'wt', 'cp1252')
             file = open(csdPath, 'wt')
         else:    
             file = codecs.open(csdPath, 'wt', 'utf-8')
@@ -2535,10 +2554,10 @@ def resetWidgetVariables():
     setPresetPanel(None)
    
 def parseInterfaceText(text, udolines=[]):
-    # Parse each line separatly to create the interface widgets List
+    # Parse each line separately to create the interface widgets List
     setModuleDescription('')
     text = removeExtraSpace(text)
-    widgetsList=[]
+    widgetsList = []
     tmplines = text.splitlines()
     if udolines != []:
         tmplines.extend(udolines)

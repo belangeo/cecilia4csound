@@ -27,11 +27,6 @@ from constants import *
 from subprocess import Popen, PIPE
 from pyo import pa_get_output_devices, pa_get_default_output, pa_get_input_devices, pa_get_default_input, pm_get_input_devices, pm_get_default_input, sndinfo
 
-# TODO: This is no more correct...
-if '/Cecilia.app' in os.getcwd():
-    csnd6.csoundSetGlobalEnv("OPCODEDIR", 
-            os.getcwd() + "/../Frameworks/CsoundLib.framework/Versions/5.2/Resources/Opcodes")
-
 class Callback(threading.Thread):
     def __init__(self, time, function, arg=None):
         threading.Thread.__init__(self)
@@ -172,7 +167,7 @@ class Csound():
             if slider.getPlay():
                 self.channelValues[slider.getCName()] = -999999999
         for slider in CeciliaLib.getUserSliders():
-            if slider.getPlay() or slider.getMidiCtl() != None:
+            if slider.getPlay() or slider.getMidiCtl() != None or slider.getWithOSC():
                 self.activeSliders.append(slider)
                 self.channelValues[slider.getName()] = -999999999
         for plug in plugins:

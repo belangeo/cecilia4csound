@@ -50,7 +50,7 @@ class PlayRecButtons(wx.Panel):
     def __init__(self, parent, cecslider, id=wx.ID_ANY, pos=(0,0), size=(40,20)):
         wx.Panel.__init__(self, parent=parent, id=wx.ID_ANY, pos=pos, size=size)
         self.SetMaxSize(self.GetSize())
-        self.SetBackgroundStyle(wx.BG_STYLE_CUSTOM)  
+        self.SetBackgroundStyle(wx.BG_STYLE_CUSTOM)
         self.SetBackgroundColour(BACKGROUND_COLOUR)
         self.cecslider = cecslider
         self.Bind(wx.EVT_PAINT, self.OnPaint)
@@ -83,23 +83,23 @@ class PlayRecButtons(wx.Panel):
             self.playOverWait = True
         if not wx.Rect(21, 2, 38, 17).Contains(pos):
             self.recOverWait = True
-                        
+
     def MouseDown(self, evt):
         pos = evt.GetPosition()
         if wx.Rect(2, 2, 17, 17).Contains(pos):
             self.play = (self.play + 1) % 3
-            if self.play == 0: 
+            if self.play == 0:
                 self.playColour = SLIDER_PLAY_COLOUR_HOT
-            elif self.play == 1: 
+            elif self.play == 1:
                 self.playColour = SLIDER_PLAY_COLOUR_PRESSED
             else:
                 self.playColour = SLIDER_PLAY_COLOUR_NO_BIND
             self.setOverWait(0)
         elif wx.Rect(21, 2, 38, 17).Contains(pos):
-            if self.rec: 
+            if self.rec:
                 self.rec = False
                 self.recColour = SLIDER_REC_COLOUR_HOT
-            else: 
+            else:
                 self.rec = True
                 self.recColour = SLIDER_REC_COLOUR_PRESSED
             self.setOverWait(1)
@@ -148,18 +148,18 @@ class PlayRecButtons(wx.Panel):
             # Draw triangle
             if self.playOver: playColour = SLIDER_PLAY_COLOUR_OVER
             else: playColour = self.playColour
-            gc.SetPen(wx.Pen(playColour, width=1, style=wx.SOLID))  
+            gc.SetPen(wx.Pen(playColour, width=1, style=wx.SOLID))
             gc.SetBrush(wx.Brush(playColour, wx.SOLID))
             tri = [(14,h/2), (9,4), (9,h-4), (14,h/2)]
             gc.DrawLines(tri)
-    
-            dc.SetPen(wx.Pen('#333333', width=1, style=wx.SOLID))  
+
+            dc.SetPen(wx.Pen('#333333', width=1, style=wx.SOLID))
             dc.DrawLine(w/2,4,w/2,h-4)
-            
+
             # Draw circle
             if self.recOver: recColour = SLIDER_REC_COLOUR_OVER
             else: recColour = self.recColour
-            gc.SetPen(wx.Pen(recColour, width=1, style=wx.SOLID))  
+            gc.SetPen(wx.Pen(recColour, width=1, style=wx.SOLID))
             gc.SetBrush(wx.Brush(recColour, wx.SOLID))
             gc.DrawEllipse(w/4+w/2-4, h/2-4, 8, 8)
 
@@ -167,9 +167,9 @@ class PlayRecButtons(wx.Panel):
 
     def setPlay(self, x):
         self.play = x
-        if self.play == 0: 
+        if self.play == 0:
             self.playColour = SLIDER_PLAY_COLOUR_HOT
-        elif self.play == 1: 
+        elif self.play == 1:
             self.playColour = SLIDER_PLAY_COLOUR_PRESSED
         else:
             self.playColour = SLIDER_PLAY_COLOUR_NO_BIND
@@ -190,10 +190,10 @@ class PlayRecButtons(wx.Panel):
             self.recColour = SLIDER_REC_COLOUR_PRESSED
 
 class Slider(wx.Panel):
-    def __init__(self, parent, minvalue, maxvalue, init=None, pos=(0,0), size=(200,20), 
+    def __init__(self, parent, minvalue, maxvalue, init=None, pos=(0,0), size=(200,20),
                  valtype='float', log=False, function=None, rate='k', cecslider=None):
         wx.Panel.__init__(self, parent=parent, id=wx.ID_ANY, pos=pos, size=size, style=wx.NO_BORDER)
-        self.SetBackgroundStyle(wx.BG_STYLE_CUSTOM)  
+        self.SetBackgroundStyle(wx.BG_STYLE_CUSTOM)
         self.SetBackgroundColour(BACKGROUND_COLOUR)
         self.SetMinSize(self.GetSize())
         self.rate = rate
@@ -250,34 +250,34 @@ class Slider(wx.Panel):
         self.knobcolor = col2
         self.createBackgroundBitmap()
         self.createKnobBitmap()
-                
-    def SetRange(self, minvalue, maxvalue):   
+
+    def SetRange(self, minvalue, maxvalue):
         self.minvalue = minvalue
         self.maxvalue = maxvalue
 
     def scale(self):
         inter = tFromValue(self.pos, self.knobHalfSize, self.GetSize()[self.orient]-self.knobHalfSize)
         return interpFloat(inter, self.minvalue, self.maxvalue)
-    
+
     def MouseDown(self, evt):
         size = self.GetSize()
-        self.pos = clamp(evt.GetPosition()[self.orient], self.knobHalfSize, 
+        self.pos = clamp(evt.GetPosition()[self.orient], self.knobHalfSize,
                           size[self.orient]-self.knobHalfSize)
         self.value = self.scale()
         self.CaptureMouse()
-        self.Refresh()
+        self.Refresh() # Should not be called inside a wx.CallAfter() ?
         if self.cecslider and self.rate == 'k' and not self.cecslider.getUp():
             if self.cecslider.getTable() or self.cecslider.getWithMidi() != None:
                 CeciliaLib.getCsound().setChannel("%s_down" % self.cecslider.getName(), 1)
-            
+
     def MouseMotion(self, evt):
         size = self.GetSize()
         if evt.Dragging() and evt.LeftIsDown() and self.HasCapture():
-            self.pos = clamp(evt.GetPosition()[self.orient], self.knobHalfSize, 
+            self.pos = clamp(evt.GetPosition()[self.orient], self.knobHalfSize,
                              size[self.orient]-self.knobHalfSize)
             self.value = self.scale()
-            self.Refresh()
-                   
+            wx.CallAfter(self.Refresh)
+
     def MouseUp(self, evt):
         if self.HasCapture():
             self.ReleaseMouse()
@@ -286,14 +286,14 @@ class Slider(wx.Panel):
                 CeciliaLib.getCsound().setChannel("%s_down" % self.cecslider.getName(), 0)
         if self.cecslider.getUp():
             CeciliaLib.getCsound().setChannel("%s_value" % self.cecslider.getName(), self.GetValue())
-            
+
     def OnResize(self, evt):
         self.createSliderBitmap()
         self.createKnobMaskBitmap()
         self.createKnobBitmap()
         self.createBackgroundBitmap()
-        self.clampPos()    
-        self.Refresh()
+        self.clampPos()
+        wx.CallAfter(self.Refresh)
 
     def clampPos(self):
         size = self.GetSize()
@@ -301,7 +301,7 @@ class Slider(wx.Panel):
         self.pos = clamp(self.pos, self.knobHalfSize, size[self.orient]-self.knobHalfSize)
 
 class HSlider(Slider):
-    def __init__(self, parent, minvalue, maxvalue, init=None, pos=(0,0), size=(200,15), 
+    def __init__(self, parent, minvalue, maxvalue, init=None, pos=(0,0), size=(200,15),
                  valtype='float', log=False, function=None, rate='k', cecslider=None):
         Slider.__init__(self, parent, minvalue, maxvalue, init, pos, size, valtype, log, function, rate, cecslider)
         self.SetMinSize((50, 15))
@@ -314,11 +314,12 @@ class HSlider(Slider):
         self.createBackgroundBitmap()
         self.createKnobBitmap()
         self.value = 0
-        if init != None: self.SetValue(init)
-        else: self.SetValue(minvalue)
+        if init != None: self._setValue(init)
+        else: self._setValue(minvalue)
         self.clampPos()
         self.midictl = ''
         self.midiLearn = False
+        self.openSndCtrl = ''
         self.font = wx.Font(LABEL_FONT, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_ITALIC, wx.FONTWEIGHT_LIGHT, face=FONT_FACE)
 
         self.mario = 0
@@ -330,14 +331,14 @@ class HSlider(Slider):
                         wx.Bitmap(os.path.join(ICON_PATH, 'Mario5.png'), wx.BITMAP_TYPE_PNG),
                         wx.Bitmap(os.path.join(ICON_PATH, 'Mario6.png'), wx.BITMAP_TYPE_PNG)
                        ]
-                        
+
     def setSliderHeight(self, height):
         self.sliderHeight = height
         self.createSliderBitmap()
         self.createKnobMaskBitmap()
         self.createBackgroundBitmap()
         self.createKnobBitmap()
-        self.Refresh()
+        wx.CallAfter(self.Refresh)
 
     def createBackgroundBitmap(self):
         w,h = self.GetSize()
@@ -366,7 +367,7 @@ class HSlider(Slider):
         dc.SetBrush(wx.Brush(BACKGROUND_COLOUR, wx.SOLID))
         dc.Clear()
 
-        rec = wx.Rect(0, 0, self.knobSize, h)  
+        rec = wx.Rect(0, 0, self.knobSize, h)
         dc.GradientFillLinear(rec, GRADIENT_DARK_COLOUR, self.knobcolor, wx.RIGHT)
         dc.DrawBitmap(self.knobMask, rec[0], rec[1], True)
         dc.SelectObject(wx.NullBitmap)
@@ -374,12 +375,16 @@ class HSlider(Slider):
     def setMidiCtl(self, str):
         self.midictl = str
         self.midiLearn = False
-        
+
     def inMidiLearnMode(self):
         self.midiLearn = True
-        self.Refresh()
-        
-    def SetValue(self, value):
+        wx.CallAfter(self.Refresh)
+
+    def setOpenSndCtrl(self, str):
+        self.openSndCtrl = str
+        #self.OnResize(None)
+
+    def _setValue(self, value):
         self.lastvalue = self.value
         value = clamp(value, self.minvalue, self.maxvalue)
         if self.log:
@@ -390,7 +395,12 @@ class HSlider(Slider):
             self.value = interpFloat(t, self.minvalue, self.maxvalue)
         if self.myType == IntType:
             self.value = int(self.value)
-        self.OnResize(None)
+        self.clampPos()
+
+    def SetValue(self, value):
+        self._setValue(value)
+        #self.OnResize(None)
+        wx.CallAfter(self.Refresh)
 
     def GetValue(self):
         if self.log:
@@ -420,22 +430,25 @@ class HSlider(Slider):
             bitmario = self.marios[(self.mario % 3) + marioff]
             dc.DrawBitmap(bitmario, self.pos-8, 0)
             self.mario += 1
-            
-        if not self.midiLearn:    
-            dc.DrawLabel(self.midictl, wx.Rect(pos, 0, self.knobSize, h), wx.ALIGN_CENTER)
-        else:
+
+        if self.midiLearn:
             dc.SetFont(wx.Font(LABEL_FONT-1, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_ITALIC, wx.FONTWEIGHT_LIGHT, face=FONT_FACE))
             dc.DrawLabel("Move a MIDI controller...", wx.Rect(5, 0, 50, h), wx.ALIGN_CENTER_VERTICAL)
-                
+        elif self.openSndCtrl:
+            dc.DrawLabel(self.openSndCtrl, wx.Rect(5, 0, w, h), wx.ALIGN_CENTER_VERTICAL)
+        else:
+            dc.DrawLabel(self.midictl, wx.Rect(pos, 0, self.knobSize, h), wx.ALIGN_CENTER)
+
         # Send value
         if self.outFunction:
             self.outFunction(self.GetValue())
 
 class CECSlider:
-    def __init__(self, parent, minvalue, maxvalue, init=None, 
-                 label='slider', unit='', valtype='float', orientation='horizontal', 
-                 log=False, name='', tableNum=None, rate='k', gliss=.025, midictl=None, 
+    def __init__(self, parent, minvalue, maxvalue, init=None,
+                 label='slider', unit='', valtype='float', orientation='horizontal',
+                 log=False, name='', tableNum=None, rate='k', gliss=.025, midictl=None,
                  tooltip='', up=0, function=None):
+        self.widget_type = "slider"
         self.parent = parent
         self.valtype = valtype
         self.name = name
@@ -446,17 +459,19 @@ class CECSlider:
         self.automationLength = None
         self.automationData = []
         self.path = None
+        self.openSndCtrl = None
+        self.OSCOut = None
         self.midictl = None
         self.midichan = 1
         self.minvalue = minvalue
         self.maxvalue = maxvalue
         self.log = log
         self.up = up
-        
+
         pos = (0,0)
         if orientation.startswith('h'):
             size = (200,16)
-            self.slider = HSlider(parent, minvalue, maxvalue, init, pos, size, 
+            self.slider = HSlider(parent, minvalue, maxvalue, init, pos, size,
                                   valtype, log, self.writeToEntry, rate, self)
             self.slider.setSliderHeight(11)
         else:
@@ -465,15 +480,15 @@ class CECSlider:
         self.setMidiCtl(midictl)
         if tooltip != '':
             self.slider.SetToolTip(wx.ToolTip(tooltip))
-    
+
         if self.up == 1:
             self.slider.setFillColour('#BBBBBB', '#999999')
-            
-        self.label = Label(parent, label, size=(100,16), outFunction=self.onLabelClick)
+
+        self.label = Label(parent, label, size=(100,16), outFunction=self.onLabelClick, dclickFunction=self.onLabelDClick)
         self.label.SetToolTip(CECTooltip(TT_SLIDER_LABEL))
         self.entryUnit = EntryUnit(parent, self.slider.GetValue(), unit, size=(120,16),
                                    valtype=valtype, outFunction=self.entryReturn)
-        self.entryUnit.SetToolTip(CECTooltip(TT_SLIDER_DISPLAY))                           
+        self.entryUnit.SetToolTip(CECTooltip(TT_SLIDER_DISPLAY))
         self.buttons = PlayRecButtons(parent, self, size=(40,16))
         self.buttons.SetToolTip(CECTooltip(TT_SLIDER_PLAY + '\n\n' + TT_SLIDER_RECORD))
 
@@ -485,18 +500,29 @@ class CECSlider:
     def onLabelClick(self, label, shift=False, alt=False, side='left'):
         # alt is now the right click
         if CeciliaLib.getGrapher() and self.rate != 'i':
-            if alt and shift:    
+            if alt and shift:
                 self.setMidiCtl(None)
             elif shift:
                 CeciliaLib.getGrapher().setShowLineSolo(label)
                 CeciliaLib.getGrapher().toolbar.menu.setLabel(label, True)
-            elif alt:    
+            elif alt:
                 CeciliaLib.getGrapher().toolbar.menu.setLabel(label, True)
                 CeciliaLib.getCsound().midiLearn(self)
                 self.slider.inMidiLearnMode()
             else:
                 CeciliaLib.getGrapher().resetShow()
                 CeciliaLib.getGrapher().toolbar.menu.setLabel(label, True)
+
+    def onLabelDClick(self, side='left'):
+        f = OSCPopupFrame(CeciliaLib.getInterface(), self)
+        f.CenterOnParent()
+        f.Show()
+
+    def setOSCInput(self, value):
+        self.setOpenSndCtrl(value)
+
+    def setOSCOutput(self, value):
+        self.setOSCOut(value)
 
     def setAutomationLength(self, x):
         self.automationLength = x
@@ -512,7 +538,7 @@ class CECSlider:
         self.slider.SetValue(value)
         self.sendValue(value)
 
-    def writeToEntry(self, value):                    
+    def writeToEntry(self, value):
         if self.slider.myType == FloatType:
             if value >= 10000:
                 self.entryUnit.setValue(float('%5.2f' % value))
@@ -526,7 +552,7 @@ class CECSlider:
                 self.entryUnit.setValue(float('%5.2f' % value))
         else:
             self.entryUnit.setValue(value)
-        if not self.getUp():    
+        if not self.getUp():
             self.sendValue(value)
 
     def getUp(self):
@@ -566,18 +592,25 @@ class CECSlider:
         return self.buttons.getRec()
 
     def getState(self):
-        return [self.getValue(), self.getPlay(), self.getMidiCtl(), self.getMidiChannel()]
+        return [self.getValue(), self.getPlay(), self.getMidiCtl(), self.getMidiChannel(), self.getOpenSndCtrl(), self.getOSCOut()]
 
     def setState(self, values):
+        self.resetOSC()
         self.setValue(values[0])
         self.setPlay(values[1])
         self.setMidiCtl(values[2])
         if len(values) >= 4:
             self.setMidiChannel(values[3])
-    
+        if len(values) >= 5:
+            if values[4] != None:
+                self.setOpenSndCtrl("%d:%s" % (values[4][0], values[4][1]))
+        if len(values) >= 6:
+            if values[5] != None:
+                self.setOSCOut("%s:%d:%s" % (values[5][0], values[5][1], values[5][2]))
+
     def setTable(self,table):
         self.tableNum = table
-        
+
     def getTable(self):
         return self.tableNum
 
@@ -589,11 +622,13 @@ class CECSlider:
             self.midictl = None
             self.midichan = 1
             self.slider.setMidiCtl('')
-        else:    
+        else:
             self.midictl = int(ctl)
             self.slider.setMidiCtl(str(self.midictl))
-        self.slider.Refresh()
-        
+            self.openSndCtrl = None
+            self.slider.setOpenSndCtrl('')
+        wx.CallAfter(self.slider.Refresh)
+
     def getMidiCtl(self):
         return self.midictl
 
@@ -602,13 +637,56 @@ class CECSlider:
 
     def getMidiChannel(self):
         return self.midichan
-        
+
     def getWithMidi(self):
         if self.getMidiCtl() != None and CeciliaLib.getUseMidi():
             return True
         else:
             return False
-                
+
+    def resetOSC(self):
+        self.setOpenSndCtrl(None)
+        self.OSCOut = None
+
+    def setOpenSndCtrl(self, value):
+        if value != None:
+            if value == "":
+                self.openSndCtrl = None
+                self.slider.setOpenSndCtrl("")
+            else:
+                sep = value.split(":")
+                port = int(sep[0].strip())
+                address = str(sep[1].strip())
+                self.openSndCtrl = (port, address)
+                self.slider.setOpenSndCtrl("%d:%s" % (port, address))
+                self.setMidiCtl(None)
+        else:
+            self.openSndCtrl = None
+            self.slider.setOpenSndCtrl("")
+
+    def setOSCOut(self, value):
+        if value != None:
+            if value == "":
+                self.OSCOut = None
+            else:
+                sep = value.split(":")
+                host = str(sep[0].strip())
+                port = int(sep[1].strip())
+                address = str(sep[2].strip())
+                self.OSCOut = (host, port, address)
+
+    def getOpenSndCtrl(self):
+        return self.openSndCtrl
+
+    def getOSCOut(self):
+        return self.OSCOut
+
+    def getWithOSC(self):
+        if self.openSndCtrl != None:
+            return True
+        else:
+            return False
+
     def setAutomationData(self, data):
         # convert values on scaling
         temp = []
@@ -636,24 +714,24 @@ class CECSlider:
             if log:
                 torec = math.log10(val/minval) / math.log10(maxOnMin)
             else:
-                torec = (val - minval) / maxMinusMin 
+                torec = (val - minval) / maxMinusMin
             temp.append([pos, torec])
             oldval = val
             oldpos = i
-                    
+
         self.automationData = temp
-        
+
     def getAutomationData(self):
         return [[x[0],x[1]] for x in self.automationData]
-                
+
     def getCeciliaText(self):
         orchtext = ''
         scotext = ''
-        if self.rate == 'k':    
+        if self.rate == 'k':
             orchtext += 'instr Cecilia_%s\n' % self.name
             orchtext += 'ksliderValue init %f\n' % self.getValue()
             orchtext += 'kgetValue init %f\n' % self.getValue()
-            
+
             if self.getWithMidi() and not self.getPlay():
                 orchtext += 'kmidiValue init %f\n' % self.getValue()
                 if not self.getLog():
@@ -671,7 +749,23 @@ class CECSlider:
                         orchtext += 'initc7 %d, %d, %f\n' % (self.getMidiChannel(), self.getMidiCtl(), init)
                     orchtext += 'kmiditemp ctrl7 %d, %d, 0, 1\n' % (self.getMidiChannel(), self.getMidiCtl())
                     orchtext += 'kmidiValue pow 10, kmiditemp * %f + %f\n' % ((math.log10(self.getMaxValue()) - math.log10(self.getMinValue())), math.log10(self.getMinValue()))
-            
+            elif self.getWithOSC() and not self.getPlay():
+                orchtext += 'koscValue init %f\n' % self.getValue()
+                if self.getLog():
+                    init = math.log10(self.getValue() / self.getMinValue()) / math.log10(self.getMaxValue() / self.getMinValue())
+                else:
+                    init = (self.getValue() - self.getMinValue()) / (self.getMaxValue() - self.getMinValue())
+                orchtext += 'kosctemp init %f\n' % init
+                if self.getOSCOut() is not None:
+                    orchtext += 'OSCsend 1, "%s", %d, "%s", "f", kosctemp\n' % self.getOSCOut()
+                orchtext += 'nextmsg:\n'
+                orchtext += 'kk OSClisten giOSC%dhandle, "%s", "f", kosctemp\n' % self.openSndCtrl
+                orchtext += 'if (kk == 0) goto done\nkgoto nextmsg\ndone:\n'
+                if self.getLog():
+                    orchtext += 'koscValue pow 10, kosctemp * %f + %f\n' % ((math.log10(self.getMaxValue()) - math.log10(self.getMinValue())), math.log10(self.getMinValue()))
+                else:
+                    orchtext += 'koscValue = kosctemp * %f + %f\n' % ((self.getMaxValue() - self.getMinValue()), self.getMinValue())
+
             orchtext += 'kgetValue chnget "%s_value"\n' % self.name
 
             if self.getWithMidi() and not self.getPlay():
@@ -683,7 +777,17 @@ class CECSlider:
                 orchtext += 'ksliderValue = kmidiValue\n'
                 orchtext += 'endif\n\n'
                 orchtext += 'gk%s port ksliderValue, %f, %f\n' % (self.name, self.gliss, self.getValue())
-                orchtext += 'chnset gk%s, "%s"\n' % (self.name, self.name)                
+                orchtext += 'chnset gk%s, "%s"\n' % (self.name, self.name)
+            elif self.getWithOSC() and not self.getPlay():
+                orchtext += 'ksliderDown init 0\n'
+                orchtext += 'ksliderDown chnget "%s_down"\n' % self.name
+                orchtext += 'if ksliderDown == 1 then\n'
+                orchtext += 'ksliderValue = kgetValue\n'
+                orchtext += 'else\n'
+                orchtext += 'ksliderValue = koscValue\n'
+                orchtext += 'endif\n\n'
+                orchtext += 'gk%s port ksliderValue, %f, %f\n' % (self.name, self.gliss, self.getValue())
+                orchtext += 'chnset gk%s, "%s"\n' % (self.name, self.name)
             elif self.getPlay():
                 orchtext += 'kreadValue init %f\n' % self.getValue()
                 orchtext += 'ksliderDown init 0\n'
@@ -697,27 +801,28 @@ class CECSlider:
                 orchtext += 'endif\n\n'
                 orchtext += 'chnset gk%s, "%s"\n' % (self.name, self.name)
             else:
-                orchtext += 'gk%s port kgetValue, %f, %f\n' % (self.name, self.gliss, self.getValue())   
-    
+                orchtext += 'gk%s port kgetValue, %f, %f\n' % (self.name, self.gliss, self.getValue())
+
             if self.getRec():
                 self.path = os.path.join(AUTOMATION_SAVE_PATH, '%s.auto' % self.name)
                 self.path = CeciliaLib.convertWindowsPath(self.path)
-                orchtext += 'dumpk gk%s, "%s", 8, 4/kr\n\n' % (self.name, self.path)    
+                orchtext += 'dumpk gk%s, "%s", 8, 4/kr\n\n' % (self.name, self.path)
             orchtext += 'endin\n\n'
-            
+
             scotext += 'i "Cecilia_%s" 0 %f\n' % (self.name, CeciliaLib.getTotalTime())
 
         return orchtext, scotext
 
     def update(self, val):
-        if not self.slider.HasCapture() and self.getPlay() == 1 or self.getWithMidi():
-            self.setValue(val)
+        if not self.slider.HasCapture():
+            if self.getPlay() == 1 or self.getWithMidi() or self.getWithOSC():
+                self.setValue(val)
 
 class RangeSlider(wx.Panel):
-    def __init__(self, parent, minvalue, maxvalue, init=None, pos=(0,0), size=(200,20), 
+    def __init__(self, parent, minvalue, maxvalue, init=None, pos=(0,0), size=(200,20),
                  valtype='float', log=False, function=None, rate='k', cecslider=None):
         wx.Panel.__init__(self, parent=parent, id=wx.ID_ANY, pos=pos, size=size, style=wx.NO_BORDER)
-        self.SetBackgroundStyle(wx.BG_STYLE_CUSTOM)  
+        self.SetBackgroundStyle(wx.BG_STYLE_CUSTOM)
         self.SetBackgroundColour(BACKGROUND_COLOUR)
         self.SetMinSize(self.GetSize())
         self.sliderHeight = 14
@@ -740,10 +845,10 @@ class RangeSlider(wx.Panel):
                 if len(init) == 1:
                     self.SetValue([init[0],init[0]])
                 else:
-                    self.SetValue([init[0],init[1]])    
-            else: 
+                    self.SetValue([init[0],init[1]])
+            else:
                 self.SetValue([minvalue,maxvalue])
-        else: 
+        else:
             self.SetValue([minvalue,maxvalue])
         self.Bind(wx.EVT_LEFT_DOWN, self.MouseDown)
         self.Bind(wx.EVT_RIGHT_DOWN, self.MouseRightDown)
@@ -774,7 +879,7 @@ class RangeSlider(wx.Panel):
         self.handlecolor = wx.Colour(self.knobcolor[0]*0.35, self.knobcolor[1]*0.35, self.knobcolor[2]*0.35)
         self.createBackgroundBitmap()
 
-    def SetRange(self, minvalue, maxvalue):   
+    def SetRange(self, minvalue, maxvalue):
         self.minvalue = minvalue
         self.maxvalue = maxvalue
 
@@ -793,28 +898,31 @@ class RangeSlider(wx.Panel):
             self.lastpos = xpos
             self.length = self.handlePos[1] - self.handlePos[0]
             self.action = 'drag'
-            
             self.handles = self.scale(self.handlePos)
             self.CaptureMouse()
-            self.Refresh()
+            wx.CallAfter(self.Refresh)
             if self.cecslider and self.rate == 'k' and not self.cecslider.getUp():
                 if self.cecslider.getTable() or self.cecslider.getWithMidi() != None:
                     CeciliaLib.getCsound().setChannel("%s_down" % self.cecslider.getName(), 1)
-        
+
     def MouseDown(self, evt):
         size = self.GetSize()
         xpos = evt.GetPosition()[self.orient]
         self.middle = (self.handlePos[1] - self.handlePos[0]) / 2 + self.handlePos[0]
-        if xpos < self.middle:
+        midrec = wx.Rect(self.middle-7, 4, 15, size[1]-9)
+        if midrec.Contains(evt.GetPosition()):
+            self.lastpos = xpos
+            self.length = self.handlePos[1] - self.handlePos[0]
+            self.action = 'drag'
+        elif xpos < self.middle:
             self.handlePos[0] = clamp(xpos, 1, self.handlePos[1])
             self.action = 'left'
         elif xpos > self.middle:
             self.handlePos[1] = clamp(xpos, self.handlePos[0], size[self.orient]-1)
-            self.action = 'right'    
+            self.action = 'right'
         self.handles = self.scale(self.handlePos)
-        
         self.CaptureMouse()
-        self.Refresh()
+        wx.CallAfter(self.Refresh)
         if self.cecslider and self.rate == 'k' and not self.cecslider.getUp():
             if self.cecslider.getTable() or self.cecslider.getWithMidi() != None:
                 CeciliaLib.getCsound().setChannel("%s_down" % self.cecslider.getName(), 1)
@@ -826,14 +934,14 @@ class RangeSlider(wx.Panel):
             if self.action == 'drag':
                 off = xpos - self.lastpos
                 self.lastpos = xpos
-                self.handlePos[0] = clamp(self.handlePos[0] + off, 1, size[self.orient]-self.length) 
+                self.handlePos[0] = clamp(self.handlePos[0] + off, 1, size[self.orient]-self.length)
                 self.handlePos[1] = clamp(self.handlePos[1] + off, self.length, size[self.orient]-1)
             if self.action == 'left':
                 self.handlePos[0] = clamp(xpos, 1, self.handlePos[1]-1)
             elif self.action == 'right':
                 self.handlePos[1] = clamp(xpos, self.handlePos[0]+1, size[self.orient]-1)
             self.handles = self.scale(self.handlePos)
-            self.Refresh()
+            wx.CallAfter(self.Refresh)
 
     def MouseUp(self, evt):
         if self.HasCapture():
@@ -848,8 +956,8 @@ class RangeSlider(wx.Panel):
     def OnResize(self, evt):
         self.createSliderBitmap()
         self.createBackgroundBitmap()
-        self.clampHandlePos()    
-        self.Refresh()
+        self.clampHandlePos()
+        wx.CallAfter(self.Refresh)
 
     def clampHandlePos(self):
         size = self.GetSize()
@@ -861,7 +969,7 @@ class RangeSlider(wx.Panel):
         self.handlePos = tmp
 
 class HRangeSlider(RangeSlider):
-    def __init__(self, parent, minvalue, maxvalue, init=None, pos=(0,0), size=(200,15), 
+    def __init__(self, parent, minvalue, maxvalue, init=None, pos=(0,0), size=(200,15),
                  valtype='float', log=False, function=None, rate='k', cecslider=None):
         RangeSlider.__init__(self, parent, minvalue, maxvalue, init, pos, size, valtype, log, function, rate, cecslider)
         self.SetMinSize((50, 15))
@@ -870,6 +978,8 @@ class HRangeSlider(RangeSlider):
         self.clampHandlePos()
         self.midictl1 = ''
         self.midictl2 = ''
+        self.openSndCtrl1 = ''
+        self.openSndCtrl2 = ''
         self.midiLearn = False
         self.font = wx.Font(LABEL_FONT, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_ITALIC, wx.FONTWEIGHT_LIGHT, face=FONT_FACE)
 
@@ -877,7 +987,7 @@ class HRangeSlider(RangeSlider):
         self.sliderHeight = height
         self.createSliderBitmap()
         self.createBackgroundBitmap()
-        self.Refresh()
+        wx.CallAfter(self.Refresh)
 
     def createBackgroundBitmap(self):
         w,h = self.GetSize()
@@ -905,7 +1015,28 @@ class HRangeSlider(RangeSlider):
 
     def inMidiLearnMode(self):
         self.midiLearn = True
-        self.Refresh()
+        wx.CallAfter(self.Refresh)
+
+    def setOpenSndCtrl(self, str, side):
+        if side == 'left':
+            self.openSndCtrl1 = str
+        else:
+            self.openSndCtrl2 = str
+        self.OnResize(None)
+
+    def SetOneValue(self, value, which):
+        self.lasthandles = self.handles
+        value = clamp(value, self.minvalue, self.maxvalue)
+        if self.log:
+            t = toLog(value, self.minvalue, self.maxvalue)
+            value = interpFloat(t, self.minvalue, self.maxvalue)
+        else:
+            t = tFromValue(value, self.minvalue, self.maxvalue)
+            value = interpFloat(t, self.minvalue, self.maxvalue)
+        if self.myType == IntType:
+            value = int(value)
+        self.handles[which] = value
+        self.OnResize(None)
 
     def SetValue(self, values):
         self.lasthandles = self.handles
@@ -921,8 +1052,8 @@ class HRangeSlider(RangeSlider):
             if self.myType == IntType:
                 value = int(value)
             tmp.append(value)
-        self.handles = tmp        
-        self.OnResize(None)
+        self.handles = tmp
+        self.OnResize(None) # TODO: CPU expensive...
 
     def GetValue(self):
         tmp = []
@@ -935,7 +1066,7 @@ class HRangeSlider(RangeSlider):
             if self.myType == IntType:
                 val = int(val)
             tmp.append(val)
-        tmp = [min(tmp), max(tmp)]    
+        tmp = [min(tmp), max(tmp)]
         return tmp
 
     def OnPaint(self, evt):
@@ -949,26 +1080,39 @@ class HRangeSlider(RangeSlider):
         # Draw handles
         dc.SetPen(wx.Pen(self.handlecolor, width=1, style=wx.SOLID))
         dc.SetBrush(wx.Brush(self.handlecolor))
-        
-        rec = wx.Rect(self.handlePos[0], 3, self.handlePos[1]-self.handlePos[0], h-7)  
-        dc.DrawRoundedRectangleRect(rec, 4)   
 
-        if not self.midiLearn:    
-            dc.DrawLabel(self.midictl1, wx.Rect(10, 0, 30, h), wx.ALIGN_CENTER_VERTICAL)
-            dc.DrawLabel(self.midictl2, wx.Rect(w-20, 0, 20, h), wx.ALIGN_CENTER_VERTICAL)
-        else:
-            dc.SetFont(wx.Font(LABEL_FONT-1, wwx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_ITALIC, wx.FONTWEIGHT_LIGHT, face=FONT_FACE))
+        rec = wx.Rect(self.handlePos[0], 3, self.handlePos[1]-self.handlePos[0], h-7)
+        dc.DrawRoundedRectangleRect(rec, 4)
+        dc.SetPen(wx.Pen(self.fillcolor, width=1, style=wx.SOLID))
+        dc.SetBrush(wx.Brush(self.fillcolor))
+        mid = (self.handlePos[1]-self.handlePos[0]) / 2 + self.handlePos[0]
+        rec = wx.Rect(mid-4, 4, 8, h-9)
+        dc.DrawRoundedRectangleRect(rec, 3)
+
+        if self.midiLearn:
+            dc.SetFont(wx.Font(LABEL_FONT-1, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_ITALIC, wx.FONTWEIGHT_LIGHT, face=FONT_FACE))
             dc.DrawLabel("Move 2 MIDI controllers...", wx.Rect(5, 0, 50, h), wx.ALIGN_CENTER_VERTICAL)
+        elif self.openSndCtrl1 or self.openSndCtrl2:
+            if self.openSndCtrl1:
+                dc.DrawLabel(self.openSndCtrl1, wx.Rect(5, 0, w, h), wx.ALIGN_CENTER_VERTICAL)
+            if self.openSndCtrl2:
+                textwidth = dc.GetTextExtent(self.openSndCtrl2)[0] + 5
+                dc.DrawLabel(self.openSndCtrl2, wx.Rect(w-textwidth, 0, textwidth, h), wx.ALIGN_CENTER_VERTICAL)
+        else:
+            textwidth = dc.GetTextExtent(self.midictl2)[0] + 5
+            dc.DrawLabel(self.midictl1, wx.Rect(5, 0, 30, h), wx.ALIGN_CENTER_VERTICAL)
+            dc.DrawLabel(self.midictl2, wx.Rect(w-textwidth, 0, textwidth, h), wx.ALIGN_CENTER_VERTICAL)
 
         # Send value
         if self.outFunction:
             self.outFunction(self.GetValue())
 
 class CECRange:
-    def __init__(self, parent, minvalue, maxvalue, init=None, 
-                 label='slider', unit='', valtype='float', orientation='horizontal', 
-                 log=False, name='', tableNum=None, rate='k', gliss=.025, midictl=None, 
+    def __init__(self, parent, minvalue, maxvalue, init=None,
+                 label='slider', unit='', valtype='float', orientation='horizontal',
+                 log=False, name='', tableNum=None, rate='k', gliss=.025, midictl=None,
                  tooltip='', up=0, function=None):
+        self.widget_type = "range"
         self.parent = parent
         self.valtype = valtype
         self.name = name
@@ -985,11 +1129,13 @@ class CECRange:
         self.up = up
         self.midictl = None
         self.midichan = [1,1]
+        self.openSndCtrl = None
+        self.OSCOut = None
 
         pos = (0,0)
         if orientation.startswith('h'):
             size = (200,16)
-            self.slider = HRangeSlider(parent, minvalue, maxvalue, init, pos, size, 
+            self.slider = HRangeSlider(parent, minvalue, maxvalue, init, pos, size,
                                   valtype, log, self.writeToEntry, rate, self)
             self.slider.setSliderHeight(11)
         else:
@@ -1002,11 +1148,11 @@ class CECRange:
         if self.up == 1:
             self.slider.setFillColour('#BBBBBB', '#999999')
 
-        self.label = Label(parent, label, size=(100,16), outFunction=self.onLabelClick)
+        self.label = Label(parent, label, size=(100,16), outFunction=self.onLabelClick, dclickFunction=self.onLabelDClick)
         self.label.SetToolTip(CECTooltip(TT_RANGE_LABEL))
         self.entryUnit = RangeEntryUnit(parent, self.slider.GetValue(), unit, size=(120,16),
                                    valtype=valtype, outFunction=self.entryReturn)
-        self.entryUnit.SetToolTip(CECTooltip(TT_SLIDER_DISPLAY))                           
+        self.entryUnit.SetToolTip(CECTooltip(TT_SLIDER_DISPLAY))
         self.buttons = PlayRecButtons(parent, self, size=(40,16))
         self.buttons.SetToolTip(CECTooltip(TT_SLIDER_PLAY + '\n\n' + TT_SLIDER_RECORD))
 
@@ -1021,20 +1167,31 @@ class CECRange:
         if side == 'left':
             label = label + ' min'
         else:
-            label = label + ' max'    
+            label = label + ' max'
         if CeciliaLib.getGrapher() and self.rate != 'i':
-            if rightclick and shift:    
+            if rightclick and shift:
                 self.setMidiCtl(None)
             elif shift:
                 CeciliaLib.getGrapher().setShowLineSolo(label)
                 CeciliaLib.getGrapher().toolbar.menu.setLabel(label, True)
-            elif rightclick:    
+            elif rightclick:
                 CeciliaLib.getGrapher().toolbar.menu.setLabel(label, True)
                 CeciliaLib.getCsound().midiLearn(self, True)
                 self.slider.inMidiLearnMode()
             else:
                 CeciliaLib.getGrapher().resetShow()
                 CeciliaLib.getGrapher().toolbar.menu.setLabel(label, True)
+
+    def onLabelDClick(self, side='left'):
+        f = OSCPopupFrame(CeciliaLib.getInterface(), self, side=side)
+        f.CenterOnParent()
+        f.Show()
+
+    def setOSCInput(self, value, side):
+        self.setOpenSndCtrl(value, side)
+
+    def setOSCOutput(self, value, side):
+        self.setOSCOut(value, side)
 
     def setAutomationLength(self, x):
         self.automationLength = x
@@ -1044,7 +1201,7 @@ class CECRange:
 
     def sendValue(self, value):
         if self.getPlay() in [0,1] or self.getRec() == 1 and self.rate == 'k':
-            for val in value: 
+            for val in value:
                 CeciliaLib.getCsound().setChannel("%s_value_min" % self.getName(), value[0])
                 CeciliaLib.getCsound().setChannel("%s_value_max" % self.getName(), value[1])
 
@@ -1052,7 +1209,7 @@ class CECRange:
         self.slider.SetValue(value)
         self.sendValue(value)
 
-    def writeToEntry(self, values):  
+    def writeToEntry(self, values):
         tmp = []
         if self.slider.myType == FloatType:
             for value in values:
@@ -1065,18 +1222,18 @@ class CECRange:
                 elif value >= 10:
                     val = float('%5.3f' % value)
                 elif value >= -100:
-                    val = float('%5.3f' % value)                    
+                    val = float('%5.3f' % value)
                 elif value >= -1000:
                     val = float('%5.2f' % value)
                 elif value >= -10000:
                     val = float('%5.1f' % value)
                 else:
                     val = float('%5.2f' % value)
-                tmp.append(val)    
+                tmp.append(val)
         else:
             tmp = [i for i in values]
-        self.entryUnit.setValue(tmp)    
-        if not self.getUp():    
+        self.entryUnit.setValue(tmp)
+        if not self.getUp():
             self.sendValue(tmp)
 
     def getUp(self):
@@ -1116,14 +1273,31 @@ class CECRange:
         return self.buttons.getRec()
 
     def getState(self):
-        return [self.getValue(), self.getPlay(), self.getMidiCtl(), self.getMidiChannel()]
+        return [self.getValue(), self.getPlay(), self.getMidiCtl(), self.getMidiChannel(), self.getOpenSndCtrl(), self.getOSCOut()]
 
     def setState(self, values):
+        self.resetOSC()
         self.setValue(values[0])
         self.setPlay(values[1])
         self.setMidiCtl(values[2])
         if len(values) >= 4:
             self.setMidiChannel(values[3])
+        if len(values) >= 5:
+            if values[4] != None:
+                for i, tup in enumerate(values[4]):
+                    if tup != ():
+                        if i == 0:
+                            self.setOpenSndCtrl("%d:%s" % (tup[0], tup[1]), 'left')
+                        else:
+                            self.setOpenSndCtrl("%d:%s" % (tup[0], tup[1]), 'right')
+        if len(values) >= 6:
+            if values[5] != None:
+                for i, tup in enumerate(values[5]):
+                    if tup != ():
+                        if i == 0:
+                            self.setOSCOut("%s:%d:%s" % (tup[0], tup[1], tup[2]), 'left')
+                        else:
+                            self.setOSCOut("%s:%d:%s" % (tup[0], tup[1], tup[2]), 'right')
 
     def setTable(self,table):
         self.tableNum = table
@@ -1139,22 +1313,99 @@ class CECRange:
             self.midictl = None
             self.midichan = [1,1]
             self.slider.setMidiCtl('', '')
-        else:    
+        else:
             self.midictl = ctls
             self.slider.setMidiCtl(str(self.midictl[0]), str(self.midictl[1]))
-        self.slider.Refresh()
+            self.openSndCtrl = None
+            self.slider.setOpenSndCtrl('', "left")
+            self.slider.setOpenSndCtrl('', "right")
+        wx.CallAfter(self.slider.Refresh)
 
     def getMidiCtl(self):
         return self.midictl
 
     def setMidiChannel(self, chan):
         self.midichan = chan
-        
+
     def getMidiChannel(self):
         return self.midichan
-            
+
     def getWithMidi(self):
         if self.getMidiCtl() != None and CeciliaLib.getUseMidi():
+            return True
+        else:
+            return False
+
+    def resetOSC(self):
+        self.setOpenSndCtrl(None)
+        self.OSCOut = None
+
+    def setOpenSndCtrl(self, value, side='left'):
+        if value != None:
+            if value == "":
+                self.slider.setOpenSndCtrl("", side)
+                if self.openSndCtrl != None:
+                    if side == 'left':
+                        self.openSndCtrl = ((), self.openSndCtrl[1])
+                    else:
+                        self.openSndCtrl = (self.openSndCtrl[0], ())
+                    if self.openSndCtrl == ((), ()):
+                        self.openSndCtrl = None
+            else:
+                self.setMidiCtl(None)
+                sep = value.split(":")
+                port = int(sep[0].strip())
+                address = str(sep[1].strip())
+                if self.openSndCtrl == None:
+                    if side == 'left':
+                        self.openSndCtrl = ((port, address), ())
+                    else:
+                        self.openSndCtrl = ((), (port, address))
+                else:
+                    if side == 'left':
+                        self.openSndCtrl = ((port, address), self.openSndCtrl[1])
+                    else:
+                        self.openSndCtrl = (self.openSndCtrl[0], (port, address))
+                self.slider.setOpenSndCtrl("%d:%s" % (port, address), side)
+        else:
+            self.openSndCtrl = None
+            self.slider.setOpenSndCtrl("", 'left')
+            self.slider.setOpenSndCtrl("", 'right')
+
+    def setOSCOut(self, value, side='left'):
+        if value != None:
+            if value == "":
+                if self.OSCOut != None:
+                    if side == 'left':
+                        self.OSCOut = ((), self.OSCOut[1])
+                    else:
+                        self.OSCOut = (self.OSCOut[0], ())
+                    if self.OSCOut == ((), ()):
+                        self.OSCOut = None
+            else:
+                sep = value.split(":")
+                host = str(sep[0].strip())
+                port = int(sep[1].strip())
+                address = str(sep[2].strip())
+                if self.OSCOut == None:
+                    if side == 'left':
+                        self.OSCOut = ((host, port, address), ())
+                    else:
+                        self.OSCOut = ((), (host, port, address))
+                else:
+                    if side == 'left':
+                        self.OSCOut = ((host, port, address), self.OSCOut[1])
+                    else:
+                        self.OSCOut = (self.OSCOut[0], (host, port, address))
+
+    def getOpenSndCtrl(self):
+        return self.openSndCtrl
+
+    def getOSCOut(self):
+        return self.OSCOut
+
+    def getWithOSC(self):
+        if self.openSndCtrl != None:
             return True
         else:
             return False
@@ -1186,23 +1437,23 @@ class CECRange:
             if log:
                 torec = math.log10(val/minval) / math.log10(maxOnMin)
             else:
-                torec = (val - minval) / maxMinusMin 
+                torec = (val - minval) / maxMinusMin
             temp.append([pos, torec])
             oldval = val
             oldpos = i
 
         if len(self.automationData) < 2:
             self.automationData.append(temp)
-        else:    
+        else:
             self.automationData[which] = temp
-            
+
     def getAutomationData(self, which=0):
         return [[x[0],x[1]] for x in self.automationData[which]]
 
     def getCeciliaText(self):
         orchtext = ''
         scotext = ''
-        if self.rate == 'k':    
+        if self.rate == 'k':
             orchtext += 'instr Cecilia_%s\n' % self.name
             orchtext += 'ksliderValuemin init %f\n' % self.getValue()[0]
             orchtext += 'ksliderValuemax init %f\n' % self.getValue()[1]
@@ -1240,6 +1491,41 @@ class CECRange:
                     orchtext += 'kmiditempmax ctrl7 %d, %d, 0, 1\n' % (self.getMidiChannel()[1], self.getMidiCtl()[1])
                     orchtext += 'kmidiValuemin pow 10, kmiditempmin * %f + %f\n' % ((math.log10(self.getMaxValue()) - math.log10(self.getMinValue())), math.log10(self.getMinValue()))
                     orchtext += 'kmidiValuemax pow 10, kmiditempmax * %f + %f\n' % ((math.log10(self.getMaxValue()) - math.log10(self.getMinValue())), math.log10(self.getMinValue()))
+            elif self.getWithOSC() and not self.getPlay():
+                if self.openSndCtrl[0]:
+                    orchtext += 'koscValuemin init %f\n' % self.getValue()[0]
+                    if self.getLog():
+                        init = math.log10(self.getValue()[0] / self.getMinValue()) / math.log10(self.getMaxValue() / self.getMinValue())
+                    else:
+                        init = (self.getValue()[0] - self.getMinValue()) / (self.getMaxValue() - self.getMinValue())
+                    orchtext += 'kosctempmin init %f\n' % init
+                    if self.getOSCOut() is not None:
+                        if self.getOSCOut()[0]:
+                            orchtext += 'OSCsend 1, "%s", %d, "%s", "f", kosctempmin\n' % self.getOSCOut()[0]
+                    orchtext += 'nextmsg0:\n'
+                    orchtext += 'kk OSClisten giOSC%dhandle, "%s", "f", kosctempmin\n' % self.openSndCtrl[0]
+                    orchtext += 'if (kk == 0) goto done0\nkgoto nextmsg0\ndone0:\n'
+                    if self.getLog():
+                        orchtext += 'koscValuemin pow 10, kosctempmin * %f + %f\n' % ((math.log10(self.getMaxValue()) - math.log10(self.getMinValue())), math.log10(self.getMinValue()))
+                    else:
+                        orchtext += 'koscValuemin = kosctempmin * %f + %f\n' % ((self.getMaxValue() - self.getMinValue()), self.getMinValue())
+                if self.openSndCtrl[1]:
+                    orchtext += 'koscValuemax init %f\n' % self.getValue()[1]
+                    if self.getLog():
+                        init = math.log10(self.getValue()[1] / self.getMinValue()) / math.log10(self.getMaxValue() / self.getMinValue())
+                    else:
+                        init = (self.getValue()[1] - self.getMinValue()) / (self.getMaxValue() - self.getMinValue())
+                    orchtext += 'kosctempmax init %f\n' % init
+                    if self.getOSCOut() is not None:
+                        if self.getOSCOut()[1]:
+                            orchtext += 'OSCsend 1, "%s", %d, "%s", "f", kosctempmax\n' % self.getOSCOut()[1]
+                    orchtext += 'nextmsg1:\n'
+                    orchtext += 'kk OSClisten giOSC%dhandle, "%s", "f", kosctempmax\n' % self.openSndCtrl[1]
+                    orchtext += 'if (kk == 0) goto done1\nkgoto nextmsg1\ndone1:\n'
+                    if self.getLog():
+                        orchtext += 'koscValuemax pow 10, kosctempmax * %f + %f\n' % ((math.log10(self.getMaxValue()) - math.log10(self.getMinValue())), math.log10(self.getMinValue()))
+                    else:
+                        orchtext += 'koscValuemax = kosctempmax * %f + %f\n' % ((self.getMaxValue() - self.getMinValue()), self.getMinValue())
 
             orchtext += 'kgetValuemin chnget "%s_value_min"\n' % self.name
             orchtext += 'kgetValuemax chnget "%s_value_max"\n' % self.name
@@ -1256,8 +1542,28 @@ class CECRange:
                 orchtext += 'endif\n\n'
                 orchtext += 'gk%smin port ksliderValuemin, %f, %f\n' % (self.name, self.gliss, self.getValue()[0])
                 orchtext += 'gk%smax port ksliderValuemax, %f, %f\n' % (self.name, self.gliss, self.getValue()[1])
-                orchtext += 'chnset gk%smin, "%s_min"\n' % (self.name, self.name)                
-                orchtext += 'chnset gk%smax, "%s_max"\n' % (self.name, self.name)                
+                orchtext += 'chnset gk%smin, "%s_min"\n' % (self.name, self.name)
+                orchtext += 'chnset gk%smax, "%s_max"\n' % (self.name, self.name)
+            elif self.getWithOSC() and not self.getPlay():
+                orchtext += 'ksliderDown init 0\n'
+                orchtext += 'ksliderDown chnget "%s_down"\n' % self.name
+                orchtext += 'if ksliderDown == 1 then\n'
+                orchtext += 'ksliderValuemin = kgetValuemin\n'
+                orchtext += 'ksliderValuemax = kgetValuemax\n'
+                orchtext += 'else\n'
+                if self.openSndCtrl[0]:
+                    orchtext += 'ksliderValuemin = koscValuemin\n'
+                else:
+                    orchtext += 'ksliderValuemin = kgetValuemin\n'
+                if self.openSndCtrl[1]:
+                    orchtext += 'ksliderValuemax = koscValuemax\n'
+                else:
+                    orchtext += 'ksliderValuemax = kgetValuemax\n'
+                orchtext += 'endif\n\n'
+                orchtext += 'gk%smin port ksliderValuemin, %f, %f\n' % (self.name, self.gliss, self.getValue()[0])
+                orchtext += 'gk%smax port ksliderValuemax, %f, %f\n' % (self.name, self.gliss, self.getValue()[1])
+                orchtext += 'chnset gk%smin, "%s_min"\n' % (self.name, self.name)
+                orchtext += 'chnset gk%smax, "%s_max"\n' % (self.name, self.name)
             elif self.getPlay():
                 orchtext += 'kreadValuemin init %f\n' % self.getValue()[0]
                 orchtext += 'kreadValuemax init %f\n' % self.getValue()[1]
@@ -1276,17 +1582,17 @@ class CECRange:
                 orchtext += 'chnset gk%smin, "%s_min"\n' % (self.name, self.name)
                 orchtext += 'chnset gk%smax, "%s_max"\n' % (self.name, self.name)
             else:
-                orchtext += 'gk%smin port kgetValuemin, %f, %f\n' % (self.name, self.gliss, self.getValue()[0])   
-                orchtext += 'gk%smax port kgetValuemax, %f, %f\n' % (self.name, self.gliss, self.getValue()[1])   
+                orchtext += 'gk%smin port kgetValuemin, %f, %f\n' % (self.name, self.gliss, self.getValue()[0])
+                orchtext += 'gk%smax port kgetValuemax, %f, %f\n' % (self.name, self.gliss, self.getValue()[1])
 
             if self.getRec():
                 self.pathmin = os.path.join(AUTOMATION_SAVE_PATH, '%smin.auto' % self.name)
                 self.pathmin = CeciliaLib.convertWindowsPath(self.pathmin)
-                orchtext += 'dumpk gk%smin, "%s", 8, 4/kr\n\n' % (self.name, self.pathmin)    
+                orchtext += 'dumpk gk%smin, "%s", 8, 4/kr\n\n' % (self.name, self.pathmin)
                 self.pathmax = os.path.join(AUTOMATION_SAVE_PATH, '%smax.auto' % self.name)
                 self.pathmax = CeciliaLib.convertWindowsPath(self.pathmax)
-                orchtext += 'dumpk gk%smax, "%s", 8, 4/kr\n\n' % (self.name, self.pathmax)  
-                self.path = [self.pathmin, self.pathmax]  
+                orchtext += 'dumpk gk%smax, "%s", 8, 4/kr\n\n' % (self.name, self.pathmax)
+                self.path = [self.pathmin, self.pathmax]
             orchtext += 'endin\n\n'
 
             scotext += 'i "Cecilia_%s" 0 %f\n' % (self.name, CeciliaLib.getTotalTime())
@@ -1294,9 +1600,10 @@ class CECRange:
         return orchtext, scotext
 
     def update(self, val):
-        if not self.slider.HasCapture() and self.getPlay() == 1 or self.getWithMidi():
-            self.setValue(val)
-        
+        if not self.slider.HasCapture():
+            if self.getPlay() == 1 or self.getWithMidi() or self.getWithOSC():
+                self.setValue(val)
+
 def buildHorizontalSlidersBox(parent, list):
     mainBox = wx.BoxSizer(wx.VERTICAL)
     box = wx.FlexGridSizer(24,4,2,5)
@@ -1318,7 +1625,7 @@ def buildHorizontalSlidersBox(parent, list):
                     init = [mini, maxi]
                 else:
                     init = init.split(',')
-                    init = [eval(i.strip()) for i in init]        
+                    init = [eval(i.strip()) for i in init]
             unit = widget.get('unit', '')
             tooltip = widget.get('help', '')
             up = eval(widget.get('up', '0'))
@@ -1332,7 +1639,7 @@ def buildHorizontalSlidersBox(parent, list):
             if gliss < 0.0:
                 CeciliaLib.showErrorDialog('Error when building interface!', "-gliss option must must be greater or equal than 0.")
             if up == 1:
-                gliss = 0.0    
+                gliss = 0.0
             linlog = widget.get('rel', 'lin')
             if linlog not in ['lin', 'log']:
                 CeciliaLib.showErrorDialog('Error when building interface!', "-rel option choices are 'lin' or 'log'.")
@@ -1349,16 +1656,16 @@ def buildHorizontalSlidersBox(parent, list):
                 CeciliaLib.showErrorDialog('Error when building interface!', "cslider %s has no -label option." % name)
 
             if widget['type'] == 'cslider':
-                tableNum += 1 
+                tableNum += 1
                 sl = CECSlider(parent, mini, maxi, init, label, unit, valtype, orient, log, name, tableNum, rate, gliss, midictl, tooltip, up)
             else:
                 tableNums = []
                 for i in range(2):
                     tableNum += 1
                     tableNums.append(tableNum)
-                sl = CECRange(parent, mini, maxi, init, label, unit, valtype, orient, log, name, tableNums, rate, gliss, midictl, tooltip, up)                
-            box.AddMany([(sl.label, 0, wx.LEFT, 5), (sl.buttons, 0, wx.LEFT, 0), 
-                         (sl.slider, 0, wx.EXPAND), (sl.entryUnit, 0, wx.LEFT | wx.RIGHT, 5)])   
+                sl = CECRange(parent, mini, maxi, init, label, unit, valtype, orient, log, name, tableNums, rate, gliss, midictl, tooltip, up)
+            box.AddMany([(sl.label, 0, wx.LEFT, 5), (sl.buttons, 0, wx.LEFT, 0),
+                         (sl.slider, 0, wx.EXPAND), (sl.entryUnit, 0, wx.LEFT | wx.RIGHT, 5)])
             sliders.append(sl)
 
     CeciliaLib.setSliderTableNum(tableNum+1)
