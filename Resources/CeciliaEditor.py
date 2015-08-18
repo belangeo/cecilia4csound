@@ -213,7 +213,7 @@ class CeciliaEditor(wx.Frame):
         
         self.multiSplitter.ReplaceWindow(self.scorePanels[oldScore], 
                                          self.scorePanels[label])
-        self.scorePanels[oldScorePanel].Hide()
+        self.scorePanels[oldScore].Hide()
 
         self.activeScore = label
      

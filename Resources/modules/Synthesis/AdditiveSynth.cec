@@ -189,19 +189,19 @@ addLine("f4 0 8192 10 1 0 0 0 .3 0 0 0 .2 0 0 .05")
 addLine("f5 0 8192 10 1 0 0 .3 0 0 .2 0 0 0 0 .1 0 0 .05 0 0 .02")
 addLine("f6 0 8192 10 1 0 0 .2 0 .1 0 0 0 .3 0 .1 0 0 .05 0 0 .1 0 .05 0 0 0 .05 0 0 .02")
 
-num = getUserValue("polynum")
-rnd = getUserValue("polyspread")
-for i in range(num+1):
-    forInst(1)
-    p2 = 0
-    p3 = '[total_time]'
-    p4 = random.uniform(1.0-rnd, 1.0+rnd)
+#num = getUserValue("polynum")
+#rnd = getUserValue("polyspread")
+#for i in range(num+1):
+#    forInst(1)
+#    p2 = 0
+#    p3 = '[total_time]'
+#    p4 = random.uniform(1.0-rnd, 1.0+rnd)
 
-#d = loopseg(mini=48, maxi=102)
-#forInst(1)
-#p2 = [i*.2 for i in range(300)]
-#p3 = .2
-#p4 = [midiToTranspo(d.next()) for i in range(300)]
+d = loopseg(mini=48, maxi=102)
+forInst(1)
+p2 = [i*.2 for i in range(300)]
+p3 = .2
+p4 = [midiToTranspo(d.next()) for i in range(300)]
 
 </PythonScore>
 
