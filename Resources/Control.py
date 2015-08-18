@@ -800,25 +800,17 @@ class Cfilein(wx.Panel):
         mainSizer.AddSpacer((200,4))
         
         # Static label for the popup menu
-        line1 = wx.BoxSizer(wx.HORIZONTAL)
-        textLabel = wx.StaticText(self, -1, self.label)
+        textLabel = wx.StaticText(self, -1, "%s :" % self.label)
         textLabel.SetFont(wx.Font(TEXT_LABELFORWIDGET_FONT, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_BOLD, face=FONT_FACE))
         textLabel.SetForegroundColour(TEXT_LABELFORWIDGET_COLOUR)
-        line1.Add(textLabel,0,wx.ALL, 0)
-        
-        textDeuxPoints = wx.StaticText(self, -1, ' :')
-        textDeuxPoints.SetFont(wx.Font(TEXT_LABELFORWIDGET_FONT, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_BOLD, face=FONT_FACE))
-        textDeuxPoints.SetForegroundColour(TEXT_LABELFORWIDGET_COLOUR)
-        line1.Add(textDeuxPoints,0,wx.ALL, 0)
-        
-        mainSizer.Add(line1, 0, wx.LEFT, 8)
+        mainSizer.Add(textLabel, 0, wx.LEFT, 9)
         
         # Popup menu
         line2 = wx.BoxSizer(wx.HORIZONTAL)
         self.fileMenu = FolderPopup(self, path=None, init='', outFunction=self.onSelectSound,
                                     emptyFunction=self.onLoadFile, backColour=CONTROLLABEL_BACK_COLOUR, tooltip=TT_SEL_SOUND)
                                    
-        line2.Add(self.fileMenu, 0, wx.ALIGN_CENTER | wx.TOP | wx.RIGHT, 1)
+        line2.Add(self.fileMenu, 0, wx.ALIGN_CENTER | wx.TOP, 1)
         line2.AddSpacer((5,5))
         self.toolbox = ToolBox(self, tools=['play','edit','load','open'],
                                outFunction=[self.listenSoundfile,
@@ -827,7 +819,7 @@ class Cfilein(wx.Panel):
                                                   self.onShowSampler])
         line2.Add(self.toolbox, 0, wx.ALIGN_RIGHT | wx.ALIGN_CENTER_VERTICAL | wx.RIGHT, 2)
         
-        mainSizer.Add(line2, 1, wx.LEFT, 6)
+        mainSizer.Add(line2, 1, wx.LEFT, 8)
         mainSizer.AddSpacer((5,2))
 
         self.createSamplerFrame()
@@ -981,24 +973,16 @@ class CSampler(Cfilein):
         mainSizer.AddSpacer((200,4))
         
         # Static label for the popup menu
-        line1 = wx.BoxSizer(wx.HORIZONTAL)
-        textLabel = wx.StaticText(self, -1, self.label)
+        textLabel = wx.StaticText(self, -1, "%s :" % self.label)
         textLabel.SetFont(wx.Font(TEXT_LABELFORWIDGET_FONT, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_BOLD, face=FONT_FACE))
         textLabel.SetForegroundColour(TEXT_LABELFORWIDGET_COLOUR)
-        line1.Add(textLabel,0,wx.ALL, 0)
-        
-        textDeuxPoints = wx.StaticText(self, -1, ' :')
-        textDeuxPoints.SetFont(wx.Font(TEXT_LABELFORWIDGET_FONT, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_BOLD, face=FONT_FACE))
-        textDeuxPoints.SetForegroundColour(TEXT_LABELFORWIDGET_COLOUR)
-        line1.Add(textDeuxPoints,0,wx.ALL, 0)
-        
-        mainSizer.Add(line1, 0, wx.LEFT, 8)
+        mainSizer.Add(textLabel, 0, wx.LEFT, 9)
         
         # Popup menu
         line2 = wx.BoxSizer(wx.HORIZONTAL)
         self.fileMenu = FolderPopup(self, path=None, init='', outFunction=self.onSelectSound,
                                     emptyFunction=self.onLoadFile, backColour=CONTROLLABEL_BACK_COLOUR, tooltip=TT_SEL_SOUND)
-        line2.Add(self.fileMenu, 0, wx.ALIGN_CENTER | wx.TOP | wx.RIGHT, 1)
+        line2.Add(self.fileMenu, 0, wx.ALIGN_CENTER | wx.TOP, 1)
         line2.AddSpacer((5,5))
 
         self.toolbox = ToolBox(self, tools=['play','edit','load','open'],
@@ -1010,7 +994,7 @@ class CSampler(Cfilein):
         self.toolbox.setOpen(False)
         line2.Add(self.toolbox, 0, wx.ALIGN_RIGHT | wx.ALIGN_CENTER_VERTICAL | wx.RIGHT, 2)
         
-        mainSizer.Add(line2, 1, wx.LEFT, 6)
+        mainSizer.Add(line2, 1, wx.LEFT, 8)
         mainSizer.AddSpacer((5,2))
 
         self.createSamplerFrame()
