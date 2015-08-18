@@ -4172,8 +4172,9 @@ class VuMeter(wx.Panel):
         gap = (self.nchnls - oldChnls) * 5
         parentSize = self.parent.GetSize()
         if CeciliaLib.getPlatform() == 'linux2':
-            self.SetMinSize((218, 5*self.nchnls+1))
-            self.parent.SetMinSize((parentSize[0], parentSize[1]+gap))
+            self.SetSize((218, 5*self.nchnls+1))
+            self.SetMaxSize((218, 5*self.nchnls+1))
+            self.parent.SetSize((parentSize[0], parentSize[1]+gap))
         elif CeciliaLib.getPlatform() == 'win32':
             self.SetSize((218, 5*self.nchnls+1))
             self.SetMaxSize((218, 5*self.nchnls+1))
@@ -4181,7 +4182,7 @@ class VuMeter(wx.Panel):
             self.SetSize((218, 5*self.nchnls+1))
             self.SetMaxSize((218, 5*self.nchnls+1))
             self.parent.SetSize((parentSize[0], parentSize[1]+gap))
-        self.Refresh()
+        wx.CallAfter(self.Refresh)
 
     def setAmplitude(self, amplitudeList=[]):
         if amplitudeList[0] < 0: 
