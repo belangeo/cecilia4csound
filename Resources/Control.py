@@ -459,13 +459,12 @@ class CECControl(scrolled.ScrolledPanel):
         self.filenameLabel.setItalicLabel('File name')
         outLine1.Add(self.filenameLabel, 0, wx.LEFT | wx.ALIGN_LEFT | wx.ALIGN_CENTER_VERTICAL, 0)
         
-        outLine1.AddSpacer((5,1))
+        outLine1.AddSpacer((25,1))
         
         outToolbox = ToolBox(self.outputPanel,
-                                     tools=['play','edit','load','recycle'],
+                                     tools=['play','edit','recycle'],
                                      outFunction=[self.listenSoundfile,
                                                   self.editSoundfile,
-                                                  self.onSelectOutputFilename,
                                                   self.onReuseOutputFile])
         outLine1.Add(outToolbox, 0,  wx.ALIGN_RIGHT | wx.ALIGN_CENTER_VERTICAL | wx.RIGHT, 2)
         
@@ -811,11 +810,10 @@ class Cfilein(wx.Panel):
                                     emptyFunction=self.onLoadFile, backColour=CONTROLLABEL_BACK_COLOUR, tooltip=TT_SEL_SOUND)
                                    
         line2.Add(self.fileMenu, 0, wx.ALIGN_CENTER | wx.TOP, 1)
-        line2.AddSpacer((5,5))
-        self.toolbox = ToolBox(self, tools=['play','edit','load','open'],
+        line2.AddSpacer((25,5))
+        self.toolbox = ToolBox(self, tools=['play','edit','open'],
                                outFunction=[self.listenSoundfile,
                                                   self.editSoundfile, 
-                                                  self.onLoadFile, 
                                                   self.onShowSampler])
         line2.Add(self.toolbox, 0, wx.ALIGN_RIGHT | wx.ALIGN_CENTER_VERTICAL | wx.RIGHT, 2)
         
@@ -983,12 +981,11 @@ class CSampler(Cfilein):
         self.fileMenu = FolderPopup(self, path=None, init='', outFunction=self.onSelectSound,
                                     emptyFunction=self.onLoadFile, backColour=CONTROLLABEL_BACK_COLOUR, tooltip=TT_SEL_SOUND)
         line2.Add(self.fileMenu, 0, wx.ALIGN_CENTER | wx.TOP, 1)
-        line2.AddSpacer((5,5))
+        line2.AddSpacer((25,5))
 
-        self.toolbox = ToolBox(self, tools=['play','edit','load','open'],
+        self.toolbox = ToolBox(self, tools=['play','edit','open'],
                                outFunction=[self.listenSoundfile,
                                                   self.editSoundfile, 
-                                                  self.onLoadFile, 
                                                   self.onShowSampler],
                                openSampler=True)
         self.toolbox.setOpen(False)
@@ -1223,18 +1220,13 @@ class CfileinFrame(wx.Frame):
         box.Add(toolsBox, 0, wx.TOP, 5)
 
         # Static label for the offset slider
-        line3 = wx.BoxSizer(wx.HORIZONTAL)
-        textLabel2 = wx.StaticText(self, -1, self.parent.label)
-        textLabel2.SetFont(wx.Font(TEXT_LABELFORWIDGET_FONT, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_BOLD, face=FONT_FACE))
-        textLabel2.SetForegroundColour(TEXT_LABELFORWIDGET_COLOUR)
-        line3.Add(textLabel2,0,wx.ALL, 0)
-        
-        textOffset = wx.StaticText(self, -1, ' Offset :')
+        textOffset = wx.StaticText(panel, -1, '%s Offset :' % self.parent.label)
         textOffset.SetFont(wx.Font(TEXT_LABELFORWIDGET_FONT, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_BOLD, face=FONT_FACE))
         textOffset.SetForegroundColour(TEXT_LABELFORWIDGET_COLOUR)
-        line3.Add(textOffset,0,wx.ALL, 0)
         
-        box.Add(line3, 0, wx.LEFT, 20)
+        box.Add(textOffset, 0, wx.LEFT, 20)
+
+        box.AddSpacer((200,2))
               
         # Offset slider
         self.offsetSlider = ControlSlider(self, minvalue=0, maxvalue=100, size=(222,15), init=0,
@@ -1309,19 +1301,12 @@ class SamplerFrame(wx.Frame):
         box.Add(self.title, 0, wx.ALL, 1)
 
         # Static label for the offset slider
-        line3 = wx.BoxSizer(wx.HORIZONTAL)
-        textLabel2 = wx.StaticText(panel, -1, self.parent.label)
-        textLabel2.SetFont(wx.Font(TEXT_LABELFORWIDGET_FONT, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_BOLD, face=FONT_FACE))
-        textLabel2.SetForegroundColour(TEXT_LABELFORWIDGET_COLOUR)
-        line3.Add(textLabel2,0,wx.ALL, 0)
-        
-        textOffset = wx.StaticText(panel, -1, ' Offset :')
+        textOffset = wx.StaticText(panel, -1, '%s Offset :' % self.parent.label)
         textOffset.SetFont(wx.Font(TEXT_LABELFORWIDGET_FONT, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_BOLD, face=FONT_FACE))
         textOffset.SetForegroundColour(TEXT_LABELFORWIDGET_COLOUR)
-        line3.Add(textOffset,0,wx.ALL, 0)
         
-        box.Add(line3, 0, wx.LEFT, 20)
-        
+        box.Add(textOffset, 0, wx.LEFT, 20)
+
         box.AddSpacer((200,2))
         
         # Offset slider
