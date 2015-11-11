@@ -212,6 +212,7 @@ class FolderPopup(wx.Panel):
         self.tip = wx.ToolTip(self.tooltip)
         self.SetToolTip(self.tip) 
         self.choice = []
+        self.arrowRect = wx.Rect(110, 0, 20, 20)
         
         if init in self.choice:
             self.setLabel(init)
@@ -260,7 +261,7 @@ class FolderPopup(wx.Panel):
         wx.CallAfter(self.Refresh)
 
     def MouseDown(self, event):
-        if self.choice != []:
+        if self.arrowRect.Contains(event.GetPosition()) and self.choice != []:
             self.PopupMenu(MenuFrame(self, self.choice), event.GetPosition())
             self.closed = False
             self.Refresh()
