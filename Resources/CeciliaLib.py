@@ -608,10 +608,16 @@ def openAudioFileDialog(parent, wildcard, type='open', defaultPath='/'):
 def saveFileDialog(parent, wildcard, type='Save'):
     if type == 'Save audio':
         defaultPath = getSaveAudioFilePath()
+        if "wav" in wildcard:
+            ext = ".wav"
+        else:
+            ext = ".aif"
     else:
         defaultPath = getSaveFilePath()
+        ext = ".cec"
     
     defaultFile = os.path.split(getCurrentCeciliaFile())[1]
+    defaultFile = os.path.splitext(defaultFile)[0] + ext
     saveAsDialog = wx.FileDialog(parent, message="%s file as ..." % type,
                                  defaultDir=defaultPath,
                                  defaultFile=defaultFile,

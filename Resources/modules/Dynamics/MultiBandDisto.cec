@@ -1,6 +1,5 @@
 <CeciliaInterface>
 ;cmodule dump -label Apply multiple arc tangent distortions with control over the frequency regions.
-
 csampler snd -label Audio
 cgraph env -label Envelope -unit x -rel lin -min 0 -max 1 -col red -func 0 0 .001 1 .999 1 1 0
 cgraph freq1 -label Frequency 1 -unit Hz -rel log -min 20 -max 15000 -init 100 -col royalblue
@@ -36,15 +35,16 @@ if itype == 1 goto band
 if itype == 2 goto high
 
 low:
-afilt       tonex           ain, kfreq,4
+afilt       butlp           ain, kfreq
 goto outer
 
 band:
-afilt       resonx          ain, kfreq, kfreq/2,4,1
+afilt       butbp          ain, kfreq, kfreq/2
 goto outer
 
 high:
-afilt       atonex          ain, kfreq,4
+afilt       buthp          ain, kfreq
+afilt       buthp          afilt, kfreq
 
 outer:
 adist       taninv2         afilt/32768, aslope 
@@ -99,15 +99,16 @@ if itype == 1 goto band
 if itype == 2 goto high
 
 low:
-afilt           tonex           ain, kfreq,4
+afilt           butlp           ain, kfreq
 goto outer
 
 band:
-afilt           resonx          ain, kfreq, kfreq/2,4,1
+afilt           butbp           ain, kfreq, kfreq/2
 goto outer
 
 high:
-afilt           atonex          ain, kfreq,4
+afilt           buthp           ain, kfreq
+afilt           buthp           afilt, kfreq
 
 outer:
 adist           taninv2         afilt/32768, aslope 

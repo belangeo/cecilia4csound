@@ -986,7 +986,7 @@ class Grapher(plot.PlotCanvas):
                 self.draw()
 
             # Check for mouse over
-            else:
+            elif len(self.data) > 0:
                 self.lineOver = None
                 if self.selected >= len(self.data) or self.selected < 0:
                     self.selected = 0
