@@ -1289,7 +1289,7 @@ class SamplerFrame(wx.Frame):
         self.name = name
         self.tableNums = tableNums
         
-        self.loopList = ['Off', 'Forward', 'Backward', 'Back & Forth']
+        self.loopList = ['Off', 'Forward', 'Backward', 'Back and Forth']
             
         panel = wx.Panel(self, -1)
         w, h = size
