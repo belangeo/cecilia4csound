@@ -9,29 +9,22 @@ Previously written with Tcl/Tk, Cecilia4Csound was entirely rewritten with
 Python/wxPython and uses the Csound API for the communication between the 
 interface and the audio engine. 
 
-# Official web site (not running yet) #
-
-To download the latest version of Cecilia4Csound, go to 
-[the official web site!](http://ajaxsoundstudio.com/software/cecilia4csound/)
-
 # Running Cecilia4Csound from sources #
 
 **To run Cecilia4Csound from sources, the following softwares must be installed on the system:**
 
-- [Python 2.7](https://www.python.org/downloads/release/python-278/)
+- [Python 2.7](https://www.python.org/downloads/release/python-2716/)
 
-- [wxPython 3.0.2.0](http://wxpython.org/download.php)
+- [wxPython 3.0.2.0](https://sourceforge.net/projects/wxpython/files/wxPython/3.0.2.0/)
 
-- [pyo 0.7.7](http://ajaxsoundstudio.com/software/pyo/)
+- [pyo 1.0.0](http://ajaxsoundstudio.com/software/pyo/)
 
-- [numpy 1.7 or 1.8 (not 1.9)](http://sourceforge.net/projects/numpy/files/NumPy/1.7.2/)
+- [numpy](https://numpy.org/)
 
-- [Csound6 6.05](http://sourceforge.net/projects/csound/files/csound6/Csound6.05/)
+- [Csound6 6](https://csound.com/)
 
 Then, download and extract sources for cecilia4csound and run in a terminal 
 (or command prompt on Windows):
 
     cd path/to/folder/cecilia4csound/
     python Cecilia4Csound.py
-
-
