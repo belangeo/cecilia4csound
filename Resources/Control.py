@@ -26,7 +26,7 @@ from types import ListType
 from TogglePopup import SamplerPopup, SamplerToggle  
 from Plugins import *
 import  wx.lib.scrolledpanel as scrolled
-from pyolib._wxwidgets import ControlSlider
+from pyo.lib._wxwidgets import ControlSlider
 
 def powerOf2(value):
     for i in range(24):

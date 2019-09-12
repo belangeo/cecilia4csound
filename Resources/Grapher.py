@@ -28,21 +28,14 @@ from types import ListType, TupleType
 from pyo import reducePoints, distanceToSegment, linToCosCurve
 
 try:
-    import numpy.oldnumeric as _Numeric
+    import numpy as _Numeric
 except:
-    try:
-        import numarray as _Numeric  #if numarray is used it is renamed Numeric
-    except:
-        try:
-            import Numeric as _Numeric
-        except:
-            msg= """
-            This module requires the Numeric/numarray or NumPy module,
-            which could not be imported.  It probably is not installed
-            (it's not part of the standard Python distribution). See the
-            Numeric Python site (http://numpy.scipy.org) for information on
-            downloading source or binaries."""
-            raise ImportError, "Numeric,numarray or NumPy not found. \n" + msg
+    msg = """
+    This module requires the NumPy module, which could not be imported.
+    It probably is not installed (it's not part of the standard Python
+    distribution). See the NumPy Python site (http://www.numpy.org/)
+    for information on downloading source or binaries."""
+    raise ImportError("NumPy not found. \n" + msg)
 
 def mouseOver(dist1, dist2, pourcent=.0008):
     if dist1 > dist2 - (dist2 * pourcent) and dist1 < dist2 + (dist2 * pourcent):

@@ -23,7 +23,7 @@ from types import ListType
 from Widgets import Label, CustomMenu, Toggle, Button, CECTooltip, ListEntry
 from constants import *
 import CeciliaLib
-from pyolib._wxwidgets import ControlSlider
+from pyo.lib._wxwidgets import ControlSlider
 
 def chooseColourFromName(name):
     def clip(x):

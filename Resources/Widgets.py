@@ -24,7 +24,7 @@ from constants import *
 import CeciliaLib as CeciliaLib
 from types import ListType
 from Drunk import *
-from pyolib._wxwidgets import ControlSlider
+from pyo.lib._wxwidgets import ControlSlider
 
 def interpFloat(t, v1, v2):
     "interpolator for a single value; interprets t in [0-1] between v1 and v2"
