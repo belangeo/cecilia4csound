@@ -5,7 +5,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>English</string>
 	<key>CFBundleDisplayName</key>
-	<string>Cecilia</string>
+	<string>Cecilia4Csound</string>
 	<key>CFBundleDocumentTypes</key>
 	<array>
 		<dict>
@@ -26,15 +26,15 @@
 		</dict>
 	</array>
 	<key>CFBundleExecutable</key>
-	<string>Cecilia</string>
+	<string>Cecilia4Csound</string>
 	<key>CFBundleIconFile</key>
 	<string>Cecilia.icns</string>
 	<key>CFBundleIdentifier</key>
-	<string>org.pythonmac.unspecified.Cecilia</string>
+	<string>org.pythonmac.unspecified.Cecilia4Csound</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
-	<string>Cecilia</string>
+	<string>Cecilia4Csound</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
@@ -62,7 +62,7 @@
 		<key>alias</key>
 		<false/>
 		<key>argv_emulation</key>
-		<true/>
+		<false/>
 		<key>no_chdir</key>
 		<false/>
 		<key>optimize</key>
@@ -78,17 +78,16 @@
 	<array/>
 	<key>PyRuntimeLocations</key>
 	<array>
-		<string>@executable_path/../Frameworks/Python.framework/Versions/2.6/Python</string>
+		<string>@executable_path/../Frameworks/Python.framework/Versions/2.7/Python</string>
 	</array>
 	<key>PythonInfoDict</key>
 	<dict>
 		<key>PythonExecutable</key>
-		<string>@executable_path/../Frameworks/Python.framework/Versions/2.6/Python</string>
+		<string>@executable_path/../Frameworks/Python.framework/Versions/2.7/Python</string>
 		<key>PythonLongVersion</key>
-		<string>2.6.5 (r265:79359, Mar 24 2010, 01:32:55) 
-[GCC 4.0.1 (Apple Inc. build 5493)]</string>
+		<string>Python 2.7.15 (v2.7.15:ca079a3ea3, Apr 29 2018, 20:59:26)</string>
 		<key>PythonShortVersion</key>
-		<string>2.6</string>
+		<string>2.7</string>
 		<key>py2app</key>
 		<dict>
 			<key>alias</key>
@@ -96,7 +95,7 @@
 			<key>template</key>
 			<string>app</string>
 			<key>version</key>
-			<string>0.4.4</string>
+			<string>0.19</string>
 		</dict>
 	</dict>
 </dict>

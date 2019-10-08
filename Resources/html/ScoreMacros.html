@@ -5,7 +5,8 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <title>Score Macros</title>
     <link rel="stylesheet" type="text/css" href="csound.css" />
-    <meta name="generator" content="DocBook XSL Stylesheets V1.78.1" />
+    <link rel="stylesheet" type="text/css" href="syntax-highlighting.css" />
+    <meta name="generator" content="DocBook XSL Stylesheets V1.79.1" />
     <link rel="home" href="index.html" title="The Canonical Csound Reference Manual" />
     <link rel="up" href="ScoreTop.html" title="The Standard Numeric Score" />
     <link rel="prev" href="ScoreRamping.html" title="Ramping" />
@@ -37,7 +38,7 @@
         <div class="titlepage">
           <div>
             <div>
-              <h3 class="title"><a id="idp78596240"></a>Description</h3>
+              <h3 class="title"><a id="idm431525195920"></a>Description</h3>
             </div>
           </div>
         </div>
@@ -58,7 +59,15 @@
       <span class="emphasis"><em>#define</em></span> NAME(<span class="emphasis"><em>a' b' c'</em></span>) -- defines a macro with arguments. This can be used in more complex situations. The name of the macro must begin with a letter and can consist of any combination of letters and numbers. Within the replacement text, the arguments can be substituted by the form: $A.  In fact, the implementation defines the arguments as simple macros.  There may be up to 5 arguments, and the names may be any choice of letters.  Remember that case is significant in macro names.
     </p>
         <p>
-      <span class="emphasis"><em>$NAME.</em></span> --  calls a defined macro.  To use a macro, the name is used following a $ character.  The name is terminated by the first character which is neither a letter nor a number.  If it is necessary for the name not to terminate with a space, a period, which will be ignored, can be used to terminate the name.  The string, <span class="emphasis"><em>$NAME</em></span>., is replaced by the replacement text from the definition.  The replacement text can also include macro calls.
+      <span class="emphasis"><em>$NAME.</em></span> -- calls a defined macro.  To
+      use a macro, the name is used following a $ character.
+      The name is terminated by the first character which is neither a
+      letter nor a number.  If it is necessary for the name to be
+      immediately followed by a leter or digit, a period, which will
+      be ignored, can be used to terminate the name.  The string,
+      <span class="emphasis"><em>$NAME</em></span>., is replaced by the
+      replacement text from the definition.  The replacement text can
+      also include macro calls.
     </p>
         <p>
       <span class="emphasis"><em>#undef</em></span> NAME -- undefines a macro name. If a macro is no longer required, it can be undefined with <span class="emphasis"><em>#undef</em></span> NAME.
@@ -68,7 +77,7 @@
         <div class="titlepage">
           <div>
             <div>
-              <h3 class="title"><a id="idp78673312"></a>Syntax</h3>
+              <h3 class="title"><a id="idm431525181376"></a>Syntax</h3>
             </div>
           </div>
         </div>
@@ -85,7 +94,7 @@
         <div class="titlepage">
           <div>
             <div>
-              <h3 class="title"><a id="idp78679024"></a>Initialization</h3>
+              <h3 class="title"><a id="idm431525176048"></a>Initialization</h3>
             </div>
           </div>
         </div>
@@ -97,7 +106,7 @@
         <div class="titlepage">
           <div>
             <div>
-              <h3 class="title"><a id="idp78680912"></a>Performance</h3>
+              <h3 class="title"><a id="idm431525174112"></a>Performance</h3>
             </div>
           </div>
         </div>
@@ -122,14 +131,14 @@
         <div class="titlepage">
           <div>
             <div>
-              <h3 class="title"><a id="idp78686672"></a>Examples</h3>
+              <h3 class="title"><a id="idm431525168576"></a>Examples</h3>
             </div>
           </div>
         </div>
         <p>
       </p>
         <div class="example">
-          <a id="idp78687600"></a>
+          <a id="idm431525167664"></a>
           <p class="title">
             <strong>Example 1. Simple Macro</strong>
           </p>
@@ -175,7 +184,7 @@
         <p>
       </p>
         <div class="example">
-          <a id="idp78701856"></a>
+          <a id="idm431525153936"></a>
           <p class="title">
             <strong>Example 2. Macros with arguments</strong>
           </p>
@@ -209,7 +218,7 @@
         <div class="titlepage">
           <div>
             <div>
-              <h3 class="title"><a id="idp78708752"></a>Credits</h3>
+              <h3 class="title"><a id="idm431525147328"></a>Credits</h3>
             </div>
           </div>
         </div>

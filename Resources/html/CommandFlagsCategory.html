@@ -5,7 +5,8 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <title>Command-line Flags (by Category)</title>
     <link rel="stylesheet" type="text/css" href="csound.css" />
-    <meta name="generator" content="DocBook XSL Stylesheets V1.78.1" />
+    <link rel="stylesheet" type="text/css" href="syntax-highlighting.css" />
+    <meta name="generator" content="DocBook XSL Stylesheets V1.79.1" />
     <link rel="home" href="index.html" title="The Canonical Csound Reference Manual" />
     <link rel="up" href="CommandTop.html" title="The Csound Command" />
     <link rel="prev" href="CommandFlags.html" title="Csound command line" />
@@ -419,6 +420,16 @@
         </p>
           </dd>
           <dt>
+            <a id="FlagsCatMinusMinussetsr"></a>
+            <span class="term">--set-system-sr<a id="IndexCatMinusMinussetsr" class="indexterm"></a></span>
+          </dt>
+          <dd>
+            <p>
+              sets sr to the system sr, requires previous -o dac.
+              If the audio does not support this request then -1 is reported.
+            </p>
+          </dd>
+          <dt>
             <a id="FlagsCatMinusRealtime"></a>
             <span class="term">--realtime<a id="IndexCatMinusRealtime" class="indexterm"></a></span>
           </dt>
@@ -507,14 +518,13 @@ csound5:output2             (playback right)</pre>
         </p>
         <dl class="variablelist">
           <dt>
-            <a id="FlagsCatMinusMinusDevices"></a>
-            <span class="term">--devices[=x]<a id="IndexCatMinusMinusDevices" class="indexterm"></a></span>
+            <a id="FlagsCatMinusAftzero"></a>
+            <span class="term">--aft-zero<a id="IndexCatMinusAftzero" class="indexterm"></a></span>
           </dt>
           <dd>
             <p>
-              list audio devices (x=out, output devices only; x=in,
-	      input; else input and output) and exit.
-            </p>
+          Use zero as initial value of after-touch.
+        </p>
           </dd>
           <dt>
             <a id="FlagsCatMinusUpperF"></a>
@@ -738,7 +748,7 @@ csound5:output2             (playback right)</pre>
                   <td align="left" valign="top">This option
           only works from the command line and not from .csound6rc or
           a CsOptions section of a  csd file.  It needs to be acted
-          upon before sound proper starts.  It is ignored in .csoundrc
+          upon before sound proper starts.  It is ignored in .csound6rc
         and CsOptions.</td>
                 </tr>
               </table>
@@ -1022,6 +1032,14 @@ csound5:output2             (playback right)</pre>
                 <li class="listitem">
                   <p>NUM = 1, show arguments to each opcode using the format &lt;opname&gt; &lt;outargs&gt; &lt;inargs&gt;</p>
                 </li>
+                <li class="listitem">
+                  <p>NUM = 2, show names including
+                deprecated ones</p>
+                </li>
+                <li class="listitem">
+                  <p>NUM = 3, show arguments to each
+                opcode, including deprecated ones, using the format &lt;opname&gt; &lt;outargs&gt; &lt;inargs&gt;</p>
+                </li>
               </ul>
             </div>
             <p>
@@ -1059,7 +1077,7 @@ csound5:output2             (playback right)</pre>
           </dd>
           <dt>
             <a id="FlagsCatDaemon"></a>
-            <span class="term">-d<a id="IndexCatDaemon" class="indexterm"></a></span>
+            <span class="term">-daemon<a id="IndexCatDaemon" class="indexterm"></a></span>
           </dt>
           <dd>
             <p>
@@ -1117,8 +1135,39 @@ csound5:output2             (playback right)</pre>
           </dt>
           <dd>
             <p>
-            Set UDP port on which to listen instruments/orchestra code
+            Set UDP port on which to listen for commands and instruments/orchestra code
             (implies --daemon)
+          </p>
+          </dd>
+          <dt>
+            <a id="FlagsCatMinusUdpEcho"></a>
+            <span class="term">--udp-echo<a id="IndexCatMinusUdpEcho" class="indexterm"></a></span>
+          </dt>
+          <dd>
+            <p>
+            Switches on printing of UDP commands on the terminal. Any
+            messages received by the UDP server are echoed (whether
+            they are valid commands or not).
+          </p>
+          </dd>
+          <dt>
+            <a id="FlagsCatMinusUdpConsole"></a>
+            <span class="term">--udp-console=address:port<a id="IndexCatMinusUdpConsole" class="indexterm"></a></span>
+          </dt>
+          <dd>
+            <p>
+            Redirects the console messages to a remote address:port
+	    via UDP.
+          </p>
+          </dd>
+          <dt>
+            <a id="FlagsCatMinusUdpMirrorConsole"></a>
+            <span class="term">--udp-mirror-console=address:port<a id="IndexCatMinusUdpMirrorConsole" class="indexterm"></a></span>
+          </dt>
+          <dd>
+            <p>
+            Mirrors the console messages to a remote address:port
+	    via UDP.
           </p>
           </dd>
           <dt>
@@ -1210,6 +1259,20 @@ csound5:output2             (playback right)</pre>
           Use the uninterpreted beats of <span class="emphasis"><em>score.srt</em></span> for this performance, and set the initial tempo at <span class="emphasis"><em>NUM</em></span> beats per minute. When this flag is set, the tempo of score performance is also controllable from within the orchestra. WARNING: this mode of operation is experimental and may be unreliable.
         </p>
           </dd>
+          <dt>
+            <a id="FlagsCatMinusLowerJ"></a>
+            <span class="term">-j NUM<a id="IndexCatMinusLowerJ" class="indexterm"></a>,
+          --num-threads=NUM<a id="IndexCatMinusNumthread" class="indexterm"></a></span>
+          </dt>
+          <dd>
+            <p>
+              Make <span class="emphasis"><em>NUM</em></span> processes available for
+              rendering.  This is only advantageous if the number of
+              processors on the computer is the same or more that the number
+              of requested processes.  It also may slow rendering down
+              if ksmps is too small. 
+            </p>
+          </dd>
         </dl>
       </div>
       <div class="variablelist">
@@ -1242,7 +1305,7 @@ csound5:output2             (playback right)</pre>
           <dd>
             <p>
           Reenables adding of directory of CSD/ORC/SCO to search paths,
-          if it has been disabled by a previous <a class="link" href="CommandFlags.html#FlagsMinusNoDefaultPaths"><em class="citetitle">--no-default-paths</em></a> (e.g. in <a class="link" href="CommandUnifileParFile.html" title="Command Line Parameter File (.csoundrc)"><em class="citetitle">.csoundrc</em></a>).
+          if it has been disabled by a previous <a class="link" href="CommandFlags.html#FlagsMinusNoDefaultPaths"><em class="citetitle">--no-default-paths</em></a> (e.g. in <a class="link" href="CommandUnifileParFile.html" title="Command Line Parameter File (.csound6rc)"><em class="citetitle">.csound6rc</em></a>).
         </p>
           </dd>
           <dt>
@@ -1284,33 +1347,33 @@ csound5:output2             (playback right)</pre>
           </dt>
           <dd>
             <p>
-                  <span class="emphasis"><em>Note that this option has no affect in
-                  csound6.</em></span>
+          <span class="emphasis"><em>Note that this option has no affect in
+          csound6.</em></span>
 
-              <span class="emphasis"><em>In Csound 5 only.</em></span>
+          <span class="emphasis"><em>In Csound 5 only.</em></span>
           Turns on some optimizations in expressions:
           </p>
             <div class="itemizedlist">
               <ul class="itemizedlist" style="list-style-type: disc; ">
                 <li class="listitem">
                   <p>Redundant assignment operations are eliminated whenever
-                possible. This means that for example this line
-                a1 = a2 + a3
-                will compile as
-                a1 Add a2, a3
-                instead of
-                #a0 Add a2, a3
-                a1 = #a0
-                saving a temporary variable and an opcode call. Less opcode
-                calls result in reduced CPU usage (an average orchestra may
-                compile about 10% faster with --expression-opt, but it
-                depends largely on how many expressions are used, what the
-                control rate is (see also below), etc.; thus, the difference
-                may be less, but also much more).</p>
+            possible. This means that for example this line
+            a1 = a2 + a3
+            will compile as
+            a1 Add a2, a3
+            instead of
+            #a0 Add a2, a3
+            a1 = #a0
+            saving a temporary variable and an opcode call. Less opcode
+            calls result in reduced CPU usage (an average orchestra may
+            compile about 10% faster with --expression-opt, but it
+            depends largely on how many expressions are used, what the
+            control rate is (see also below), etc.; thus, the difference
+            may be less, but also much more).</p>
                 </li>
                 <li class="listitem">
-                  <p>number of a- and k-rate temporary variables is significantly
-                reduced. This expression</p>
+                  <p>number of a- and k-rate temporary
+            variables is significantly reduced. This expression</p>
                   <pre class="programlisting">
 (a1 + a2 + a3 + a4)</pre>
                   <p>will compile as</p>
@@ -1345,7 +1408,6 @@ csound5:output2             (playback right)</pre>
               </ul>
             </div>
             <p>
-
           </p>
             <div class="warning" style="margin-left: 0.5in; margin-right: 0.5in;">
               <table border="0" summary="Warning: Warning">
@@ -1370,12 +1432,22 @@ csound5:output2             (playback right)</pre>
         </p>
           </dd>
           <dt>
+            <a id="FlagsCatMinusVersion"></a>
+            <span class="term">--version<a id="IndexCatMinusVersion" class="indexterm"></a></span>
+          </dt>
+          <dd>
+            <p>
+          Exits after printing version information.
+        </p>
+          </dd>
+          <dt>
             <a id="CatFlagsMinusMinusGetSR"></a>
             <span class="term">--get-system-sr<a id="IndexCatMinusMinusGetSR" class="indexterm"></a></span>
           </dt>
           <dd>
             <p>
-          PObtain the machine's sample rate.
+          prints system sr and exits, requires previous -o dac.
+              If the audio does not support this request then -1 is reported.
         </p>
           </dd>
           <dt>
@@ -1388,12 +1460,13 @@ csound5:output2             (playback right)</pre>
         </p>
           </dd>
           <dt>
-            <a id="CatFlagsMinusMinusDevice"></a>
-            <span class="term">--devices<a id="IndexCatMinusMinusDevice" class="indexterm"></a></span>
+            <a id="FlagsCatMinusMinusDevices"></a>
+            <span class="term">--devices[=x]<a id="IndexCatMinusMinusDevices" class="indexterm"></a></span>
           </dt>
           <dd>
-            <p> Gives a list of available audio devices and then
-        exits.
+            <p>
+          List audio devices (x=out, output devices only; x=in,
+	        input; else input and output) and exit.
         </p>
           </dd>
           <dt>
@@ -1483,7 +1556,7 @@ csound5:output2             (playback right)</pre>
                   <td align="left" valign="top">This option
           only works from the command line and not from .csound6rc or
           a CsOptions section of a  csd file.  It needs to be acted
-          upon before sound proper starts.  It is ignored in .csoundrc
+          upon before sound proper starts.  It is ignored in .csound6rc
           and CsOptions.</td>
                 </tr>
               </table>

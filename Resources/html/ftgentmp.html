@@ -5,7 +5,8 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <title>ftgentmp</title>
     <link rel="stylesheet" type="text/css" href="csound.css" />
-    <meta name="generator" content="DocBook XSL Stylesheets V1.78.1" />
+    <link rel="stylesheet" type="text/css" href="syntax-highlighting.css" />
+    <meta name="generator" content="DocBook XSL Stylesheets V1.79.1" />
     <link rel="home" href="index.html" title="The Canonical Csound Reference Manual" />
     <link rel="up" href="OpcodesTop.html" title="Orchestra Opcodes and Operators" />
     <link rel="prev" href="ftgenonce.html" title="ftgenonce" />
@@ -38,7 +39,7 @@
     </p>
       </div>
       <div class="refsect1">
-        <a id="idp111713488"></a>
+        <a id="idm431491408928"></a>
         <h2>Description</h2>
         <p>
       Generate a score function table from within the orchestra,
@@ -46,12 +47,12 @@
     </p>
       </div>
       <div class="refsect1">
-        <a id="idp111714784"></a>
+        <a id="idm431491407632"></a>
         <h2>Syntax</h2>
         <pre class="synopsis">ifno <span class="command"><strong>ftgentmp</strong></span> ip1, ip2dummy, isize, igen, iarga, iargb, ...</pre>
       </div>
       <div class="refsect1">
-        <a id="idp111716864"></a>
+        <a id="idm431491405520"></a>
         <h2>Initialization</h2>
         <p>
     <span class="emphasis"><em>ifno</em></span> --  either a requested or automatically
@@ -92,51 +93,53 @@
         </div>
       </div>
       <div class="refsect1">
-        <a id="idp111726448"></a>
+        <a id="idm431491396128"></a>
         <h2>Examples</h2>
         <p>
       Here is an example of the ftgentmp opcode. It uses the file <a class="ulink" href="examples/ftgentmp.csd" target="_top"><em class="citetitle">ftgentmp.csd</em></a>.
       </p>
         <div class="example">
-          <a id="idp111728224"></a>
+          <a id="idm431491394336"></a>
           <p class="title">
-            <strong>Example 334. Example of the ftgentmp opcode.</strong>
+            <strong>Example 370. Example of the ftgentmp opcode.</strong>
           </p>
           <div class="example-contents">
             <p>See the sections <a class="link" href="UsingRealTime.html" title="Real-Time Audio"><em class="citetitle">Real-time Audio</em></a> and <a class="link" href="CommandFlags.html" title="Csound command line"><em class="citetitle">Command Line Flags</em></a> for more information on using command line flags.</p>
-            <pre class="programlisting">
-<span class="csdtag">&lt;CsoundSynthesizer&gt;</span>
-<span class="csdtag">&lt;CsOptions&gt;</span>
+            <div class="refsect1">
+              <a id="idm431865938368"></a>
+              <pre class="programlisting">
+<span class="nt">&lt;CsoundSynthesizer&gt;</span>
+<span class="nt">&lt;CsOptions&gt;</span>
+<span class="nt">&lt;/CsOptions&gt;</span>
+<span class="nt">&lt;CsInstruments&gt;</span>
 
-<span class="csdtag">&lt;/CsOptions&gt;</span>
-<span class="csdtag">&lt;CsInstruments&gt;</span>
+<span class="vg">sr</span> <span class="o">=</span> <span class="mi">44100</span>
+<span class="vg">ksmps</span> <span class="o">=</span> <span class="mi">128</span>
+<span class="vg">nchnls</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="vg">0dbfs</span> <span class="o">=</span> <span class="mi">1</span>
 
-<span class="ohdr">sr</span> <span class="op">=</span> 44100
-<span class="ohdr">ksmps</span> <span class="op">=</span> 128
-<span class="ohdr">nchnls</span> <span class="op">=</span> 2
-<span class="ohdr">0dbfs</span> <span class="op">=</span> 1
+<span class="kd">instr</span> <span class="nf">1</span>
+i<span class="n">fno</span>  <span class="nb">ftgentmp</span>  <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">512</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">1</span>
+<span class="nb">print</span> i<span class="n">fno</span>
+<span class="kd">endin</span>
 
-<span class="oblock">instr</span> 1
-ifno  <span class="opc">ftgentmp</span>  0, 0, 512, 10, 1
-<span class="opc">print</span> ifno
-<span class="oblock">endin</span>
+<span class="kd">instr</span> <span class="nf">2</span>
+<span class="nb">print</span> <span class="nb">ftlen</span><span class="p">(</span><span class="nb">p4</span><span class="p">)</span>
+<span class="kd">endin</span>
 
-<span class="oblock">instr</span> 2
-<span class="opc">print</span> <span class="opc">ftlen</span>(p4)
-<span class="oblock">endin</span>
-
-<span class="csdtag">&lt;/CsInstruments&gt;</span>
-<span class="csdtag">&lt;CsScore&gt;</span>
-<span class="stamnt">i</span> 1 0 10
-<span class="stamnt">i</span> 2 2 1 101
-<span class="stamnt">i</span> 1 5 10
-<span class="stamnt">i</span> 2 7 1 102
-<span class="stamnt">i</span> 2 12 1 101 
-<span class="stamnt">i</span> 2 17 1 102 
-<span class="stamnt">e</span>
-<span class="csdtag">&lt;/CsScore&gt;</span>
-<span class="csdtag">&lt;/CsoundSynthesizer&gt;</span>
+<span class="nt">&lt;/CsInstruments&gt;</span>
+<span class="nt">&lt;CsScore&gt;</span>
+<span class="nb">i</span> <span class="mi">1</span> <span class="mi">0</span> <span class="mi">10</span>
+<span class="nb">i</span> <span class="mi">2</span> <span class="mi">2</span> <span class="mi">1</span> <span class="mi">101</span>
+<span class="nb">i</span> <span class="mi">1</span> <span class="mi">5</span> <span class="mi">10</span>
+<span class="nb">i</span> <span class="mi">2</span> <span class="mi">7</span> <span class="mi">1</span> <span class="mi">102</span>
+<span class="nb">i</span> <span class="mi">2</span> <span class="mi">12</span> <span class="mi">1</span> <span class="mi">101</span> 
+<span class="nb">i</span> <span class="mi">2</span> <span class="mi">17</span> <span class="mi">1</span> <span class="mi">102</span> 
+<span class="nb">e</span>
+<span class="nt">&lt;/CsScore&gt;</span>
+<span class="nt">&lt;/CsoundSynthesizer&gt;</span>
 </pre>
+            </div>
           </div>
         </div>
         <p><br class="example-break" />
@@ -171,7 +174,7 @@ instr 2:  #i0 = -1.000
     </p>
       </div>
       <div class="refsect1">
-        <a id="idp111734144"></a>
+        <a id="idm431491388784"></a>
         <h2>Credits</h2>
         <p>
       </p>

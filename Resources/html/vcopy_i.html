@@ -5,7 +5,8 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <title>vcopy_i</title>
     <link rel="stylesheet" type="text/css" href="csound.css" />
-    <meta name="generator" content="DocBook XSL Stylesheets V1.78.1" />
+    <link rel="stylesheet" type="text/css" href="syntax-highlighting.css" />
+    <meta name="generator" content="DocBook XSL Stylesheets V1.79.1" />
     <link rel="home" href="index.html" title="The Canonical Csound Reference Manual" />
     <link rel="up" href="OpcodesTop.html" title="Orchestra Opcodes and Operators" />
     <link rel="prev" href="vcopy.html" title="vcopy" />
@@ -38,19 +39,19 @@
     </p>
       </div>
       <div class="refsect1">
-        <a id="idp162943344"></a>
+        <a id="idm431438921920"></a>
         <h2>Description</h2>
         <p>
       Copies a vector from one table to another.
     </p>
       </div>
       <div class="refsect1">
-        <a id="idp162944560"></a>
+        <a id="idm431438920688"></a>
         <h2>Syntax</h2>
         <pre class="synopsis"><span class="command"><strong>vcopy_i</strong></span>  ifn1, ifn2, ielements [,idstoffset, isrcoffset]</pre>
       </div>
       <div class="refsect1">
-        <a id="idp162946640"></a>
+        <a id="idm431438918704"></a>
         <h2>Initialization</h2>
         <p>
       <span class="emphasis"><em>ifn1</em></span>  - number of the table where the vectorial signal will be copied
@@ -69,7 +70,7 @@
     </p>
       </div>
       <div class="refsect1">
-        <a id="idp162951696"></a>
+        <a id="idm431438913696"></a>
         <h2>Performance</h2>
         <p>
       <span class="emphasis"><em>vcopy_i</em></span> copies <span class="emphasis"><em>ielements</em></span> elements from <span class="emphasis"><em>ifn2</em></span> (starting from position <span class="emphasis"><em>isrcoffset</em></span>) to <span class="emphasis"><em>ifn1</em></span> (starting from position <span class="emphasis"><em>idstoffset</em></span>). Useful to keep old vector values, by storing them in another table. This opcode is exactly the same as <a class="link" href="vcopy.html" title="vcopy"><em class="citetitle">vcopy</em></a> but performs all the copying on the intialization pass only.
@@ -99,14 +100,14 @@
     </p>
       </div>
       <div class="refsect1">
-        <a id="idp162971584"></a>
+        <a id="idm431438894880"></a>
         <h2>Examples</h2>
         <p>
       See <a class="link" href="vcopy.html" title="vcopy"><em class="citetitle">vcopy</em></a> for an example.
     </p>
       </div>
       <div class="refsect1">
-        <a id="idp162973760"></a>
+        <a id="idm431438892832"></a>
         <h2>Credits</h2>
         <p>Written by Gabriel Maldonado. Optional arguments added by Andres Cabrera and Istvan Varga.</p>
         <p>New in Csound 5 (Previously available only on CsoundAV)</p>

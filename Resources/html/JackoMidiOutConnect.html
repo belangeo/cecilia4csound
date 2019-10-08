@@ -5,7 +5,8 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <title>JackoMidiOutConnect</title>
     <link rel="stylesheet" type="text/css" href="csound.css" />
-    <meta name="generator" content="DocBook XSL Stylesheets V1.78.1" />
+    <link rel="stylesheet" type="text/css" href="syntax-highlighting.css" />
+    <meta name="generator" content="DocBook XSL Stylesheets V1.79.1" />
     <link rel="home" href="index.html" title="The Canonical Csound Reference Manual" />
     <link rel="up" href="OpcodesTop.html" title="Orchestra Opcodes and Operators" />
     <link rel="prev" href="JackoMidiInConnect.html" title="JackoMidiInConnect" />
@@ -37,8 +38,21 @@
       Creates a MIDI connection from Csound to a Jack port.
      </p>
       </div>
+      <div class="note" style="margin-left: 0.5in; margin-right: 0.5in;">
+        <table border="0" summary="Note">
+          <tr>
+            <td rowspan="2" align="center" valign="top" width="25">
+              <img alt="[Note]" src="images/note.png" />
+            </td>
+            <th align="left">Note</th>
+          </tr>
+          <tr>
+            <td align="left" valign="top">plugin: Requires jacko plugin</td>
+          </tr>
+        </table>
+      </div>
       <div class="refsect1">
-        <a id="idp117777040"></a>
+        <a id="idm431485029392"></a>
         <h2>Description</h2>
         <p>
       In the orchestra header, creates a connection 
@@ -47,12 +61,12 @@
     </p>
       </div>
       <div class="refsect1">
-        <a id="idp117778384"></a>
+        <a id="idm431485028048"></a>
         <h2>Syntax</h2>
         <pre class="synopsis"><span class="command"><strong>JackoMidiOutConnect </strong></span>ScsoundPortName, SexternalPortName</pre>
       </div>
       <div class="refsect1">
-        <a id="idp117780160"></a>
+        <a id="idm431485026064"></a>
         <h2>Initialization</h2>
         <p>
       <span class="emphasis"><em>ScsoundPortName</em></span> -- The short name ("portname") 
@@ -64,7 +78,7 @@
     </p>
       </div>
       <div class="refsect1">
-        <a id="idp117782768"></a>
+        <a id="idm431485023504"></a>
         <h2>Performance</h2>
         <p>
       The actual MIDI data must be written with the JackoMidiOut 
@@ -72,7 +86,7 @@
     </p>
       </div>
       <div class="refsect1">
-        <a id="idp117784064"></a>
+        <a id="idm431485022224"></a>
         <h2>See Also</h2>
         <p>
       <a class="link" href="JackoInit.html" title="JackoInit"><em class="citetitle">JackoInfo</em></a>
@@ -90,7 +104,7 @@
     </p>
       </div>
       <div class="refsect1">
-        <a id="idp117796384"></a>
+        <a id="idm431485010544"></a>
         <h2>Credits</h2>
         <p>By: Michael Gogins 2010</p>
       </div>

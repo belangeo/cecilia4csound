@@ -3,9 +3,10 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <title>What's new in Csound 6.05</title>
+    <title>What's new in Csound 6.13.0</title>
     <link rel="stylesheet" type="text/css" href="csound.css" />
-    <meta name="generator" content="DocBook XSL Stylesheets V1.78.1" />
+    <link rel="stylesheet" type="text/css" href="syntax-highlighting.css" />
+    <meta name="generator" content="DocBook XSL Stylesheets V1.79.1" />
     <link rel="home" href="index.html" title="The Canonical Csound Reference Manual" />
     <link rel="up" href="PrefaceTop.html" title="Preface" />
     <link rel="prev" href="PrefaceGettingStarted.html" title="Getting Started with Csound" />
@@ -15,7 +16,7 @@
     <div class="navheader">
       <table width="100%" summary="Navigation header">
         <tr>
-          <th colspan="3" align="center">What's new in Csound 6.05</th>
+          <th colspan="3" align="center">What's new in Csound 6.13.0</th>
         </tr>
         <tr>
           <td width="20%" align="left"><a accesskey="p" href="PrefaceGettingStarted.html">Prev</a> </td>
@@ -29,11 +30,2733 @@
       <div class="titlepage">
         <div>
           <div>
-            <h2 class="title" style="clear: both"><a id="PrefaceWhatsNew"></a>What's new in Csound 6.05</h2>
+            <h2 class="title" style="clear: both"><a id="PrefaceWhatsNew"></a>What's new in Csound 6.13.0</h2>
           </div>
         </div>
       </div>
-      <h3><a id="idp69436608"></a>Release Notes for Csound 6.05 (2015 April)</h3>
+      <h3><a id="idm431543577456"></a>Release Notes for Csound 6.13 (2019 July)</h3>
+      <p>
+    Not many new opcodes but there are a significant number of opcodes being
+    extended to use arrays in a variety of ways, widening the options for
+    users. There have been many fixes to the core code as well as opcodes.
+  </p>
+      <p>
+    </p>
+      <div class="itemizedlist">
+        <ul class="itemizedlist" style="list-style-type: disc; ">
+          <li class="listitem">
+            <p>New opcodes:
+          </p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist" style="list-style-type: circle; ">
+                <li class="listitem"><span class="emphasis"><em>string2array</em></span> is a variant of
+                fillarray with the data coming from a string of space separated
+                values.
+              </li>
+                <li class="listitem"><a class="link" href="nstrstr.html" title="nstrstr"><em class="citetitle">nstrstr</em></a>
+                returns the name string of an instrument number or an empty
+                string if the number does not refer to a named instrument.
+              </li>
+                <li class="listitem"><a class="link" href="ntof.html" title="ntof"><em class="citetitle">ntof</em></a>
+                converts notename to frequency at i- and k-time.
+              </li>
+                <li class="listitem">
+                <a class="link" href="ampmidicurve.html" title="ampmidicurve"><em class="citetitle">ampmidicurve</em></a>
+                is a new opcode that maps an input MIDI velocity number to an
+                output gain factor with a maximum value of 1, modifying the
+                output gain by a dynamic range and a shaping exponent.
+              </li>
+              </ul>
+            </div>
+            <p>
+        </p>
+          </li>
+          <li class="listitem">
+            <p>Orchestra:
+          </p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist" style="list-style-type: circle; ">
+                <li class="listitem">The consistency of kr, sr and ksmps reworked especially
+                when there is overriding.
+              </li>
+                <li class="listitem">Corrected default 0bdfs usage.</li>
+                <li class="listitem">Resolving the path for #include files reworked to be
+                more liberal.
+              </li>
+                <li class="listitem">Reading and writing to multidimensional arrays was very
+                wrong. This is now correct.
+              </li>
+                <li class="listitem">Better checking for unknown array types (issue #1124)
+              </li>
+                <li class="listitem">In all array operations the size of an array is
+                determined at init time and no allocation happens at perf time.
+              </li>
+                <li class="listitem">Array arithmetic now respects --sample-accurate.
+              </li>
+              </ul>
+            </div>
+            <p>
+        </p>
+          </li>
+          <li class="listitem">
+            <p>
+          Score:
+          </p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist" style="list-style-type: circle; ">
+                <li class="listitem">The characters n and m could erroneously get ignored in
+                scores.
+              </li>
+                <li class="listitem">Resolving the path for #include files reworked to be
+                more liberal.
+              </li>
+                <li class="listitem">After an error the backtrace of files and macros
+                incorrectly read the information for orchestra rather than
+                scores; fixed.
+              </li>
+                <li class="listitem">The end of an r (repeated) section was not always
+                correct.
+              </li>
+                <li class="listitem">Nested {} parts of a score could lead to errors.
+              </li>
+                <li class="listitem">After an s statement a newline was required; no longer
+                needed.
+              </li>
+                <li class="listitem">The {} score loops have been reworked to allow macros
+                and expressions in the loop count.
+              </li>
+              </ul>
+            </div>
+            <p>
+        </p>
+          </li>
+          <li class="listitem">
+            <p>
+          Options:
+          </p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist" style="list-style-type: circle; ">
+                <li class="listitem">The new option --use-system-sr set the sample rate to the
+                hardware/system value.
+              </li>
+              </ul>
+            </div>
+            <p>
+        </p>
+          </li>
+          <li class="listitem">
+            <p>
+          Modified Opcodes and Gens:
+          </p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist" style="list-style-type: circle; ">
+                <li class="listitem">Sending failure in OSC is now a warning rather than an
+                error.
+              </li>
+                <li class="listitem">passign can now have an array as the target.</li>
+                <li class="listitem">Version of bpf/bpfcos added to allow points defined
+                via arrays.
+              </li>
+                <li class="listitem">grain can now use tables of any size, which was only a
+                power of 2.
+              </li>
+                <li class="listitem">Changing colours in FL widgets now works (it previously
+                did not redraw the colour).
+              </li>
+                <li class="listitem">fillarray can read from a file of values overcoming the
+                argument limit.
+              </li>
+                <li class="listitem">sumarray now works for audio arrays as well as for
+                scalar values.
+              </li>
+                <li class="listitem">Assignment of an audio value to an audio array now works.
+              </li>
+                <li class="listitem">monitor was broken in the array form.</li>
+                <li class="listitem">gendyc now respects sample-accurate mode.</li>
+                <li class="listitem">mtof and ftom now have array versions.</li>
+                <li class="listitem">
+              sc_lag and sc_lagud now use the first k- or a-rate input
+                when no initial value is given.
+            </li>
+                <li class="listitem">printarray now works for string arrays.</li>
+                <li class="listitem">changed2 now works for strings.</li>
+                <li class="listitem">diskgrain, syncgrain and syncloop now can do sample rate
+                scaling.
+              </li>
+                <li class="listitem">GEN01 correctly reads raw audio files when requested.
+              </li>
+                <li class="listitem">ftaudio can now take two additional optional arguments
+                for the start and end of the table data being written to file.
+              </li>
+                <li class="listitem">sensekey recoded in the 'key down' mode.</li>
+                <li class="listitem">loscilx can return an audio array.</li>
+                <li class="listitem">schedule opcode reports undefined instruments in all
+                cases.
+              </li>
+                <li class="listitem">event_i now accepts tagged instrument numbers.</li>
+                <li class="listitem">printarray treats %d correctly.</li>
+                <li class="listitem">beadsynt now works with i arrays as well as k arrays as
+                in the manual.
+              </li>
+              </ul>
+            </div>
+            <p>
+        </p>
+          </li>
+          <li class="listitem">
+            <p>Utilities:
+          </p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist" style="list-style-type: circle; ">
+                <li class="listitem">hetro had a number of fixes and improvements.</li>
+              </ul>
+            </div>
+            <p>
+        </p>
+          </li>
+          <li class="listitem">
+            <p>General Usage:
+          </p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist" style="list-style-type: circle; ">
+                <li class="listitem">There have been a number of improvements in the semantics
+                for multicore; most of these are corrections with a few
+                efficiency gains.
+              </li>
+                <li class="listitem">There is a maximum number of arguments for an opcode
+              which was neither explicit nor policed. Attempts to use too many
+              arguments now gives a syntax error.
+              </li>
+              </ul>
+            </div>
+            <p>
+        </p>
+          </li>
+          <li class="listitem">
+            <p>Bugs Fixed:
+          </p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist" style="list-style-type: circle; ">
+                <li class="listitem">FLgetsnap fixed.</li>
+                <li class="listitem">directory fixed regarding file extensions.</li>
+                <li class="listitem">FLsetText reused a string incorrectly which led to
+                incorrect values.
+              </li>
+                <li class="listitem">fmb3 failed to initialise the lfo rate in some cases.
+              </li>
+                <li class="listitem">ftaudio at i-rate was totally broken.</li>
+                <li class="listitem">Following a reinit printks could be skipped; fixed.
+              </li>
+                <li class="listitem">printks fixed so it prints at correct times.</li>
+                <li class="listitem">tabrowlin and getrowlin would calculate wrong size under
+                certain conditions.
+              </li>
+              </ul>
+            </div>
+            <p>
+        </p>
+          </li>
+          <li class="listitem">
+            <p>System Changes:
+          </p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist" style="list-style-type: circle; ">
+                <li class="listitem">Hash Table implementation modified to expand on load for
+                better performance when map contains large number of entries.
+              </li>
+                <li class="listitem">Plugin GEN functions can have a zero length, but the
+                code must check for this and act accordingly. This allows for
+                deferred allocations.
+              </li>
+                <li class="listitem">schedule reports undefined instr numbers/names and
+                continues, rather than causing an error.
+              </li>
+                <li class="listitem">Allow multiple calls to midi out controls.</li>
+              </ul>
+            </div>
+            <p>
+        </p>
+          </li>
+          <li class="listitem">
+            <p>API:
+          </p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist" style="list-style-type: circle; ">
+                <li class="listitem">find_opcode_new and find_opcode_exact now exposed in API.
+              </li>
+                <li class="listitem">After a reset a default message string callback handle
+                is configured.
+              </li>
+                <li class="listitem">New function csoundSystemSr added to the API to read
+                hardware-imposed sample rate.
+              </li>
+              </ul>
+            </div>
+            <p>
+        </p>
+          </li>
+          <li class="listitem">
+            <p>Platform Specific:
+          </p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist" style="list-style-type: circle; ">
+                <li class="listitem">WebAudio: libsndfile now compiled with FLAC and OGG
+                support.
+              </li>
+                <li class="listitem">In both orchestra and score the path tracking of
+                #include expects a \ separator.
+              </li>
+                <li class="listitem">Haiku port now available.</li>
+                <li class="listitem">Allow analog in and out with different channel numbers.
+              </li>
+              </ul>
+            </div>
+            <p>
+        </p>
+          </li>
+        </ul>
+      </div>
+      <p>
+  </p>
+      <h3><a id="idm431538566928"></a>Release Notes for Csound 6.12 (2018 November)</h3>
+      <p>
+    Many changes including the removal of vst2cs functionality due to a
+    copyright issue.
+  </p>
+      <p>
+    The changes made in 6.11 to raw format reading have been modified so
+    gen1 and diskin ignore positive file formats and use the file header,
+    unless the format is negative when it uses the absolute value in a raw
+    audio file. This should preserve most compatibility issues.
+  </p>
+      <p>
+   There are a number of new and improved opcodes, new facilities in
+   scores and many bug fixes.
+  </p>
+      <p>
+    </p>
+      <div class="itemizedlist">
+        <ul class="itemizedlist" style="list-style-type: disc; ">
+          <li class="listitem">
+            <p>New opcodes:
+          </p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist" style="list-style-type: circle; ">
+                <li class="listitem"><a class="link" href="fluidInfo.html" title="fluidInfo"><em class="citetitle">fluidInfo</em></a>
+               retrieves program information from a currently loaded
+              soundfont.
+            </li>
+                <li class="listitem">
+              New opcode <a class="link" href="ftaudio.html" title="ftaudio"><em class="citetitle">ftaudio</em></a>
+              writes a ftable to an audio file; irate and triggered k-rate
+              version exist and k-rate version supports sync or async writing.
+            </li>
+                <li class="listitem">
+              Version of <a class="link" href="OSClisten.html" title="OSClisten"><em class="citetitle">OSClisten</em></a>
+               that writes the data to a k-rate array now exists.
+            </li>
+                <li class="listitem"><a class="link" href="OSCcount.html" title="OSCcount"><em class="citetitle">OSCcount</em>
+              </a> returns the number of OSC incoming messages
+              pending.
+            </li>
+                <li class="listitem"><p class="simpara"><a class="link" href="faustplay.html" title="faustplay"><em class="citetitle">faustplay</em></a>
+              </p> and <p class="simpara"><a class="link" href="faustdsp.html" title="faustdsp">
+              <em class="citetitle">faustdsp</em></a></p> are new opcodes
+              splitting the faust DSP instantiation and performance.
+            </li>
+                <li class="listitem"><a class="link" href="OSCbundle.html" title="OSCbundle"><em class="citetitle">OSCbundle</em></a>
+               sends a collection of similar OSC messages as a single
+              packet for efficiency.
+            </li>
+                <li class="listitem"><p class="simpara"><a class="link" href="beosc.html" title="beosc"><em class="citetitle">beosc</em></a>
+              </p> and <p class="simpara"><a class="link" href="beadsynt.html" title="beadsynt">
+              <em class="citetitle">beadsynt</em></a></p> are band enhanced
+              oscillator and oscillator bank. <p class="simpara"><a class="link" href="bpfcos.html" title="bpfcos"><em class="citetitle">bpfcos</em></a></p>
+              is for breakpoint files with interpolation. Similarly <p class="simpara">
+              <a class="link" href="lincos.html" title="lincos"><em class="citetitle">lincos</em></a>
+              </p> adds cosine interpolation to <p class="simpara"><a class="link" href="linlin.html" title="linlin"><em class="citetitle">linlin</em></a></p>.
+            </li>
+                <li class="listitem"><p class="simpara"><a class="link" href="printarray.html" title="printarray"><em class="citetitle">printarray</em></a>
+              </p> and <p class="simpara"><a class="link" href="reshapearray.html" title="reshapearray">
+              <em class="citetitle">reshapearray</em></a></p> act on
+              arrays.
+            </li>
+                <li class="listitem"><p class="simpara"><a class="link" href="trim.html" title="trim"><em class="citetitle">trim</em></a>
+              </p> and <p class="simpara"><a class="link" href="trim.html" title="trim">
+              <em class="citetitle">trim_i</em></a></p> adjust the size of
+              a 1 dimensional array, either bigger or smaller, preserving data
+              and/or padding with zeros.
+            </li>
+              </ul>
+            </div>
+            <p>
+        </p>
+          </li>
+          <li class="listitem">
+            <p>
+          Orchestra:
+          </p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist" style="list-style-type: circle; ">
+                <li class="listitem">
+                New preprocessor option #includestr.  This is like #include but
+                has macro expansion in the double-quote delimited string.
+              </li>
+                <li class="listitem">Use of tied notes in subinstr fixed.</li>
+                <li class="listitem">
+                Nesting macro calls more than about 10 caused a crash; now
+                unlimited nesting works.
+              </li>
+                <li class="listitem">
+                Runtime error message now (usually) include a line number and a
+                file/macro trace.
+              </li>
+                <li class="listitem">
+                Multiple assignments such as ka, kb = 1,2  are again supported
+                by the parser; it had inadvertently got lost.
+              </li>
+                <li class="listitem">
+                The problematic use of i() with an array element directy is now
+                flagged as an error.
+              </li>
+                <li class="listitem">
+                If an included file name has a "/" in it then any nested include
+                is relative to that directory. (Issue #973).
+              </li>
+                <li class="listitem">
+                Redefinition of UDOs with zero output arguments fixed.
+              </li>
+                <li class="listitem">
+                A very obscure bug in running sub-instruments, which has been
+                in the code for nearly a year, was fixed.
+              </li>
+              </ul>
+            </div>
+            <p>
+        </p>
+          </li>
+          <li class="listitem">
+            <p>Score:
+          </p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist" style="list-style-type: circle; ">
+                <li class="listitem">
+                New preprocessor option #includestr. This is like #include but
+                has macro expansion in the double-quote delimited string.
+              </li>
+                <li class="listitem">
+                'd' score opcode for real-time performance. This was issue #966.
+              </li>
+                <li class="listitem">Bug in np operation fixed.</li>
+                <li class="listitem">
+                Use of [] syntax in a score could lead to a loss of precision
+                for numbers over about 1 million; older version restored.
+              </li>
+                <li class="listitem">
+                Nesting macro calls more than about 10 caused a crash; now
+                unlimited nesting works.
+              </li>
+                <li class="listitem">
+                The forms for delayed ending of sections (e 5 or s 5) now work
+                with fractional delays; previously only read the integer part.
+              </li>
+                <li class="listitem">
+                If an included file name has a "/" in it then any nested include
+                is relative to that directory. (Issue #973).
+              </li>
+              </ul>
+            </div>
+            <p>
+        </p>
+          </li>
+          <li class="listitem">
+            <p>Modified Opcodes and Gens:
+          </p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist" style="list-style-type: circle; ">
+                <li class="listitem">
+                Add optional argument to ftom for rounding answer to integer.
+              </li>
+                <li class="listitem">
+                flooper2 and syncgrain etc now allow resampling.
+              </li>
+                <li class="listitem">
+                chnclear can now take a list of channels to clear instead of
+                just one.
+              </li>
+                <li class="listitem">
+                printf and printf_i now are like the manual: all arguments
+                beyond the format and trigger are optional.
+              </li>
+                <li class="listitem">
+                prints and printks can take string arguments printed with %s.
+              </li>
+                <li class="listitem">
+                GEN2 can now take a size of zero, which is interpreted as size
+                sufficient for the number of values provided.
+              </li>
+                <li class="listitem">
+                faustcompile now includes a new optional parameter to allow it
+                to be run in a blocking mode. Defaults (as before) to
+                non-blocking.
+              </li>
+                <li class="listitem">
+                fillarray can be run at k-rate if any of the argument/values
+                are k-rate.
+              </li>
+                <li class="listitem">
+                slicearray for other than i-rate arrays runs at k-rate only.
+              </li>
+                <li class="listitem">
+                pvstrace now has the option also to return an array containing
+                the bin numbers.
+              </li>
+              </ul>
+            </div>
+            <p>
+        </p>
+          </li>
+          <li class="listitem">
+            <p>Utilities:
+          </p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist" style="list-style-type: circle; ">
+                <li class="listitem">
+                A coding error in mixer was fixed. It was very broken.
+              </li>
+              </ul>
+            </div>
+            <p>
+        </p>
+          </li>
+          <li class="listitem">
+            <p>Bugs Fixed:
+          </p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist" style="list-style-type: circle; ">
+                <li class="listitem">
+                A typo in p5glove meant that the command to read the button
+                status as a bitmap only returned state of button A.
+              </li>
+                <li class="listitem">
+                diskin to array fixed and also use with small ksmps.
+              </li>
+                <li class="listitem">
+                In loscil it sometimes failed to deal with the ibas argument;
+                this has now been reworked to be correct.
+              </li>
+                <li class="listitem">
+                madsr could overflow an internal counter when given a negative
+                p3.
+              </li>
+                <li class="listitem">
+                Fixed mapping from threads to lua_States (issue #959).
+              </li>
+                <li class="listitem">
+                The time calculation in flooper2, flooper, and syncgrain was
+                corrected.
+              </li>
+                <li class="listitem">
+                Resampling and pitch fixed in pvstanal
+              </li>
+                <li class="listitem">
+                Rare buffer overflow case in faust opcodes fixed.
+              </li>
+                <li class="listitem">
+                pvsftw had an incorrect check for fft format which led to
+                incorrect claim of bad format; fixed.
+              </li>
+                <li class="listitem">
+                If ksmps was 1 the opcode linenr at arate failed to work; fixed.
+              </li>
+                <li class="listitem">window opcode fixed.</li>
+                <li class="listitem">
+                The test for compatible subtypes of f-values in a number of pvs
+                opcodes was wrong, causing spurious error messages.
+              </li>
+                <li class="listitem">
+                cosseg was broken for more than one segment; now OK.
+              </li>
+                <li class="listitem">
+                monitor opcode did not work correctly when using multiple
+                processes; fixed.
+              </li>
+                <li class="listitem">
+                in the linenr opcode if the release stage was entered before
+                the end of the rise the output value jumped to the end value
+                and then decayed, causing a glitch. This is fixed. (#1048)
+              </li>
+              </ul>
+            </div>
+            <p>
+        </p>
+          </li>
+          <li class="listitem">
+            <p>System Changes:
+          </p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist" style="list-style-type: circle; ">
+                <li class="listitem">
+                The various -zN options now reports the number of opcodes for
+                the request, so differs with respect to deprecated and
+                polymorphic opcodes.
+              </li>
+                <li class="listitem">
+                Recompilation of named instruments totally reworked to avoid
+                errors and memory leaks.
+              </li>
+                <li class="listitem">
+                The allocation of instrument names to internal numbers has been
+                rewritten and should now be usable with replacements in live
+                coding.
+              </li>
+                <li class="listitem">
+                Printing the number allocated to a named instrument now behaves
+                the manual, not just for debug.
+              </li>
+                <li class="listitem">
+                If liblo version 0.29 is available csound can be built to use
+                it (with a compiler flag LIBLO29) and this fixes some bugs
+                related to heavy/complex use of OSClisten. Unfortunately the
+                older 0.28 version is being distributed by some Linux distros.
+              </li>
+                <li class="listitem">
+                The orchestra compiler has a number of new optimisations,
+                avoiding unnecessary assignments and doing some more expression
+                optimisations.
+              </li>
+              </ul>
+            </div>
+            <p>
+        </p>
+          </li>
+          <li class="listitem">
+            <p>API:
+          </p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist" style="list-style-type: circle; ">
+                <li class="listitem">
+                csound-&gt;ReadScore was changed so it behaves the same as a score
+                in a csd or sco file. This could incorrectly give an infinite
+                score or not in unexpected cases.
+              </li>
+              </ul>
+            </div>
+            <p>
+        </p>
+          </li>
+          <li class="listitem">
+            <p>Platform Specific:
+          </p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist" style="list-style-type: circle; ">
+                <li class="listitem">
+                Bela: allow analog in and out with different channel numbers.
+              </li>
+              </ul>
+            </div>
+            <p>
+        </p>
+          </li>
+        </ul>
+      </div>
+      <p>
+  </p>
+      <h3><a id="idm431538489264"></a>Release Notes for Csound 6.11 (2018 May)</h3>
+      <p>
+    There has been a great amount of internal reorganisation, which should not
+    affect most users. Some components are now independently managed and will
+    eventually be installable via a new package manager. The realtime option is
+    now considered stable and has the "experimental" tag removed. Special
+    support for the Bela platform has been introduced. There have
+    been more steps towards completing the arithmetic operations involving
+    a-arrays.
+    </p>
+      <div class="note" style="margin-left: 0.5in; margin-right: 0.5in;">
+        <table border="0" summary="Note">
+          <tr>
+            <td rowspan="2" align="center" valign="top" width="25">
+              <img alt="[Note]" src="images/note.png" />
+            </td>
+            <th align="left">Note</th>
+          </tr>
+          <tr>
+            <td align="left" valign="top">Note that changes to GEN01 and diskin2 may not be backward compatible
+    if a non zero value is given for the format.</td>
+          </tr>
+        </table>
+      </div>
+      <p>
+  </p>
+      <p>
+    </p>
+      <div class="itemizedlist">
+        <ul class="itemizedlist" style="list-style-type: disc; ">
+          <li class="listitem">
+            <p>New opcodes:
+          </p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist" style="list-style-type: circle; ">
+                <li class="listitem">
+                <a class="link" href="loscil.html" title="loscil"><em class="citetitle">loscilphs</em></a>,
+                <a class="link" href="loscil3.html" title="loscil3"><em class="citetitle">loscil3phs</em></a>
+                are like loscil but return the phase in  addition to the audio.
+              </li>
+              </ul>
+            </div>
+            <p>
+          </p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist" style="list-style-type: circle; ">
+                <li class="listitem">
+                More arithmetic between a-rate arrays and a-rate values; this
+                completes the arithmetic where one or more argument is an audio
+                array.
+              </li>
+              </ul>
+            </div>
+            <p>
+          </p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist" style="list-style-type: circle; ">
+                <li class="listitem">
+                <a class="link" href="balance2.html" title="balance2"><em class="citetitle">balance2</em></a>
+                is like balance but scales the output at a-rate,
+                rather than k-rate. 
+              </li>
+              </ul>
+            </div>
+            <p>
+        </p>
+          </li>
+          <li class="listitem">
+            <p>Score:
+          </p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist" style="list-style-type: circle; ">
+                <li class="listitem">
+                Characters following a \ in a score string are treated as
+                escaped, so \n is a newline rather than two characters. It
+                handles escaped a, b, f, n, r, t and v. Other characters
+                following a \ ignore the backslash.
+              </li>
+              </ul>
+            </div>
+            <p>
+        </p>
+          </li>
+          <li class="listitem">
+            <p>Modified Opcodes and Gens:
+          </p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist" style="list-style-type: circle; ">
+                <li class="listitem">
+                print, printk2 now take an additional optional argument which
+                if non-zero causes the k-variable name to be printed as well as
+                the value.
+              </li>
+                <li class="listitem">
+                getrow, setrow, getcol, and setcol can now act on i-rate arrays.
+              </li>
+                <li class="listitem">
+                diskin2 was incorrectly described in the manual with respect to
+                the iformat parameter. Now if iformat is zero the file is
+                expected to have an audio header; if in the range 1-10 (rather
+                than 0-9 as before) then it is opened as raw with the specified
+                sample format. THIS MAY BE INCOMPATIBLE. For most users the
+                value of zero will be correct.
+              </li>
+                <li class="listitem">
+                GEN01 now uses format 0 to get the file type from the header;
+                any other value indicates a raw file. THIS MAY BE INCOMPATIBLE.
+                For most users the value of zero will be correct.
+              </li>
+                <li class="listitem">
+                GEN01 was incorrectly documented with respect to the format
+                argument. There are 9 raw formats whereas the earlier manual
+                stated 6.
+              </li>
+                <li class="listitem">
+                Small change in slicearray should allow it to be used in
+                functional form in most cases.
+              </li>
+                <li class="listitem">
+                The family of opcodes tb0 to tb15 and their initialisation
+                opcodes tb0_init to tb15_init are deprecated as multi-argument
+                functions are allowed.
+              </li>
+                <li class="listitem">
+                The mode filter now does not allow a frequency in the unstable
+                region.
+              </li>
+                <li class="listitem">
+                In scanu and xscanu the value of kpos is supposed to be in the
+                range [0,1]. This is now enforced by treating all negative
+                values as 0 and all values bigger than 1 as 1.
+              </li>
+              </ul>
+            </div>
+            <p>
+        </p>
+          </li>
+          <li class="listitem">
+            <p>Utilities:
+          </p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist" style="list-style-type: circle; ">
+                <li class="listitem">
+                src_conv is now available on Windows and MacOS.
+              </li>
+              </ul>
+            </div>
+            <p>
+        </p>
+          </li>
+          <li class="listitem">
+            <p>Frontends:
+          </p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist" style="list-style-type: circle; ">
+                <li class="listitem">
+                Belacsound: a new frontend specific for the Bela platform is
+                introduced in this version.
+              </li>
+              </ul>
+            </div>
+            <p>
+        </p>
+          </li>
+          <li class="listitem">
+            <p>Bugs Fixed:
+          </p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist" style="list-style-type: circle; ">
+                <li class="listitem">
+                linen was reworked to allow for long durations and overlaps.
+              </li>
+                <li class="listitem">
+                Resetting csound caused a crash if Lua opcodes were used; fixed.
+              </li>
+                <li class="listitem">
+                The poscil family of opcodes could give incorrect results if
+                used in multi-core orchestras AND another instrument changed
+                the f-table. This is now corrected.
+              </li>
+                <li class="listitem">
+                Use of out with an audio array did not check that the array
+                dimension was not greater than the number of channels, which
+                caused a crash. It is now checked and truncated if too large
+                with a warning.
+              </li>
+                <li class="listitem">
+                Bug in stereo versions of loscil introduced distortion;
+                now fixed.
+              </li>
+                <li class="listitem">Fencepost error in phs fixed.</li>
+                <li class="listitem">
+                gen49 read deleted memory if the file was not found; fixed.
+              </li>
+                <li class="listitem">
+                Loading of LADSPA plugins when relying on search paths was
+                wrong and mangled the name; now fixed.
+              </li>
+              </ul>
+            </div>
+            <p>
+        </p>
+          </li>
+          <li class="listitem">
+            <p>System Changes:
+          </p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist" style="list-style-type: circle; ">
+                <li class="listitem">
+                OPCODE6DIR{64} now can contain a colon-separated list of
+                directories.
+              </li>
+                <li class="listitem">
+                The somewhat curious distinction between k-rate and a-rate
+                perf-time has been removed throughput, so only threads 1, 2
+                and 3 are used, the s-type output is not used, and some x-type
+                inputs have been changed for direct polymorphism. This only
+                matters for opcode writers as the s, and x codes and threads
+                4, 5, 6 and 7 will be removed in a while.
+              </li>
+              </ul>
+            </div>
+            <p>
+        </p>
+          </li>
+          <li class="listitem">
+            <p>Translations:
+          </p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist" style="list-style-type: circle; ">
+                <li class="listitem">As ever the French translations are complete.</li>
+              </ul>
+            </div>
+            <p>
+        </p>
+          </li>
+          <li class="listitem">
+            <p>API:
+          </p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist" style="list-style-type: circle; ">
+                <li class="listitem">No changes to the API.</li>
+              </ul>
+            </div>
+            <p>
+        </p>
+          </li>
+          <li class="listitem">
+            <p>Platform Specific:
+          </p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist" style="list-style-type: circle; ">
+                <li class="listitem">
+                WebAudio: from this release onwards, the Csound port for the
+                web platforms has been merged into a single package henceforth
+                called 'WebAudio Csound'. There are many internal changes to
+                this, the AudioWorklet interface is employed wherever supported,
+                with a fallback to ScriptProcessorNode elsewhere. Csound is also
+                available in the form of independent Nodes, in addition to the
+                original CsoundObj API. The csound.js frontend, originally
+                designed for PNaCl Csound, is also ported to WebAudio Csound,
+                following the deprecation of that port of Csound.
+              </li>
+              </ul>
+            </div>
+            <p>
+        </p>
+          </li>
+        </ul>
+      </div>
+      <p>
+  </p>
+      <h3><a id="idm431538446080"></a>Release Notes for Csound 6.10 (2017 December)</h3>
+      <p>
+    This is mostly a bugfix release, including a major bug introduced in loscil
+    recently. New and improved opcodes and a long orphaned GEN (53) are here, as
+    well as many small internal improvements. Internal changes have removed a
+    number of memory leaks.
+  </p>
+      <p>
+    </p>
+      <div class="itemizedlist">
+        <ul class="itemizedlist" style="list-style-type: disc; ">
+          <li class="listitem">
+            <p>New opcodes:
+          </p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist" style="list-style-type: circle; ">
+                <li class="listitem">
+                <a class="link" href="midiout_i.html" title="midiout_i"><em class="citetitle">midiout_i</em></a>
+                which is like midiout, but works at i-rate.
+              </li>
+                <li class="listitem">
+                <a class="link" href="chnget.html" title="chnget"><em class="citetitle">chngetks</em></a> and
+                <a class="link" href="chnset.html" title="chnset"><em class="citetitle">chnsetks</em></a> --
+                versions of <span class="emphasis"><em>chnget</em></span> and <span class="emphasis"><em>chnset</em></span>
+                for string channels that only run at perf-time.
+              </li>
+                <li class="listitem">
+                <a class="link" href="squinewave.html" title="squinewave"><em class="citetitle">squinewave</em></a>,
+                a mostly bandlimited shape-shifting square-pulse-saw-sinewave
+                oscillator with hardsync.
+              </li>
+              </ul>
+            </div>
+            <p>
+        </p>
+          </li>
+          <li class="listitem">
+            <p>New Gen and Macros:
+          </p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist" style="list-style-type: circle; ">
+                <li class="listitem">
+                <a class="link" href="GEN53.html" title="GEN53"><em class="citetitle">GEN53</em></a>
+                (which has been in the code but not documented for years) is now
+                acknowledged. It creates a linear-phase or minimum-phase impulse
+                response table from a source table containing a frequency
+                response or an impulse response.
+              </li>
+              </ul>
+            </div>
+            <p>
+        </p>
+          </li>
+          <li class="listitem">
+            <p>Orchestra:
+          </p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist" style="list-style-type: circle; ">
+                <li class="listitem">
+                Incorrect use of k-rate if..then.. in instrument 0 is now treated
+                as i-rate.
+              </li>
+                <li class="listitem">
+                Incorrect use of k-rate operations in instrument 0 are no longer
+                treated as an error but a warning.
+              </li>
+                <li class="listitem">
+                In a csd file commented-out tags were acted upon in some cases,
+                leading to truncated orchestras. This is now fixed.
+              </li>
+                <li class="listitem">
+                Arrays can be assigned from i-rate and k-rate to krate and
+                i-rate; previously rates had to match.
+              </li>
+                <li class="listitem">
+                The use of ! as a Boolean operation (meaning negation) is now
+                supported, where previously the parser accepted it but did not
+                use it.
+              </li>
+                <li class="listitem">
+                Constant folding now implemented on a wide range of arithmetic.
+              </li>
+                <li class="listitem">
+                Attempts to use an undefined macro produce a syntax error now.
+              </li>
+                <li class="listitem">
+                Missing " (or other terminator) in #include is noticed and
+                the #include is ignored.
+              </li>
+              </ul>
+            </div>
+            <p>
+        </p>
+          </li>
+          <li class="listitem">
+            <p>Score:
+          </p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist" style="list-style-type: circle; ">
+                <li class="listitem">
+                In a csd file commented-out tags were acted upon in some cases,
+                leading to truncated scores. This is now fixed.
+              </li>
+                <li class="listitem">The evaluation form [..] can now be nested.</li>
+                <li class="listitem">
+                The extract feature (-x from command line) now works.
+              </li>
+                <li class="listitem">
+                Use of the score opcode x could cause spurious error messages
+                which are now suppressed.
+              </li>
+                <li class="listitem">
+                After calling a undefined macro the rest of the line is ignored.
+              </li>
+                <li class="listitem">
+                A couple of bugs in repeated sections (r opcode) have been removed.
+              </li>
+                <li class="listitem">
+                Missing " (or other terminator) in #include is noticed and the
+                #include is ignored.
+              </li>
+              </ul>
+            </div>
+            <p>
+        </p>
+          </li>
+          <li class="listitem">
+            <p>Options:
+          </p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist" style="list-style-type: circle; ">
+                <li class="listitem">
+                The --tempo (and -t) option now can be fractional; was
+                previously limited to an integer.
+              </li>
+                <li class="listitem">
+                new option: --udp-console=address:port redirects console to a
+                remote address:port.
+              </li>
+                <li class="listitem">
+                new option: --udp-mirror-console=address:port mirrors the
+                console to a remote address:port.
+              </li>
+                <li class="listitem">
+                new option: --udp-echo echoes messages sent to the UDP server.
+              </li>
+              </ul>
+            </div>
+            <p>
+        </p>
+          </li>
+          <li class="listitem">
+            <p>Modified Opcodes and Gens:
+          </p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist" style="list-style-type: circle; ">
+                <li class="listitem">loscil/loscil3 accept floating point increment.</li>
+                <li class="listitem">OSCraw closes socket after use.</li>
+                <li class="listitem">
+                fout can now generate ogg format, as well as accepting -1 to
+                mean the same format as -o uses.
+              </li>
+                <li class="listitem">
+                bitwise and opcode (&amp;) at a-rate corrected for sample-accurate
+                mode.
+              </li>
+                <li class="listitem">
+                slicearray has an optional additional argument to give a stride
+                to the slice.
+              </li>
+                <li class="listitem">chnset now can have variable channel names.</li>
+                <li class="listitem">
+                a-rate arrays may be added, subtracted, multiplied and scaled.
+                This is a start on a-rate array arithmetic.
+              </li>
+                <li class="listitem">dssiinit improved removing some crashes.</li>
+                <li class="listitem">partials improved to remove a fencepost issue.</li>
+                <li class="listitem">vco2ift fixed when an existing table is used.</li>
+              </ul>
+            </div>
+            <p>
+        </p>
+          </li>
+          <li class="listitem">
+            <p>Frontends:
+          </p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist" style="list-style-type: circle; ">
+                <li class="listitem">
+                Emscripten: Now compiled as WebAssembly (runs in all major
+                browsers). API now somewhat more conformed to other HTML5 APIs.
+              </li>
+                <li class="listitem">
+                CsoundQT: Now built from master branch for improved stability.
+              </li>
+              </ul>
+            </div>
+            <p>
+        </p>
+          </li>
+          <li class="listitem">
+            <p>Bug fixed:
+          </p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist" style="list-style-type: circle; ">
+                <li class="listitem">
+                The optionality of the last argument in sc_phasor now works.
+              </li>
+                <li class="listitem">Freezing in dconv fixed.</li>
+                <li class="listitem">
+                looptseg no longer crashes if presented with too few arguments.
+              </li>
+                <li class="listitem">
+                schedule etc now work correctly with double-quoted strings
+                within {{ }} strings.
+              </li>
+                <li class="listitem">
+                problem with CLI frontend interrupt handler fixed.
+              </li>
+                <li class="listitem">
+                outs2 was broken (always wrote to channel 1 like outs1).
+              </li>
+                <li class="listitem">
+                Various errors in the DSSI/ladspa system fixed.
+              </li>
+                <li class="listitem">
+                vbap was broken in all cases except 4-speakers, now corrected.
+              </li>
+                <li class="listitem">
+                Live evalution of Csound Orchestra code code could result in
+                hard to diagnose, odd errors (e.g., crashes, division by zeros,
+                NaNs). This was due to a bug in merging of newly found constants
+                into the global constant pool.
+              </li>
+              </ul>
+            </div>
+            <p>
+        </p>
+          </li>
+          <li class="listitem">
+            <p>System Changes:
+          </p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist" style="list-style-type: circle; ">
+                <li class="listitem">
+                UDP Server now accepts some new commands, which are prefixed by
+                an opcode. These include support for events (&amp;) and scores ($);
+                setting control channels (@ ); setting string channels (% );
+                getting control channel values via UDP (:@ ) and string channel
+                contents (:% ).
+              </li>
+              </ul>
+            </div>
+            <p>
+        </p>
+          </li>
+          <li class="listitem">
+            <p>Translations:
+          </p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist" style="list-style-type: circle; ">
+                <li class="listitem">As ever the French translations are complete.</li>
+                <li class="listitem">
+                The Italian translations of messages are greatly improved in
+                scope; about a half of error and warning messages are now done.
+              </li>
+                <li class="listitem">
+                Some progress as been made in German translations.
+              </li>
+              </ul>
+            </div>
+            <p>
+        </p>
+          </li>
+          <li class="listitem">
+            <p>API:
+          </p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist" style="list-style-type: circle; ">
+                <li class="listitem">
+                CompileCsdText now always returns a value indicating success/failure.
+              </li>
+                <li class="listitem">
+                Eight new asynchronous versions of API functions now available:
+                csoundCompileTreeAsync(), csoundCompileOrcAsync(), csoundReadScoreAsync(),
+                csoundInputMessageAsync(), csoundScoreEventAsync(), csoundScoreEventAbsoluteAsync(),
+                csoundTableCopyOutAsync(), and csoundTableCopyInAsync().
+              </li>
+                <li class="listitem">
+                For server use, three new API functions: csoundUDPServerStart,
+                csoundUDPServerStatus and csoundUDPServerClose.
+              </li>
+              </ul>
+            </div>
+            <p>
+        </p>
+          </li>
+          <li class="listitem">
+            <p>Platform Specific:
+          </p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist" style="list-style-type: circle; ">
+                <li class="listitem">
+                  <p class="simpara">Windows</p>
+                  <div class="itemizedlist">
+                    <ul class="itemizedlist" style="list-style-type: square; ">
+                      <li class="listitem">Now compiled with Microsoft Visual Studio 2017 or later.</li>
+                      <li class="listitem">Continuous integration for Windows with AppVeyor.</li>
+                    </ul>
+                  </div>
+                </li>
+                <li class="listitem">
+                  <p class="simpara">GNU/Linux</p>
+                  <div class="itemizedlist">
+                    <ul class="itemizedlist" style="list-style-type: square; ">
+                      <li class="listitem">
+                    GNU/Linux ALSA MIDI backend now ignores some spurious ENOENT
+                    error codes.
+                  </li>
+                    </ul>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <p>
+        </p>
+          </li>
+        </ul>
+      </div>
+      <p>
+  </p>
+      <h3><a id="idm431538369808"></a>Release Notes for Csound 6.09 (2017 May)</h3>
+      <p>A mixed bag of new opcodes and many fixes and improvements.</p>
+      <p>
+    Also as usual there are a number of internal changes, including many memory
+    leaks fixed and more robust code.
+  </p>
+      <p>
+    </p>
+      <div class="itemizedlist">
+        <ul class="itemizedlist" style="list-style-type: disc; ">
+          <li class="listitem">
+            <p>New opcodes:
+          </p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist" style="list-style-type: circle; ">
+                <li class="listitem">
+                <a class="link" href="select.html" title="select"><em class="citetitle">select</em></a> --
+                sample-by-sample comparison of audio selecting the output.
+              </li>
+                <li class="listitem">
+                <a class="link" href="midiarp.html" title="midiarp"><em class="citetitle">midiarp</em></a> --
+                generates arpeggios based on currently held MIDI notes.
+              </li>
+                <li class="listitem">
+                <a class="link" href="hilbert2.html" title="hilbert2"><em class="citetitle">hilbert2</em></a> --
+                a DFT-based implementation of a Hilbert transformer.
+              </li>
+                <li class="listitem">
+                Ableton Link opcodes -- for synchronizing tempo and beat across
+                local area networks.
+              </li>
+                <li class="listitem">
+                <a class="link" href="pvstrace.html" title="pvstrace"><em class="citetitle">pvstrace</em></a> --
+                retain only the N loudest bins.
+              </li>
+                <li class="listitem">
+                several new unary functions/opcodes for k-rate and i-time numeric
+                arrays: ceil, floor, round, int, frac, powoftwo, abs, log2, log10,
+                log, exp, sqrt, cos, sin, tan, acos, asin, atan, sinh, cosh, tanh,
+                cbrt, limit1.
+              </li>
+                <li class="listitem">
+                several new binary functions/opcodes for k-rate and i-time numeric
+                arrays: atan2, pow, hypot, fmod, fmax, fmin.
+              </li>
+                <li class="listitem">
+                <a class="link" href="limit.html" title="limit"><em class="citetitle">limit</em></a> --
+                numeric limiting within a given range (for arrays).
+              </li>
+                <li class="listitem">
+                <a class="link" href="tvconv.html" title="tvconv"><em class="citetitle">tvconv</em></a> --
+                a time-varying convolution (FIR filter) opcode.
+              </li>
+                <li class="listitem">
+                <a class="link" href="liveconv.html" title="liveconv"><em class="citetitle">liveconv</em></a> --
+                partitioned convolution with dynamically reloadable impulse
+                response.
+              </li>
+                <li class="listitem">
+                <a class="link" href="bpf.html" title="bpf"><em class="citetitle">bpf</em></a>,
+                <a class="link" href="xyscale.html" title="xyscale"><em class="citetitle">xyscale</em></a>,
+                <a class="link" href="ntom.html" title="ntom"><em class="citetitle">ntom</em></a>,
+                <a class="link" href="mton.html" title="mton"><em class="citetitle">mton</em></a> --
+                (from SuperCollider?).
+              </li>
+                <li class="listitem">
+                <a class="link" href="OSCsend.html" title="OSCsend"><em class="citetitle">OSCsend</em></a> --
+                now implemented directly using system sockets. Old version using
+                liblo has been kept as OSCsend_lo.
+              </li>
+                <li class="listitem">
+                <span class="emphasis"><em>OSCraw</em></span> -- to listen for all OSC messages at
+                a given port.
+              </li>
+                <li class="listitem">
+                <a class="link" href="sorta.html" title="sorta"><em class="citetitle">sorta</em></a> and 
+                <a class="link" href="sortd.html" title="sortd"><em class="citetitle">sortd</em></a>--
+                sort elements of an array.
+              </li>
+                <li class="listitem">
+                <a class="link" href="dot.html" title="dot"><em class="citetitle">dot</em></a> --
+                calculates the dot product of two arrays.
+              </li>
+                <li class="listitem">
+                zero delay filters -- 
+                <a class="link" href="zdf_1pole_mode.html" title="zdf_1pole_mode"><em class="citetitle">zdf_1pole_mode</em></a>,
+                <a class="link" href="zdf_2pole_mode.html" title="zdf_2pole_mode"><em class="citetitle">zdf_2pole_mode</em></a>,
+                <a class="link" href="zdf_ladder.html" title="zdf_ladder"><em class="citetitle">zdf_ladder</em></a>,
+                <a class="link" href="zdf_1pole.html" title="zdf_1pole"><em class="citetitle"></em>zdf_1pole</a> and
+                <a class="link" href="zdf_2pole.html" title="zdf_2pole"><em class="citetitle"></em>zdf_2pole</a>,
+                <a class="link" href="diode_ladder.html" title="diode_ladder"><em class="citetitle"></em>diode_ladder</a>,
+                <a class="link" href="k35_hpf.html" title="K35_hpf"><em class="citetitle">K35_hpf</em></a> and
+                <a class="link" href="k35_lpf.html" title="K35_lpf"><em class="citetitle">K35_lpf</em></a>.
+              </li>
+                <li class="listitem">
+                <a class="link" href="product.html" title="product"><em class="citetitle">product</em></a> --
+                takes a numeric array (k or i-rate) and calculates its product.
+              </li>
+                <li class="listitem">
+                supercollider ugens -- 
+                <a class="link" href="sc_phasor.html" title="sc_phasor"><em class="citetitle">sc_phasor</em></a>,
+                <a class="link" href="sc_lag.html" title="sc_lag"><em class="citetitle">sc_lag</em></a>,
+                <a class="link" href="sc_lagud.html" title="sc_lagud"><em class="citetitle">sc_lagud</em></a>,
+                <a class="link" href="sc_trig.html" title="sc_trig"><em class="citetitle">sc_trig</em></a>.
+              </li>
+              </ul>
+            </div>
+            <p>
+        </p>
+          </li>
+          <li class="listitem">
+            <p>
+          Orchestra:
+          </p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist" style="list-style-type: circle; ">
+                <li class="listitem">
+                Including a directory of UDO files no longer fails if more than
+                about 20 entries.
+              </li>
+                <li class="listitem">
+                It was possible for kr, sr, and ksmps to be inconsistent in one
+                case, no more.
+              </li>
+                <li class="listitem">
+                Macro names better policed and bracket matching.
+              </li>
+                <li class="listitem">
+                Octal values as \000 can be in strings.
+              </li>
+                <li class="listitem">
+                (from 6.09.1) In a UDO the out* opcodes now work, where before
+                it was working only sometimes.
+              </li>
+              </ul>
+            </div>
+            <p>
+        </p>
+          </li>
+          <li class="listitem">
+            <p>Score:
+          </p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist" style="list-style-type: circle; ">
+                <li class="listitem">
+                Improved line number reporting in r opcode and case with no
+                macro implemented.
+              </li>
+                <li class="listitem">m and n opcodes fixed.</li>
+                <li class="listitem">Expansion of [...] corrected and improved.</li>
+                <li class="listitem">Strings in scores improved.</li>
+                <li class="listitem">
+                The ) character can be in a macro argument if it is escaped
+                with \.
+              </li>
+                <li class="listitem">
+                Use of the characters e or s could lead to errors; now fixed.
+              </li>
+                <li class="listitem">
+                Macro names better policed, and bracket matching.
+              </li>
+                <li class="listitem">
+                p2 and p3 are now at higher precision, no longer truncated to
+                6 decimal places.
+              </li>
+                <li class="listitem">
+                new opcode d to switch off infinite notes (denote); same as i
+                with negative p1.
+              </li>
+                <li class="listitem">
+                named instruments can be turned off with i if a - follows the ".
+              </li>
+                <li class="listitem">
+                (from 6.09.1) if an r-opcode section ended in e-opcode it used
+                to stop early.
+              </li>
+              </ul>
+            </div>
+            <p>
+        </p>
+          </li>
+          <li class="listitem">
+            <p>
+          Options:
+          </p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist" style="list-style-type: circle; ">
+                <li class="listitem">
+                jack midi module now can report available devices under
+                --midi-devices.
+              </li>
+                <li class="listitem">
+                (from 6.09.1) defining smacros and omacros on command line only
+                happens once.
+              </li>
+                <li class="listitem">
+                (from 6.09.1) defining smacros  from command line now works.
+              </li>
+              </ul>
+            </div>
+            <p>
+        </p>
+          </li>
+          <li class="listitem">
+            <p>Modified Opcodes and Gens:
+          </p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist" style="list-style-type: circle; ">
+                <li class="listitem">ftgentmp improved string arguments.</li>
+                <li class="listitem">
+                hdf5read opcode now reads entire data sets when dataset name
+                string is suffixed with an asterisk.
+              </li>
+                <li class="listitem">
+                use of non power-of-two lengths now acceptable where before
+                it was inconsistent.
+              </li>
+                <li class="listitem">ampmidid optionally can be aware of 0dbfs.</li>
+                <li class="listitem">
+                dust and dust2 at k-rate now conform to the manual (NOTE:
+                this is an incompatible change).
+              </li>
+                <li class="listitem">In prints the format %% now prints one %.</li>
+                <li class="listitem">OSClisten can be used with no data outputs.</li>
+                <li class="listitem">GEN18 corrected to write to requested range.</li>
+                <li class="listitem">sockrev now can read strings.</li>
+                <li class="listitem">
+                vbap system can in some cases allow arbitrary number of
+                speakers via arrays (work in progress).
+              </li>
+                <li class="listitem">
+                Websocket server can only accept one protocol output, so
+                limiting intype to just a single argument.
+              </li>
+                <li class="listitem">sum opcode will also sum elements of an array.</li>
+                <li class="listitem">
+                Overloaded pvs2tab and tab2pvs now can create and use split
+                magnitude and phase arrays.
+              </li>
+              </ul>
+            </div>
+            <p>
+        </p>
+          </li>
+          <li class="listitem">
+            <p>Utilities:
+          </p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist" style="list-style-type: circle; ">
+                <li class="listitem">dnoise fixed.</li>
+              </ul>
+            </div>
+            <p>
+        </p>
+          </li>
+          <li class="listitem">
+            <p>Frontends:
+          </p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist" style="list-style-type: circle; ">
+                <li class="listitem">Removed HTML5 Csound editor which has quit working.</li>
+                <li class="listitem">
+                Emscripten: Emscripten Csound (asm.js) now requires sourcing in
+                CsoundObj.js and FileList.js separately from libcsound.js. This
+                is to accommodate using the same JS API with either asm.js or
+                wasm backends.
+              </li>
+                <li class="listitem">
+                CsoundQT: CsoundQt 0.9.4 is announced:
+                <a class="ulink" href="https://github.com/CsoundQt/CsoundQt/blob/develop/release_notes/Release%20notes%200.9.4.md" target="_top">
+                <em class="citetitle">https://github.com/CsoundQt/CsoundQt/blob/develop/release_notes/Release notes 0.9.4.md</em></a>.
+              </li>
+                <li class="listitem">Windows installer with CsoundQt includes PythonQt.</li>
+              </ul>
+            </div>
+            <p>
+        </p>
+          </li>
+          <li class="listitem">
+            <p>Bugs Fixed:
+          </p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist" style="list-style-type: circle; ">
+                <li class="listitem">pwd works on OSX.</li>
+                <li class="listitem">Fencepost error in sensLine fixed.</li>
+                <li class="listitem">OSCsend corrected for caching of host name.</li>
+                <li class="listitem">
+                Bug in push/pop opcodes fixed (this opcode is now a plugin and
+                deprecated).
+              </li>
+                <li class="listitem">Bug in sprintf removed.</li>
+                <li class="listitem">Bug in soundin removed.</li>
+                <li class="listitem">losci/losci3 fixed in case of long tables.</li>
+                <li class="listitem">inrg was broke for a while.</li>
+                <li class="listitem">
+                Partikkel channelmask panning laws had an indexing error, now
+                fixed.
+              </li>
+                <li class="listitem">
+                jack audio module now allows for independent numbers of in and
+                out channels.
+              </li>
+                <li class="listitem">Bug in string copying fixed.</li>
+                <li class="listitem">
+                Bug in hdf5read where if two hdf5read opcodes were placed in
+                series in an instrument, the argument names of the second opcode
+                instance would be incorrect due to directly changing the last
+                string character of the first when reading an entire dataset.
+              </li>
+                <li class="listitem">Memory leaks fixed in some plugin opcodes.</li>
+              </ul>
+            </div>
+            <p>
+        </p>
+          </li>
+          <li class="listitem">
+            <p>System Changes:
+          </p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist" style="list-style-type: circle; ">
+                <li class="listitem">soundin now uses the diskin2 code.</li>
+                <li class="listitem">
+                out family of opcodes reworked to reduce interleaving costs and
+                to take proper regard if nchnls value.
+              </li>
+                <li class="listitem">
+                (from 6.09.1) a crash on Linux i386 removed relating to server mode.
+              </li>
+              </ul>
+            </div>
+            <p>
+        </p>
+          </li>
+          <li class="listitem">
+            <p>API:
+          </p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist" style="list-style-type: circle; ">
+                <li class="listitem">
+                New csound_threaded.hpp header-only facility, obviating need for
+                csPerfThread.cpp object in some projects.
+              </li>
+                <li class="listitem">Added GetA4 function.</li>
+                <li class="listitem">
+                New framework for plugin opcode development in C++ using
+                Csound's allocator.
+              </li>
+                <li class="listitem">Added StrDup function.</li>
+                <li class="listitem">
+                Boost dependencies removed from Csound interfaces and CsoundAC.
+              </li>
+                <li class="listitem">
+                (from 6.09.1) Two new API function, csoundSetSpinSample and
+                csoundClearSpin.
+              </li>
+              </ul>
+            </div>
+            <p>
+        </p>
+          </li>
+          <li class="listitem">
+            <p>Platform Specific:
+          </p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist" style="list-style-type: circle; ">
+                <li class="listitem">
+                  <p class="simpara">iOS</p>
+                  <div class="itemizedlist">
+                    <ul class="itemizedlist" style="list-style-type: square; ">
+                      <li class="listitem">
+                    iPad portrait SplitView fix+animation, info popover
+                    resizing, stop button fix in Soundfile Pitch Shifter.
+                  </li>
+                      <li class="listitem">
+                    Csound-iOS API updates; Examples cleaned up,
+                    enhanced/expanded, and reordered. Manual revised, expanded,
+                    updated. Updates to API and examples support iOS 10 and
+                    Xcode 8.
+                  </li>
+                    </ul>
+                  </div>
+                </li>
+                <li class="listitem">
+                  <p class="simpara">Android</p>
+                  <div class="itemizedlist">
+                    <ul class="itemizedlist" style="list-style-type: square; ">
+                      <li class="listitem">
+                    Multichannel input and output allowed.
+                  </li>
+                    </ul>
+                  </div>
+                </li>
+                <li class="listitem">
+                  <p class="simpara">Windows</p>
+                  <div class="itemizedlist">
+                    <ul class="itemizedlist" style="list-style-type: square; ">
+                      <li class="listitem">
+                    csound64.lib import library added to Windows installer.
+                  </li>
+                    </ul>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <p>
+        </p>
+          </li>
+        </ul>
+      </div>
+      <p>
+  </p>
+      <h3><a id="idm431538260176"></a>Release Notes for Csound 6.08 (2016 November)</h3>
+      <p>
+    As usual there are a number of opcode fixes and improvements, but the major
+    changes are in the language structures. First the score language has all-new
+    treatment of macros and preprocessing, bringing it in line with those of the
+    orchestra. The parsing of the orchestra has had a number of fixes as
+    outlined below.
+  </p>
+      <p>
+    A major, and not totally compatible change as been made in reading and
+    writing array elements. The rate of the index now often determines the
+    time of processing; check the entry below under Orchestra. This simplifies
+    much code and seems to capture expectations; the earlier ad hoc code had
+    many anomalies.
+  </p>
+      <p>
+    Also as usual there are a number of new opcodes and internal fixes to
+    memory leaks and more robust code.
+  </p>
+      <p>
+    </p>
+      <div class="itemizedlist">
+        <ul class="itemizedlist" style="list-style-type: disc; ">
+          <li class="listitem">
+            <p>New opcodes:
+          </p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist" style="list-style-type: circle; ">
+                <li class="listitem">
+                <a class="link" href="dct.html" title="dct"><em class="citetitle">dct</em></a>: Discrete
+                Cosine Transform of a sample array (type-II DCT).
+              </li>
+                <li class="listitem">
+                <a class="link" href="getftargs.html" title="getftargs"><em class="citetitle">getftargs</em></a>:
+                copy arguments of a gen to an S-variable.
+              </li>
+                <li class="listitem"><a class="link" href="mfb.html" title="mfb"><em class="citetitle">mfb</em></a>:
+                implements a mel-frequency filterbank for an array of input
+                magnitudes.
+              </li>
+              </ul>
+            </div>
+            <p>
+        </p>
+          </li>
+          <li class="listitem">
+            <p>New Gen and Macros:
+          </p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist" style="list-style-type: circle; ">
+                <li class="listitem">
+                <a class="link" href="GENquadbezier.html" title="GENquadbezier"><em class="citetitle">quadbezier</em></a>:
+                generating Bezier curves in a table.
+              </li>
+              </ul>
+            </div>
+            <p>
+        </p>
+          </li>
+          <li class="listitem">
+            <p>Orchestra:
+          </p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist" style="list-style-type: circle; ">
+                <li class="listitem">
+                The character ¬ is now correctly treated as a variant of ~ for
+                bitwise not.
+              </li>
+                <li class="listitem">Lexing bug which could corrupt strings fixed.</li>
+                <li class="listitem">Ensure no newlines in string-lexing.</li>
+                <li class="listitem">Small improvement in reported line numbers.</li>
+                <li class="listitem">Better checking of macro syntax.</li>
+                <li class="listitem">Improved parsing of setting of labels.</li>
+                <li class="listitem">
+                Added error handling for unmatched brackets for UDO arg
+                specification.
+              </li>
+                <li class="listitem">Check that #included file is not a directory.</li>
+                <li class="listitem">Deeply nested macro calls better policed.</li>
+                <li class="listitem">
+                For years Csound has fixed the pitch of A4 at 440Hz. Now this
+                can be set in the header using the new r-variable A4, and also
+                read with that variable.
+              </li>
+                <li class="listitem">Floating point values can use e or E for exponent.</li>
+                <li class="listitem">
+                Array access semantics have been clarified:
+                <div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: square; "><li class="listitem">
+                      i[i] =&gt; reading at i-time and perf-time, writing at i-time only.
+                    </li><li class="listitem">
+                      i[k] =&gt; reading at perf-time, writing yields a runtime error.
+                    </li><li class="listitem">
+                      k[i], k[k] =&gt; reading at perf-time, writing at perf-time.
+                    </li><li class="listitem">
+                      a[i], a[k] =&gt; reading at perf-time, writing at perf-time.
+                    </li><li class="listitem">
+                      other (S[], f[]) =&gt; reading and writing according to index
+                      type (i,k).
+                    </li></ul></div>
+                In particular, i(k[i]) will continue not to work, as before,
+                but the new operator i(k[],i) is provided to cover this case.
+              </li>
+                <li class="listitem">
+                xout validation no longer fails when constants are given.
+              </li>
+              </ul>
+            </div>
+            <p>
+        </p>
+          </li>
+          <li class="listitem">
+            <p>Score:
+          </p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist" style="list-style-type: circle; ">
+                <li class="listitem">
+                New code to handle macros and other preprocessor commands.
+                Brings it into line with orchestra code.
+              </li>
+                <li class="listitem">
+                New score opcode C introduced as a way of switching automatic
+                carry off (C 0) or on (default) (C 1).
+              </li>
+              </ul>
+            </div>
+            <p>
+        </p>
+          </li>
+          <li class="listitem">
+            <p>Options:
+          </p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist" style="list-style-type: circle; ">
+                <li class="listitem">
+                The tempo setting can now be a floating point value (previously
+                fixed to integer).
+              </li>
+                <li class="listitem">
+                New option --version prints version information and exits.
+              </li>
+              </ul>
+            </div>
+            <p>
+        </p>
+          </li>
+          <li class="listitem">
+            <p>Modified Opcodes and Gens:
+          </p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist" style="list-style-type: circle; ">
+                <li class="listitem">Problems in centroid fixed.</li>
+                <li class="listitem">Better treatment of rounding in printks.</li>
+                <li class="listitem">OSC extended to include multicast.</li>
+                <li class="listitem">Faust opcodes brought up to date with faust.</li>
+                <li class="listitem">oscil1 and oscili can take a negative duration.</li>
+                <li class="listitem">fout opcode documentation clarified.</li>
+                <li class="listitem">Release time in mxadsr fixed.</li>
+                <li class="listitem">
+                centroid opcode extended to take array inputs in addition.
+              </li>
+                <li class="listitem">
+                ptable opcodes are now identical to table family.
+              </li>
+                <li class="listitem">ftgen now as array input option.</li>
+                <li class="listitem">subinstr can now have string arguments.</li>
+                <li class="listitem">
+                the i() format is extended to work on k-rate arrays with the
+                first argument being an array, followed by the indices.
+              </li>
+              </ul>
+            </div>
+            <p>
+        </p>
+          </li>
+          <li class="listitem">
+            <p>Utilities:
+          </p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist" style="list-style-type: circle; ">
+                <li class="listitem">
+                pvlook now always prints explicit analysis window name.
+              </li>
+              </ul>
+            </div>
+            <p>
+        </p>
+          </li>
+          <li class="listitem">
+            <p>Frontends:
+          </p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist" style="list-style-type: circle; ">
+                <li class="listitem">
+                HTML5
+                <div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: square; "><li class="listitem">
+                      csound.node: Implemented for Linux, minor API fix.
+                    </li><li class="listitem">
+                      pnacl: Added compileCsdText method to csound object.
+                    </li></ul></div>
+              </li>
+              </ul>
+            </div>
+            <p>
+        </p>
+          </li>
+          <li class="listitem">
+            <p>General Usage:
+          </p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist" style="list-style-type: circle; ">
+                <li class="listitem">Checking of valid macro names improved.</li>
+                <li class="listitem">#undef fixed.</li>
+              </ul>
+            </div>
+            <p>
+        </p>
+          </li>
+          <li class="listitem">
+            <p>Bugs Fixed:
+          </p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist" style="list-style-type: circle; ">
+                <li class="listitem">Fixes to prints in format use.</li>
+                <li class="listitem">jitter2 reworked to make it more like the manual.</li>
+                <li class="listitem">
+                oscbank has had multiple fixes and now works as advertised.
+              </li>
+                <li class="listitem">bformdec1 with arrays and type 4 fixed.</li>
+                <li class="listitem">Bug in pvsceps fixed.</li>
+                <li class="listitem">
+                In various formatted print opcodes extra trash characters might
+                appear -- fixed.
+              </li>
+                <li class="listitem">
+                Assigning variables with --sample-accurate could give unexpected
+                results; this is believed fixed now.
+              </li>
+                <li class="listitem">
+                padsynth square profile fix, and opcode prints less depending
+                on warn level.
+              </li>
+                <li class="listitem">gen31 fixed.</li>
+                <li class="listitem">gen41 fixed.</li>
+                <li class="listitem">Bug in sensekey fixed.</li>
+                <li class="listitem">A number of issues in centroid fixed.</li>
+              </ul>
+            </div>
+            <p>
+        </p>
+          </li>
+          <li class="listitem">
+            <p>System changes:
+          </p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist" style="list-style-type: circle; ">
+                <li class="listitem">New score lexing and preprocessor.</li>
+                <li class="listitem">MAC line endings now work again.</li>
+                <li class="listitem">
+                System information messages (system sampling rate, etc) are now
+                directed to stdout.
+              </li>
+                <li class="listitem">rtjack reworked to deal with names and numbers.</li>
+                <li class="listitem">
+                The version printing now includes the commit as so the
+                developers know which patches have been applied.
+              </li>
+              </ul>
+            </div>
+            <p>
+        </p>
+          </li>
+          <li class="listitem">
+            <p>API:
+          </p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist" style="list-style-type: circle; ">
+                <li class="listitem">API version now 4.0.</li>
+                <li class="listitem">Now supports named gens.</li>
+                <li class="listitem">fterror now in API.</li>
+                <li class="listitem">API functions SetOutput and GetOutputFormat fixed.</li>
+                <li class="listitem">Many API functions now use const where appropriate.</li>
+                <li class="listitem">
+                Messages can now be directed to stdout from the API by using
+                CSOUNDMSG_STDOUT attribute.
+              </li>
+                <li class="listitem">
+                New Lisp CFFI and FFI interfaces tested with Steel Bank Common
+                Lisp (64 bit CPU architecture), runs in separate thread.
+              </li>
+                <li class="listitem">
+                ctcsound.py, a new FFI interface for Python was introduced in
+                version 6.07. It is now the recommanded interface for Python,
+                csnd6.py being deprecated.
+              </li>
+              </ul>
+            </div>
+            <p>
+        </p>
+          </li>
+          <li class="listitem">
+            <p>Platform Specific:
+          </p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist" style="list-style-type: circle; ">
+                <li class="listitem">
+                  <p class="simpara">Android.</p>
+                  <div class="itemizedlist">
+                    <ul class="itemizedlist" style="list-style-type: square; ">
+                      <li class="listitem">Multichannel input and output allowed.</li>
+                    </ul>
+                  </div>
+                </li>
+                <li class="listitem">
+                  <p class="simpara">Windows.</p>
+                  <div class="itemizedlist">
+                    <ul class="itemizedlist" style="list-style-type: square; ">
+                      <li class="listitem">
+                    csound64.lib import library added to Windows installer.
+                  </li>
+                    </ul>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <p>
+        </p>
+          </li>
+        </ul>
+      </div>
+      <p>
+  </p>
+      <h3><a id="idm431538176608"></a>Release Notes for Csound 6.07 (2016 March)</h3>
+      <p>
+    A large number of bug fixes, some quite major, some internal are
+    included, as well as some new facilities and extensions. As ever there
+    are coding improvements as well.
+  </p>
+      <p>
+    </p>
+      <div class="itemizedlist">
+        <ul class="itemizedlist" style="list-style-type: disc; ">
+          <li class="listitem">
+            <p>New opcodes:
+          </p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist" style="list-style-type: circle; ">
+                <li class="listitem">
+                <a class="link" href="compress2.html" title="compress2"><em class="citetitle">compress2</em></a>:
+                like compress but using a more normal use of dB (0.0 for full
+                scale).
+              </li>
+                <li class="listitem">
+                (Experimental, source code-only) New cuda opcodes: cudasynth2
+                and cudanal2.
+              </li>
+                <li class="listitem">
+                <a class="link" href="directory.html" title="directory"><em class="citetitle">directory</em></a>
+                opcode: reads a directory and outputs to a string array a list
+                of file names.
+              </li>
+                <li class="listitem">
+                <a class="link" href="ftsamplebank.html" title="ftsamplebank"><em class="citetitle">ftsamplebank</em></a>:
+                to load a sample library from a directory.
+              </li>
+                <li class="listitem">
+                <a class="link" href="mvclpf1.html" title="mvclpf1"><em class="citetitle">mvclpf1</em></a>,
+                <a class="link" href="mvclpf2.html" title="mvclpf2"><em class="citetitle">mvclpf2</em></a>,
+                <a class="link" href="mvclpf3.html" title="mvclpf3"><em class="citetitle">mvclpf3</em></a>,
+                <a class="link" href="mvclpf4.html" title="mvclpf4"><em class="citetitle">mvclpf4</em></a>,
+                <a class="link" href="mvchpf.html" title="mvchpf"><em class="citetitle">mvchpf</em></a>:
+                Moog voltage-controlled filter emulations from Fons Andriaensen.
+              </li>
+                <li class="listitem">
+                <a class="link" href="ops.html" title="S"><em class="citetitle">S()</em></a>
+                converter from k-rate and i-time number to a string.
+              </li>
+                <li class="listitem">
+                <a class="link" href="cepsinv.html" title="cepsinv"><em class="citetitle">cepsinv</em></a>
+                opcode to calculate the inverse cepstrum of an array.
+              </li>
+                <li class="listitem">
+                <a class="link" href="moogladder2.html" title="moogladder2"><em class="citetitle">moogladder2</em></a>,
+                is a faster, less accurate implementation of moogladder.
+              </li>
+                <li class="listitem">
+                <a class="link" href="paulstretch.html" title="paulstretch"><em class="citetitle">paulstretch</em></a>
+                opcode is a lightweight implementation of the PaulStretch
+                time-stretching algorithm by Nasca Octavian Paul. It is ideal
+                for timestretching a signal by very large amounts.
+              </li>
+                <li class="listitem">
+                <a class="link" href="mp3scal.html" title="mp3scal"><em class="citetitle">mp3scal</em></a>
+                implements phase-locked vocoder processing from mp3-format disk
+                files, resampling if necessary.
+              </li>
+                <li class="listitem">
+                <a class="link" href="filescal.html" title="filescal"><em class="citetitle">filescal</em></a>
+                implements phase-locked vocoder processing from disk files,
+                resampling if necessary.
+              </li>
+              </ul>
+            </div>
+            <p>
+        </p>
+          </li>
+          <li class="listitem">
+            <p>
+          Orchestra:
+          </p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist" style="list-style-type: circle; ">
+                <li class="listitem">
+                The boolean ? .. : .. construction can now have string results,
+                while previously it only allowed numbers.
+              </li>
+                <li class="listitem">
+                The line number reported when an error is detected at the end
+                of a line is now correct. Also more improvements in line numbers
+                for complex syntax.
+              </li>
+                <li class="listitem">
+                <a class="link" href="while.html" title="while"><em class="citetitle">while</em></a> loop
+                improved/fixed.
+              </li>
+                <li class="listitem">
+                Better and consistent reading of comments.
+              </li>
+                <li class="listitem">
+                Continuation lines handled better, especially respecting line
+                numbers.
+              </li>
+                <li class="listitem">
+                opcode: <a class="link" href="ops.html" title="S"><em class="citetitle">S(.)</em></a>
+                syntax now allowed.
+              </li>
+              </ul>
+            </div>
+            <p>
+        </p>
+          </li>
+          <li class="listitem">
+            <p>Score:
+          </p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist" style="list-style-type: circle; ">
+                <li class="listitem">
+                The list of tempo points in score opcode
+                <a class="link" href="t.html" title="t Statement (Tempo Statement)"><em class="citetitle">t</em></a> is now
+                arbitrarily long.
+              </li>
+                <li class="listitem">
+                A stupidity in <a class="link" href="r.html" title="r Statement (Repeat Statement)"><em class="citetitle">r</em></a>
+                and <a class="link" href="leftbrace.html" title="{ Statement"><em class="citetitle">{</em></a>
+                opcodes fixed.
+              </li>
+              </ul>
+            </div>
+            <p>
+        </p>
+          </li>
+          <li class="listitem">
+            <p>
+          Options:
+          </p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist" style="list-style-type: circle; ">
+                <li class="listitem">
+                The <a class="link" href="CommandFlagsCategory.html#FlagsCatMinusLowerZ"><em class="citetitle">-z</em></a>
+                option now suppresses deprecated opcodes, unless given
+                a 2 or 3 argument.
+              </li>
+                <li class="listitem">
+                The new option --fftlib controls which real fft library to
+                use internally (FFTLIB = 0, PFFFT = 1, vDSP = 2)
+              </li>
+              </ul>
+            </div>
+            <p>
+        </p>
+          </li>
+          <li class="listitem">
+            <p>
+          Modified Opcodes and Gens:
+          </p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist" style="list-style-type: circle; ">
+                <li class="listitem">
+                In <a class="link" href="OSC.html" title="OSC"><em class="citetitle">OSC</em></a>
+                opcodes it is now possible to send and receive arrays,
+                tables and audio.
+              </li>
+                <li class="listitem">
+                Better diagnostic if
+                <a class="link" href="diskin2.html" title="diskin2"><em class="citetitle">diskin2</em></a>
+                fails.
+              </li>
+                <li class="listitem">
+                <a class="link" href="rezzy.html" title="rezzy"><em class="citetitle">rezzy</em></a>
+                now checks for unstable filter and modifies to close
+                stable version.
+              </li>
+                <li class="listitem">
+                <a class="link" href="adsr.html" title="adsr"><em class="citetitle">adsr</em></a>
+                rewritten so it gives an error if the segments are
+                longer than p3.
+              </li>
+                <li class="listitem">
+                Use of <a class="link" href="diskin.html" title="diskin"><em class="citetitle">diskin</em></a> to an
+                array now resizes the output array if necessary.
+              </li>
+                <li class="listitem">
+                <a class="link" href="chnget.html" title="chnget"><em class="citetitle">chnget</em></a>
+                now checks for a change in channel name as well as data.
+              </li>
+                <li class="listitem">
+              <a class="link" href="interp.html" title="interp"><em class="citetitle">interp</em></a>
+                can take an optional extra argument to give an initial value.
+              </li>
+                <li class="listitem">
+                <a class="link" href="oscilikts.html" title="oscilikts"><em class="citetitle">oscilikts</em></a>
+                uses a more liberal table lookup.
+              </li>
+                <li class="listitem">
+                opcode <a class="link" href="in.html" title="in"><em class="citetitle">in</em></a> can
+                read mono or stereo, obviating the <a class="link" href="in.html" title="in"><em class="citetitle">in</em></a>/<a class="link" href="ins.html" title="ins"><em class="citetitle">ins</em></a> distinction.
+              </li>
+                <li class="listitem">
+                <a class="link" href="sensekey.html" title="sensekey"><em class="citetitle">sensekey</em></a>
+                rewritten to provide better diagnostics and fixes a minor bug.
+              </li>
+                <li class="listitem">
+                Fix to a case of defining a macro with arguments.
+              </li>
+                <li class="listitem">
+                <a class="link" href="sockrecv.html" title="sockrecv"><em class="citetitle">sockrecv</em></a>
+                now works at a and k rate.
+              </li>
+                <li class="listitem">
+                <a class="link" href="GEN49.html" title="GEN49"><em class="citetitle">GEN49</em></a> now
+                works from <a class="link" href="ftgen.html" title="ftgen"><em class="citetitle">ftgen</em></a>
+                calls.
+              </li>
+                <li class="listitem">
+                <a class="link" href="GEN34.html" title="GEN34"><em class="citetitle">GEN34</em></a>
+                liberalised in tables it accepts.
+              </li>
+                <li class="listitem">
+                <a class="link" href="chnget.html" title="chnget"><em class="citetitle">chnget</em></a>
+                now allows channel names to be changed at perf time.
+              </li>
+                <li class="listitem">
+                iceps has been renamed cepsinv to avoid name clashes.
+              </li>
+                <li class="listitem">
+                mp3 support improved in a number of minor ways.
+              </li>
+                <li class="listitem">
+                A minor fix to allow a ladspa plugin to be re-loaded by the host.
+              </li>
+              </ul>
+            </div>
+            <p>
+        </p>
+          </li>
+          <li class="listitem">
+            <p>
+          Frontends:
+          </p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist" style="list-style-type: circle; ">
+                <li class="listitem">
+                  <p class="simpara">csdebugger:</p>
+                  <div class="itemizedlist">
+                    <ul class="itemizedlist" style="list-style-type: square; ">
+                      <li class="listitem">Some memory issues fixed.</li>
+                    </ul>
+                  </div>
+                </li>
+                <li class="listitem">
+                  <p class="simpara">HTML5:</p>
+                  <div class="itemizedlist">
+                    <ul class="itemizedlist" style="list-style-type: square; ">
+                      <li class="listitem">
+                    CsoundQT has its own notes at 
+                    <a class="ulink" href="https://github.com/CsoundQt/CsoundQt/blob/develop/release_notes/Release%20Notes%200.9.2.1.md" target="_top">
+                    <em class="citetitle">https://github.com/CsoundQt/CsoundQt/blob/develop/release_notes/Release%20Notes%200.9.2.1.md</em></a>.
+                  </li>
+                    </ul>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <p>
+        </p>
+          </li>
+          <li class="listitem">
+            <p>General usage:
+          </p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist" style="list-style-type: circle; ">
+                <li class="listitem">
+                The multicore options somewhat improved.
+              </li>
+                <li class="listitem">
+                When replacing instruments the new version inherits <a class="link" href="maxalloc.html" title="maxalloc"><em class="citetitle">maxalloc</em></a>
+                and active flags.
+              </li>
+                <li class="listitem">
+                Multicore code now works with midi instruments.
+              </li>
+                <li class="listitem">
+                MIDI operations now available via a new rtmidi jack module
+                (-+rtmidi=jack).
+              </li>
+              </ul>
+            </div>
+            <p>
+        </p>
+          </li>
+          <li class="listitem">
+            <p>Bugs fixed:
+          </p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist" style="list-style-type: circle; ">
+                <li class="listitem">
+                Fix to <a class="link" href="trigseq.html" title="trigseq"><em class="citetitle">trigseq</em></a>.
+              </li>
+                <li class="listitem">
+                Major error in <a class="link" href="rezzy.html" title="rezzy"><em class="citetitle">rezzy</em></a> fixed.
+              </li>
+                <li class="listitem">
+                <a class="link" href="p.html" title="p"><em class="citetitle">p()</em></a> fixed for
+                high numbers of p-arguments.
+              </li>
+                <li class="listitem">
+                <a class="link" href="p.html" title="p"><em class="citetitle">p()</em></a> now works
+                from MIDI events.
+              </li>
+                <li class="listitem">
+                The 31-bit random number generator could give a very short
+                loop if seeded with zero; fixed.
+              </li>
+                <li class="listitem">
+                Macros in .orc files now work.
+              </li>
+                <li class="listitem">
+                A long-standing bug in display of graphs fixed.
+              </li>
+                <li class="listitem">
+                Fixes to the envelope opcodes 
+                <a class="link" href="linen.html" title="linen"><em class="citetitle"></em>linen</a>,
+                <a class="link" href="expsegr.html" title="expsegr"><em class="citetitle"></em>expsegr</a>,
+                <a class="link" href="linsegr.html" title="linsegr"><em class="citetitle"></em>linsegr</a>,
+                <a class="link" href="cossegr.html" title="cossegr"><em class="citetitle"></em>cossegr</a>,
+                <a class="link" href="transegr.html" title="transegr"><em class="citetitle"></em>transegr</a>,
+                <a class="link" href="envlpx.html" title="envlpx"><em class="citetitle"></em>envlpx</a>,
+                including new warnings.
+              </li>
+                <li class="listitem">
+                Many fixes in string opcodes
+                (<a class="link" href="strsub.html" title="strsub"><em class="citetitle"></em>strsub</a>,
+                <a class="link" href="strcpy.html" title="strcpy"><em class="citetitle"></em>strcpy</a> 
+                and others).
+              </li>
+                <li class="listitem">
+                Fixed bugs in print formats
+                (<a class="link" href="sprintf.html" title="sprintf"><em class="citetitle"></em>sprintf</a>,
+                <a class="link" href="printf.html" title="printf"><em class="citetitle"></em>printf</a>,
+                <a class="link" href="prints.html" title="prints"><em class="citetitle"></em>prints</a>).
+              </li>
+                <li class="listitem">
+                <a class="link" href="pvsmooth.html" title="pvsmooth"><em class="citetitle"></em>pvsmooth</a>
+                had a missing initialisation.
+              </li>
+                <li class="listitem">
+                Array initialisation now robust.
+              </li>
+                <li class="listitem">
+                Bug in <a class="link" href="copya2ftab.html" title="copya2ftab"><em class="citetitle"></em>copya2ftab</a>
+                fixed.
+              </li>
+                <li class="listitem">
+                Fix in cudapvsanal (EXPERIMENTAL).
+              </li>
+                <li class="listitem">
+                <a class="link" href="partikkel.html" title="partikkel"><em class="citetitle">partikkel</em></a>
+                fix to subsample grain placement.
+              </li>
+                <li class="listitem">
+                Opcodes that require an odd number of arguments are now
+                properly checked.
+              </li>
+                <li class="listitem">
+                pvswrite now takes proper notice of 0dbfs.
+              </li>
+                <li class="listitem">
+                <a class="link" href="GEN34.html" title="GEN34"><em class="citetitle">GEN34</em></a>
+                now allowing non-power-of-two source tables.
+              </li>
+                <li class="listitem">
+                <a class="link" href="strcat.html" title="strcat"><em class="citetitle">strcat</em></a>
+                mended.
+              </li>
+                <li class="listitem">
+                <a class="link" href="nstance.html" title="nstance"><em class="citetitle">nstance</em></a>
+                mended.
+              </li>
+                <li class="listitem">
+                fixed small issues in rtauhal module.
+              </li>
+                <li class="listitem">
+                Windows installer for 64 bit CPU architecture now sets
+                environment variables on system level as it should.
+              </li>
+                <li class="listitem">
+                transeg at k-rate with itype non-zero had an initial delay if
+                one cycle.
+              </li>
+                <li class="listitem">
+                log function on arrays fixed.
+              </li>
+                <li class="listitem">
+                Rescaling of named GENs fixed.
+              </li>
+                <li class="listitem">
+                A fencepost error in reading ATS files believed fixed; it
+                generated spurious errors about file finishing early.
+              </li>
+                <li class="listitem">
+                Initialisation error in pvbandp fixed.
+              </li>
+                <li class="listitem">
+                readfi string allocation fixed.
+              </li>
+              </ul>
+            </div>
+            <p>
+        </p>
+          </li>
+          <li class="listitem">
+            <p>System changes:
+          </p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist" style="list-style-type: circle; ">
+                <li class="listitem">
+                Extensive use made of in-memory files. Orc and sco are always
+                thus, as are .csound6rc. This simplifies much internally.
+              </li>
+                <li class="listitem">
+                Nested longjmps fixed which affected some API use.
+              </li>
+                <li class="listitem">
+                If a non-existent .csd file is presented Csound no longer
+                crashes.
+              </li>
+                <li class="listitem">
+                The kcounter value is now consistently an unsigned 64bit
+                value, allowing for long performances.
+              </li>
+              </ul>
+            </div>
+            <p>
+        </p>
+          </li>
+          <li class="listitem">
+            <p>API:
+          </p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist" style="list-style-type: circle; ">
+                <li class="listitem">
+                csoundCompileCsdText: New function to compile a CSD from a
+                string of text.
+              </li>
+                <li class="listitem">
+                The function call csound-&gt;GetKcounter(csound) now returns an
+                unsigned 64 bit integer.  Previously it returned a long which is
+                unclear.
+              </li>
+                <li class="listitem">
+                ctcsound.py is a new wrapper file to the Csound API for the
+                Python language.  It is a pure Python file using the FFI
+                (Foreign Function Interface) module ctypes. It does not depend
+                on Swig, and it works with Python2 and Python3 as well. It uses
+                numpy for its data structures, numpy being the fundamental
+                package for scientific computing with Python.
+              </li>
+              </ul>
+            </div>
+            <p>
+        </p>
+          </li>
+          <li class="listitem">
+            <p>
+          Platform Specific:
+          </p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist" style="list-style-type: circle; ">
+                <li class="listitem">
+                  <p class="simpara">Windows.</p>
+                  <div class="itemizedlist">
+                    <ul class="itemizedlist" style="list-style-type: square; ">
+                      <li class="listitem">
+                    The Windows installer for Csound now contains all executables
+                    built for 64 bit CPU architecture.
+                  </li>
+                      <li class="listitem">
+                    The Windows installer for 64 bit CPU architecture now
+                    provides NW.js "out of the box." It runs all features of
+                    Csound, as well as all features of HTML5, in a browser-like
+                    runtime with JavaScript scripting, and includes a Csound
+                    editor implemented in HTML. The editor will run pieces
+                    either as .csd files with embedded &lt;html&gt; or as .html
+                    files calling the csound object, and includes JavaScript
+                    debugging.
+                  </li>
+                      <li class="listitem">
+                    A new simplified build system has been implemented in the
+                    csound/mingw64 directory for building Csound using the
+                    MSYS2/mingw64 toolchain.
+                  </li>
+                      <li class="listitem">
+                    Linking to pthreads and other libraries now static.
+                  </li>
+                      <li class="listitem">
+                    Some limited support for non-ASCII characters in file names.
+                  </li>
+                    </ul>
+                  </div>
+                </li>
+                <li class="listitem">
+                  <p class="simpara">OSX.</p>
+                  <div class="itemizedlist">
+                    <ul class="itemizedlist" style="list-style-type: square; ">
+                      <li class="listitem">Installer fixed for link names for _csnd6 and _CsoundAC.</li>
+                    </ul>
+                  </div>
+                </li>
+                <li class="listitem">
+                  <p class="simpara">GNU/Linux.</p>
+                  <div class="itemizedlist">
+                    <ul class="itemizedlist" style="list-style-type: square; ">
+                      <li class="listitem">
+                    <a class="link" href="date.html" title="date"><em class="citetitle">date</em></a>
+                    opcode more accurate.</li>
+                    </ul>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <p>
+        </p>
+          </li>
+        </ul>
+      </div>
+      <p>
+  </p>
+      <h3><a id="idm431538021376"></a>Release Notes for Csound 6.06 (2015 September)</h3>
+      <p>A number of bug fixes, some quite major, are included, as well as some
+  new facilities and extensions.</p>
+      <p>
+    </p>
+      <div class="itemizedlist">
+        <ul class="itemizedlist" style="list-style-type: disc; ">
+          <li class="listitem">
+            <p>New opcodes:
+          </p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist" style="list-style-type: circle; ">
+                <li class="listitem">getseed reads the state of the PRN generator;
+              opposite of seed opcode.</li>
+                <li class="listitem">tabifd — Instantaneous Frequency Distribution, magnitude
+              and phase analysis.</li>
+                <li class="listitem">websocket — Read and write signals and arrays using a
+              websocket connection.</li>
+                <li class="listitem">framebuffer — Read audio signals into 1 dimensional
+              k-rate arrays and vice-versa with a specified buffer size.</li>
+                <li class="listitem">olabuffer — Sum overlapping frames of audio as k-rate
+              arrays and read as an audio signal</li>
+              </ul>
+            </div>
+            <p>
+        </p>
+          </li>
+          <li class="listitem">
+            <p>
+          Orchestra:
+          </p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist" style="list-style-type: circle; ">
+                <li class="listitem">Labels are allowed in instrument 0.</li>
+              </ul>
+            </div>
+            <p>
+        </p>
+          </li>
+          <li class="listitem">
+            <p>Score:
+          </p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist" style="list-style-type: circle; ">
+                <li class="listitem">Maximum string length in scores increased to 1024.</li>
+              </ul>
+            </div>
+            <p>
+        </p>
+          </li>
+          <li class="listitem">
+            <p>
+          Modified Opcodes and Gens:
+          </p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist" style="list-style-type: circle; ">
+                <li class="listitem">diskin2 array version uses array size to give number
+              of channels in raw file form.</li>
+                <li class="listitem">diskin2 now has the kpitch parameter defaulting to 1 for
+              simple use.</li>
+                <li class="listitem">Vibrato f-table in wgflute and wgcar optional,
+              defaulting to sine wave.</li>
+                <li class="listitem">schedule now accept string arguments.</li>
+                <li class="listitem">urandom now available on OSX platforms.</li>
+                <li class="listitem">GEN18 had fencepost problem; largely rewritten.</li>
+                <li class="listitem">In poscil family of opcodes it is possible to skip
+              initialisation of phase.</li>
+                <li class="listitem">svfilter now can skip initialisation.</li>
+                <li class="listitem">When opening an input file nchncls_i is used rather
+              than nchnls. This is a change that should have followed the
+              existence of nchnls_i</li>
+                <li class="listitem">rtjack module now reports the sampling rate.</li>
+                <li class="listitem">The opcodes rfft, rifft, fft, fftinv, r2c and c2r now
+              have i-rate array versions.</li>
+                <li class="listitem">New optional threshhold parameter in opcodes tradsyn,
+              sinsyn and resyn.</li>
+                <li class="listitem">New thresholding option for partials.</li>
+              </ul>
+            </div>
+            <p>
+        </p>
+          </li>
+          <li class="listitem">
+            <p>Utilities:
+          </p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist" style="list-style-type: circle; ">
+                <li class="listitem">extract fixed.</li>
+                <li class="listitem">src_conv improved and integrated with -U options.</li>
+                <li class="listitem">fixes in atsa, and heti.</li>
+              </ul>
+            </div>
+            <p>
+        </p>
+          </li>
+          <li class="listitem">
+            <p>Frontends:
+          </p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist" style="list-style-type: circle; ">
+                <li class="listitem">
+                  <p class="simpara">pnacl:</p>
+                  <div class="itemizedlist">
+                    <ul class="itemizedlist" style="list-style-type: square; ">
+                      <li class="listitem">Support for 48000 sample rate fixed.</li>
+                    </ul>
+                  </div>
+                </li>
+                <li class="listitem">
+                  <p class="simpara">csound~:</p>
+                  <div class="itemizedlist">
+                    <ul class="itemizedlist" style="list-style-type: square; ">
+                      <li class="listitem">Changes to the threading system. String channel
+                  initialisation fixed. A number of other bugs were
+                  fixed.</li>
+                    </ul>
+                  </div>
+                </li>
+                <li class="listitem">
+                  <p class="simpara">Emscripten:</p>
+                  <div class="itemizedlist">
+                    <ul class="itemizedlist" style="list-style-type: square; ">
+                      <li class="listitem">Csound Javascript object can now receive data
+                  from the outvalue opcode.</li>
+                    </ul>
+                  </div>
+                </li>
+                <li class="listitem">
+                  <p class="simpara">HTML5:</p>
+                  <div class="itemizedlist">
+                    <ul class="itemizedlist" style="list-style-type: square; ">
+                      <li class="listitem">Integrate HTML, JavaScript, and other features of
+                  HTML5 with Csound, either by embedding a Web page as an
+                  &lt;html&gt; element in the CSD file for CsoundQt or Csound
+                  for Android, or by hosting Csound in the JavaScript context
+                  of a standalone Web browser (Emscripten, PNaCl) or embedded
+                  Web browser (csound.node).</li>
+                    </ul>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <p>
+        </p>
+          </li>
+          <li class="listitem">
+            <p>General usage:
+          </p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist" style="list-style-type: circle; ">
+                <li class="listitem">Ill-formatted macros in the orchestra now trapped.</li>
+              </ul>
+            </div>
+            <p>
+        </p>
+          </li>
+          <li class="listitem">
+            <p>Bugs fixed:
+          </p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist" style="list-style-type: circle; ">
+                <li class="listitem">Use of Windows-style environments for INCDIR etc now
+              works with device numbers.</li>
+                <li class="listitem">vibrato opcode fixed.</li>
+                <li class="listitem">Clicking in real-time sample accurate case fixed.</li>
+                <li class="listitem">Copying of strings now correct; did confuse memory
+              sometimes.</li>
+                <li class="listitem">Bug in pvstanal fixed.</li>
+                <li class="listitem">Rounding error in cpspch fixed.</li>
+                <li class="listitem">Removed crash on recompiling a named instrument.</li>
+                <li class="listitem">Fix interpolation bug in tablexkt.</li>
+                <li class="listitem">Fix to plltrack when ksmps is 1.</li>
+              </ul>
+            </div>
+            <p>
+        </p>
+          </li>
+          <li class="listitem">
+            <p>System changes:
+          </p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist" style="list-style-type: circle; ">
+                <li class="listitem">The "error" message from STK plugin is now a warning.</li>
+              </ul>
+            </div>
+            <p>
+        </p>
+          </li>
+          <li class="listitem">
+            <p>API:
+          </p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist" style="list-style-type: circle; ">
+                <li class="listitem">Redefinition of opcodes and UDOs fixed.</li>
+              </ul>
+            </div>
+            <p>
+        </p>
+          </li>
+          <li class="listitem">
+            <p>
+          Platform Specific:
+          </p>
+            <div class="itemizedlist">
+              <ul class="itemizedlist" style="list-style-type: circle; ">
+                <li class="listitem">
+                  <p class="simpara">OSX.</p>
+                  <div class="itemizedlist">
+                    <ul class="itemizedlist" style="list-style-type: square; ">
+                      <li class="listitem">csnd6.jar link installed in the correct location.</li>
+                      <li class="listitem">Java JNI linking issues solved.</li>
+                      <li class="listitem">fixed link name for libpng in libfltk_image.</li>
+                    </ul>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <p>
+        </p>
+          </li>
+        </ul>
+      </div>
+      <p>
+  </p>
+      <h3><a id="idm431535851744"></a>Release Notes for Csound 6.05 (2015 April)</h3>
       <p>As ever there are new facilities and numerous bug-fixes.  A major part of
   this release is the removal of a number of memory leaks and over use
   of memory.  Naturally these changes are all but invisible, just a
@@ -132,8 +2855,10 @@
                 <li class="listitem">init of arrays clarified and checked</li>
                 <li class="listitem"><span class="emphasis"><em>gen23</em></span> corrected to stop an infinite
               loop</li>
-                <li class="listitem">alwayson now starts from score offset; this is part of
-              a fix to the long-standing problem with alwayson in CsoundVST</li>
+                <li class="listitem">alwayson now starts from score offset.
+              
+              
+              </li>
                 <li class="listitem">invalue now checks for output string size and reallocates
               memory if smaller than default string size (set at 256 bytes
               for backwards compatibility)</li>
@@ -296,7 +3021,7 @@
       </div>
       <p>
   </p>
-      <h3><a id="idp69541776"></a>Release Notes for Csound 6.04 (2014 November)</h3>
+      <h3><a id="idm431535785392"></a>Release Notes for Csound 6.04 (2014 November)</h3>
       <p>This new version has many extensions and fixes; many new opcodes
   and significant numbers of internal reworking.  There is a new
   frontend and iOS and Android version have seen many improvements.</p>
@@ -553,7 +3278,7 @@
       </div>
       <p>
   </p>
-      <h3><a id="idp69620128"></a>Release Notes for Csound 6.03 (2014 May)</h3>
+      <h3><a id="idm431535704384"></a>Release Notes for Csound 6.03 (2014 May)</h3>
       <p>
     This new version has a large number of bug fixes (including clearing
     many tickets on SourceForge and GitHub) as well internal changes to improve
@@ -880,7 +3605,7 @@ void csoundDebugFreeVariables(CSOUND *csound, debug_variable_t *varHead);</pre>
       </div>
       <p>
   </p>
-      <h3><a id="idp69693072"></a>Release Notes for Csound 6.02</h3>
+      <h3><a id="idm431535629504"></a>Release Notes for Csound 6.02</h3>
       <p>
 This new version has a large number of bug fixes (including clearing
 all general tickets on SourceForge). It also introduces some major new
@@ -949,7 +3674,7 @@ changeable at audio rate.
               <ul class="itemizedlist" style="list-style-type: circle; ">
                 <li class="listitem">Many filters generalised to allow k- or a-rate parameters.  In
               particular it includes these:
-              <div class="informaltable"><table border="0"><colgroup><col /><col /></colgroup><tbody><tr><td>areson</td><td>atonex</td></tr><tr><td>butterworth filters</td><td>fofilter</td></tr><tr><td>lowres</td><td>lowresx</td></tr><tr><td>lpf18</td><td>mode</td></tr><tr><td>moogladder</td><td>moogvcf</td></tr><tr><td>reson</td><td>resonr</td></tr><tr><td>resonx</td><td>resonz</td></tr><tr><td>statevar</td><td>tonex</td></tr></tbody></table></div>
+              <div class="informaltable"><table class="informaltable" border="0"><colgroup><col /><col /></colgroup><tbody><tr><td>areson</td><td>atonex</td></tr><tr><td>butterworth filters</td><td>fofilter</td></tr><tr><td>lowres</td><td>lowresx</td></tr><tr><td>lpf18</td><td>mode</td></tr><tr><td>moogladder</td><td>moogvcf</td></tr><tr><td>reson</td><td>resonr</td></tr><tr><td>resonx</td><td>resonz</td></tr><tr><td>statevar</td><td>tonex</td></tr></tbody></table></div>
               </li>
                 <li class="listitem">The maximum number of presets in sfont increased to 16384.
               </li>
@@ -957,9 +3682,6 @@ changeable at audio rate.
               </li>
                 <li class="listitem"><span class="emphasis"><em>max_k</em></span> now behaves like the documentation.
               There were cases when it gave strange results.
-              </li>
-                <li class="listitem">The vst4cs opcodes have been re-factored. FLTK code has been encapsulated.
-              The build system has been updated for Csound 6.
               </li>
                 <li class="listitem">In <span class="emphasis"><em>alwayson</em></span> opcode changes for better
               handling of pfields, more reliable insert of an instrument instance
@@ -1007,9 +3729,6 @@ changeable at audio rate.
               </li>
                 <li class="listitem">index overflow in <span class="emphasis"><em>randh</em></span> and
               <span class="emphasis"><em>randi</em></span> fixed.
-              </li>
-                <li class="listitem">A number of fixes to CsoundVST: initialization, score
-              handling, and MIDI driver initialization, so it now works for Csound 6.
               </li>
                 <li class="listitem">fixed <span class="emphasis"><em>pycalln</em></span> for no inputs.
               </li>
@@ -1117,7 +3836,7 @@ changeable at audio rate.
       </div>
       <p>
   </p>
-      <h3><a id="idp69761664"></a>Release Notes for Csound6</h3>
+      <h3><a id="idm431535557920"></a>Release Notes for Csound6</h3>
       <p>
   Csound6 is a significant rewrite of much of the code.  In particular
   the API is not compatible, although all orc/sco/csd works should still
@@ -1597,7 +4316,7 @@ int perf_myopcode(CSOUND *csound, MYOPCODE *p)
       </div>
       <p>
 </p>
-      <h3><a id="idp69440944"></a>New in Version 5.19 (2013 January 7)</h3>
+      <h3><a id="idm431535433872"></a>New in Version 5.19 (2013 January 7)</h3>
       <p>
   This is mainly a bug-fixing release but with a number of new opcodes and
   enhanced features.
@@ -1879,7 +4598,7 @@ int perf_myopcode(CSOUND *csound, MYOPCODE *p)
       </div>
       <p>
 </p>
-      <h3><a id="idp69956256"></a>New in Version 5.18 (2012 August 29)</h3>
+      <h3><a id="idm431535364928"></a>New in Version 5.18 (2012 August 29)</h3>
       <p>
   This is mainly a bug-fixing release but with a number of new opcodes and
   enhanced features.
@@ -2024,7 +4743,7 @@ int perf_myopcode(CSOUND *csound, MYOPCODE *p)
       </div>
       <p>
   </p>
-      <h3><a id="idp69998768"></a>New in Version 5.17 (March 2012)</h3>
+      <h3><a id="idm431535318032"></a>New in Version 5.17 (March 2012)</h3>
       <p>
   This is mainly a bug-fixing release with no major changes, but the
   number of fixes warrants a release.
@@ -2129,7 +4848,7 @@ int perf_myopcode(CSOUND *csound, MYOPCODE *p)
       </div>
       <p>
   </p>
-      <h3><a id="idp70028288"></a>New in Version 5.16 (February 2012)</h3>
+      <h3><a id="idm431535287296"></a>New in Version 5.16 (February 2012)</h3>
       <p>
     The major change is that the new parser is now the default. The old
     parser is still available in case of difficulty but the new has been
@@ -2276,7 +4995,7 @@ int perf_myopcode(CSOUND *csound, MYOPCODE *p)
       </div>
       <p>
   </p>
-      <h3><a id="idp70077088"></a>New in Version 5.15 (December 2011)</h3>
+      <h3><a id="idm431535236672"></a>New in Version 5.15 (December 2011)</h3>
       <p>
   </p>
       <div class="itemizedlist">
@@ -2410,7 +5129,7 @@ int perf_myopcode(CSOUND *csound, MYOPCODE *p)
       </div>
       <p>
   </p>
-      <h3><a id="idp70124336"></a>New in Version 5.14 (October 2011)</h3>
+      <h3><a id="idm431535186768"></a>New in Version 5.14 (October 2011)</h3>
       <p>
   </p>
       <div class="itemizedlist">
@@ -2449,8 +5168,7 @@ int perf_myopcode(CSOUND *csound, MYOPCODE *p)
               opcode.</li>
                 <li class="listitem"><a class="link" href="serialBegin.html" title="serialBegin"><em class="citetitle">serial</em></a>
               opcodes.</li>
-                <li class="listitem"><a class="link" href="lua.html" title="Lua Opcodes"><em class="citetitle">lua
-              opcodes</em></a> opcodes.</li>
+                <li class="listitem">lua opcodes.</li>
                 <li class="listitem">plustab opcode.</li>
                 <li class="listitem">multtab opcode.</li>
                 <li class="listitem"><a class="link" href="maxarray.html" title="maxarray"><em class="citetitle">maxarray</em></a>
@@ -2569,7 +5287,7 @@ int perf_myopcode(CSOUND *csound, MYOPCODE *p)
       </div>
       <p>
   </p>
-      <h3><a id="idp70194592"></a>New in Version 5.13 (January 2011)</h3>
+      <h3><a id="idm431535111264"></a>New in Version 5.13 (January 2011)</h3>
       <p>
     </p>
       <div class="itemizedlist">
@@ -2670,7 +5388,7 @@ int perf_myopcode(CSOUND *csound, MYOPCODE *p)
       </div>
       <p>
   </p>
-      <h3><a id="idp70251712"></a>New in Version 5.12 (January 2010)</h3>
+      <h3><a id="idm431535047088"></a>New in Version 5.12 (January 2010)</h3>
       <p>
    </p>
       <div class="itemizedlist">
@@ -2736,7 +5454,7 @@ int perf_myopcode(CSOUND *csound, MYOPCODE *p)
              </li>
                 <li class="listitem">
          linecount for error messages no longer includes text
-         from <a class="link" href="CommandUnifileParFile.html" title="Command Line Parameter File (.csoundrc)"><em class="citetitle">.csoundrc</em></a>
+         from <a class="link" href="CommandUnifileParFile.html" title="Command Line Parameter File (.csound6rc)"><em class="citetitle">.csoundrc</em></a>
              </li>
                 <li class="listitem">
          <a class="link" href="p5gconnect.html" title="p5gconnect"><em class="citetitle">p5gconnect</em></a>
@@ -2786,7 +5504,7 @@ int perf_myopcode(CSOUND *csound, MYOPCODE *p)
       </div>
       <p>
  </p>
-      <h3><a id="idp70290592"></a>New in Version 5.11 (June 2009)</h3>
+      <h3><a id="idm431535002736"></a>New in Version 5.11 (June 2009)</h3>
       <p>
     </p>
       <div class="itemizedlist">
@@ -2798,7 +5516,7 @@ int perf_myopcode(CSOUND *csound, MYOPCODE *p)
               <ul class="itemizedlist" style="list-style-type: circle; ">
                 <li class="listitem"><a class="link" href="mp3in.html" title="mp3in"><em class="citetitle">mp3in</em></a>
               allows reading of mp3 files directly in the orchestra.</li>
-                <li class="listitem"><a class="link" href="wiiconnect.html" title="wiiconnect"><em class="citetitle"></em>wiiconnect</a>, <a class="link" href="wiidata.html" title="wiidata"><em class="citetitle"></em>wiidata</a>, <a class="link" href="wiisend.html" title="wiisend"><em class="citetitle"></em>wiisend</a>, <a class="link" href="wiirange.html" title="wiirange"><em class="citetitle"></em>wiirange</a> opcodes by john ffitch to recieve and send data to a wiimote controller.</li>
+                <li class="listitem"><a class="link" href="wiiconnect.html" title="wiiconnect"><em class="citetitle"></em>wiiconnect</a>, <a class="link" href="wiidata.html" title="wiidata"><em class="citetitle"></em>wiidata</a>, <a class="link" href="wiisend.html" title="wiisend"><em class="citetitle"></em>wiisend</a>, <a class="link" href="wiirange.html" title="wiirange"><em class="citetitle"></em>wiirange</a> opcodes by john ffitch to receive and send data to a wiimote controller.</li>
                 <li class="listitem">New opcodes to receive data directly from a p5glove by john ffitch <a class="link" href="p5gdata.html" title="p5gdata"><em class="citetitle">p5gdata</em></a></li>
                 <li class="listitem"><a class="link" href="tabsum.html" title="tabsum"><em class="citetitle">tabsum</em></a> sums sections of ftables</li>
                 <li class="listitem"><a class="link" href="MixerSetLevel_i.html" title="MixerSetLevel_i"><em class="citetitle">MixerSetLevel_i</em></a> an init-time only version of <a class="link" href="MixerSetLevel.html" title="MixerSetLevel"><em class="citetitle">MixerSetLevel</em></a></li>
@@ -2917,7 +5635,7 @@ int perf_myopcode(CSOUND *csound, MYOPCODE *p)
       </div>
       <p>
   </p>
-      <h3><a id="idp70349504"></a>New in Version 5.10 (December 2008)</h3>
+      <h3><a id="idm431534935760"></a>New in Version 5.10 (December 2008)</h3>
       <p>
     </p>
       <div class="itemizedlist">
@@ -2993,7 +5711,7 @@ int perf_myopcode(CSOUND *csound, MYOPCODE *p)
       </div>
       <p>
   </p>
-      <h3><a id="idp70371360"></a>New in Version 5.09 (October 2008)</h3>
+      <h3><a id="idm431534912336"></a>New in Version 5.09 (October 2008)</h3>
       <p>
     </p>
       <div class="itemizedlist">
@@ -3104,7 +5822,7 @@ int perf_myopcode(CSOUND *csound, MYOPCODE *p)
       </div>
       <p>
   </p>
-      <h3><a id="idp70419760"></a>New in Version 5.08 (February 2008)</h3>
+      <h3><a id="idm431534856464"></a>New in Version 5.08 (February 2008)</h3>
       <p>
     </p>
       <div class="itemizedlist">
@@ -3208,7 +5926,7 @@ int perf_myopcode(CSOUND *csound, MYOPCODE *p)
       </div>
       <p>
   </p>
-      <h3><a id="idp70466112"></a>New in Version 5.07 (October 2007)</h3>
+      <h3><a id="idm431534785824"></a>New in Version 5.07 (October 2007)</h3>
       <p>
       </p>
       <div class="itemizedlist">
@@ -3284,7 +6002,7 @@ int perf_myopcode(CSOUND *csound, MYOPCODE *p)
       </div>
       <p>
     </p>
-      <h3><a id="idp70500944"></a>New in Version 5.06 (June 2007)</h3>
+      <h3><a id="idm431534746240"></a>New in Version 5.06 (June 2007)</h3>
       <p>
     </p>
       <div class="itemizedlist">

@@ -5,7 +5,8 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <title>Csound command line</title>
     <link rel="stylesheet" type="text/css" href="csound.css" />
-    <meta name="generator" content="DocBook XSL Stylesheets V1.78.1" />
+    <link rel="stylesheet" type="text/css" href="syntax-highlighting.css" />
+    <meta name="generator" content="DocBook XSL Stylesheets V1.79.1" />
     <link rel="home" href="index.html" title="The Canonical Csound Reference Manual" />
     <link rel="up" href="CommandTop.html" title="The Csound Command" />
     <link rel="prev" href="CommandDesc.html" title="Description of the command syntax" />
@@ -36,20 +37,20 @@
         <p>csound</p>
       </div>
       <div class="refsect1">
-        <a id="idp73118464"></a>
+        <a id="idm431530729872"></a>
         <h2>Description</h2>
         <p>
         The <span class="emphasis"><em>csound</em></span> command executes Csound.
       </p>
       </div>
       <div class="refsect1">
-        <a id="idp73120096"></a>
+        <a id="idm431530728240"></a>
         <h2>Syntax</h2>
         <pre class="synopsis"><span class="command"><strong>csound</strong></span>  [<code class="option">flags</code>]  [orchname]  [scorename]</pre>
         <pre class="synopsis"><span class="command"><strong>csound</strong></span>  [<code class="option">flags</code>]  [csdfilename]</pre>
       </div>
       <div class="refsect1">
-        <a id="idp73195280"></a>
+        <a id="idm431530720784"></a>
         <h2>Csound command line flags</h2>
         <p>
         Listed below are the command line flags available in Csound6 in alphabetical order. Various platform
@@ -122,6 +123,15 @@
             <dd>
               <p>
               Use a-law audio samples.
+            </p>
+            </dd>
+            <dt>
+              <a id="FlagsMinusAftzero"></a>
+              <span class="term">--aft-zero<a id="IndexMinusAftzero" class="indexterm"></a></span>
+            </dt>
+            <dd>
+              <p>
+              Use zero as initial value of after-touch.
             </p>
             </dd>
             <dt>
@@ -215,7 +225,7 @@
                     <td align="left" valign="top">This option
               only works from the command line and not from .csound6rc or
               a CsOptions section of a  csd file.  It needs to be acted
-              upon before sound proper starts.  It is ignored in .csoundrc
+              upon before sound proper starts.  It is ignored in .csound6rc
               and CsOptions.</td>
                   </tr>
                 </table>
@@ -225,20 +235,11 @@
             </dd>
             <dt>
               <a id="FlagsDaemon"></a>
-              <span class="term">-d<a id="IndexDaemon" class="indexterm"></a></span>
+              <span class="term">-daemon<a id="IndexDaemon" class="indexterm"></a></span>
             </dt>
             <dd>
               <p>
               Run in daemon mode: do not exit if CSD/orchestra is not given, is empty or does not compile.
-            </p>
-            </dd>
-            <dt>
-              <a id="FlagsMinusMinusDevice"></a>
-              <span class="term">--devices<a id="IndexMinusMinusDevice" class="indexterm"></a></span>
-            </dt>
-            <dd>
-              <p> Gives a list of available audio devices and then
-            exits.
             </p>
             </dd>
             <dt>
@@ -248,7 +249,7 @@
             <dd>
               <p>
               list audio devices (x=out, output devices only; x=in,
-	      input; else input and output) and exit.
+              input; else input and output) and exit.
             </p>
             </dd>
             <dt>
@@ -267,7 +268,7 @@
             <dd>
               <p>
               Reenables adding of directory of CSD/ORC/SCO to search paths,
-              if it has been disabled by a previous <a class="link" href="CommandFlags.html#FlagsMinusNoDefaultPaths"><em class="citetitle">--no-default-paths</em></a> (e.g. in <a class="link" href="CommandUnifileParFile.html" title="Command Line Parameter File (.csoundrc)"><em class="citetitle">.csoundrc</em></a>).
+              if it has been disabled by a previous <a class="link" href="CommandFlags.html#FlagsMinusNoDefaultPaths"><em class="citetitle">--no-default-paths</em></a> (e.g. in <a class="link" href="CommandUnifileParFile.html" title="Command Line Parameter File (.csound6rc)"><em class="citetitle">.csound6rc</em></a>).
             </p>
             </dd>
             <dt>
@@ -430,7 +431,18 @@
             </dt>
             <dd>
               <p>
-              prints system sr and exits, requires -o dac.
+              prints system sr and exits, requires previous -o dac.
+              If the audio does not support this request then -1 is reported.
+            </p>
+            </dd>
+            <dt>
+              <a id="FlagsMinusMinussetsr"></a>
+              <span class="term">--set-system-sr<a id="IndexMinusMinussetsr" class="indexterm"></a></span>
+            </dt>
+            <dd>
+              <p>
+              sets sr to the system sr, requires previous -o dac.
+              If the audio does not support this request then -1 is reported.
             </p>
             </dd>
             <dt>
@@ -625,6 +637,19 @@
             </p>
             </dd>
             <dt>
+              <a id="FlagsMinusLowerJ"></a>
+              <span class="term">-j NUM<a id="IndexMinusLowerJ" class="indexterm"></a></span>
+            </dt>
+            <dd>
+              <p>
+              Make <span class="emphasis"><em>NUM</em></span> processes available for
+              rendering.  This is only advantageous if the number of
+              processors on the computer is the same or more that the number
+              of requested processes.  It also may slow rendering
+              down if ksmps is too small. 
+            </p>
+            </dd>
+            <dt>
               <a id="FlagsMinusPlusJackClient"></a>
               <span class="term">-+jack_client=[client_name]<a id="IndexMinusPlusJackClient" class="indexterm"></a></span>
             </dt>
@@ -697,8 +722,8 @@
                   <tr>
                     <td align="left" valign="top">
                       <p>
-	    The -L flag is only valid on *NIX systems which have pipes. It doesn't work on Windows.
-	  </p>
+      The -L flag is only valid on *NIX systems which have pipes. It doesn't work on Windows.
+    </p>
                     </td>
                   </tr>
                 </table>
@@ -927,7 +952,7 @@
             <dd>
               <p>
              list midi devices (x=out, output devices only; x=in,
-	      input; else input and output) and exit.
+        input; else input and output) and exit.
             </p>
             </dd>
             <dt>
@@ -1039,6 +1064,19 @@
             </p>
             </dd>
             <dt>
+              <a id="FlagsMinusNumthread"></a>
+              <span class="term">--num-threads=NUM<a id="IndexMinusNumthread" class="indexterm"></a></span>
+            </dt>
+            <dd>
+              <p>
+              Make <span class="emphasis"><em>NUM</em></span> processes available for
+              rendering.  This is only advantageous if the number of
+              processors on the computer is more that the number
+              of requested processes.  It also may slow rendering
+              down if ksmps is too small. 
+            </p>
+            </dd>
+            <dt>
               <a id="FlagsMinusNoDefaultPaths"></a>
               <span class="term">--no-default-paths<a id="IndexMinusNoDefaultPaths" class="indexterm"></a></span>
             </dt>
@@ -1079,7 +1117,7 @@
                     <td align="left" valign="top">This option only works from the command line and
               not from .csound6rc or a CsOptions section of a csd
               file.  It needs to be acted upon before sound proper
-              starts.  It is ignored in .csoundrc and
+              starts.  It is ignored in .csound6rc and
               CsOptions.</td>
                   </tr>
                 </table>
@@ -1123,8 +1161,8 @@
             </dt>
             <dd>
               <p>
-	    Load plugin library <span class="emphasis"><em>LIBNAME</em></span>.
-	  </p>
+      Load plugin library <span class="emphasis"><em>LIBNAME</em></span>.
+    </p>
             </dd>
             <dt>
               <a id="FlagMinuMinusOrc"></a>
@@ -1132,9 +1170,9 @@
             </dt>
             <dd>
               <p>
-	    Set the argument as the orchestrra file.  Used when not
+      Set the argument as the orchestrra file.  Used when not
             score is required&gt;.  (Csound 5.18 and later).
-	  </p>
+    </p>
             </dd>
             <dt>
               <a id="FlagsMinusMinusKsmps"></a>
@@ -1160,8 +1198,39 @@
             </dt>
             <dd>
               <p>
-            Set UDP port on which to listen instruments/orchestra code
+            Set UDP port on which to listen for commands and instruments/orchestra code
             (implies --daemon) 
+          </p>
+            </dd>
+            <dt>
+              <a id="FlagsMinusUdpEcho"></a>
+              <span class="term">--udp-echo<a id="IndexMinusUdpEcho" class="indexterm"></a></span>
+            </dt>
+            <dd>
+              <p>
+            Switches on printing of UDP commands on the terminal. Any
+            messages received by the UDP server are echoed (whether
+            they are valid commands or not).
+          </p>
+            </dd>
+            <dt>
+              <a id="FlagsMinusUdpConsole"></a>
+              <span class="term">--udp-console=address:port<a id="IndexFlagsMinusUdpConsole" class="indexterm"></a></span>
+            </dt>
+            <dd>
+              <p>
+            Redirects the console messages to a remote address:port
+	    via UDP.
+          </p>
+            </dd>
+            <dt>
+              <a id="FlagsMinusUdpMirrorConsole"></a>
+              <span class="term">--udp-mirror-console=address:port<a id="IndexFlagsMinusUdpMirrorConsole" class="indexterm"></a></span>
+            </dt>
+            <dd>
+              <p>
+            Mirrors the console messages to a remote address:port
+	    via UDP.
           </p>
             </dd>
             <dt>
@@ -1419,6 +1488,15 @@
             </p>
             </dd>
             <dt>
+              <a id="FlagsMinusVersion"></a>
+              <span class="term">--version<a id="IndexMinusVersion" class="indexterm"></a></span>
+            </dt>
+            <dd>
+              <p>
+              Exits after printing version information.
+            </p>
+            </dd>
+            <dt>
               <a id="FlagsMinusUpperW"></a>
               <span class="term">-W<a id="IndexMinusUpperW" class="indexterm"></a>, --wave<a id="IndexMinusWave" class="indexterm"></a>, --format=wave<a id="IndexMinusFWave" class="indexterm"></a></span>
             </dt>
@@ -1478,6 +1556,14 @@
                   </li>
                   <li class="listitem">
                     <p>NUM = 1, show arguments to each opcode using the format &lt;opname&gt; &lt;outargs&gt; &lt;inargs&gt;</p>
+                  </li>
+                  <li class="listitem">
+                    <p>NUM = 2, show names including
+                deprecated ones</p>
+                  </li>
+                  <li class="listitem">
+                    <p>NUM = 3, show arguments to each
+                opcode, including deprecated ones, using the format &lt;opname&gt; &lt;outargs&gt; &lt;inargs&gt;</p>
                   </li>
                 </ul>
               </div>

@@ -5,7 +5,8 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <title>subinstr</title>
     <link rel="stylesheet" type="text/css" href="csound.css" />
-    <meta name="generator" content="DocBook XSL Stylesheets V1.78.1" />
+    <link rel="stylesheet" type="text/css" href="syntax-highlighting.css" />
+    <meta name="generator" content="DocBook XSL Stylesheets V1.79.1" />
     <link rel="home" href="index.html" title="The Canonical Csound Reference Manual" />
     <link rel="up" href="OpcodesTop.html" title="Orchestra Opcodes and Operators" />
     <link rel="prev" href="strupperk.html" title="strupperk" />
@@ -38,20 +39,20 @@
           </p>
       </div>
       <div class="refsect1">
-        <a id="idp154196416"></a>
+        <a id="idm431447322288"></a>
         <h2>Description</h2>
         <p>
       Creates an instance of another instrument and is used as if it were an opcode.
     </p>
       </div>
       <div class="refsect1">
-        <a id="idp154213904"></a>
+        <a id="idm431447320912"></a>
         <h2>Syntax</h2>
         <pre class="synopsis">a1, [...] [, a8] <span class="command"><strong>subinstr</strong></span> instrnum [, p4] [, p5] [...]</pre>
         <pre class="synopsis">a1, [...] [, a8] <span class="command"><strong>subinstr</strong></span> "insname" [, p4] [, p5] [...]</pre>
       </div>
       <div class="refsect1">
-        <a id="idp154264144"></a>
+        <a id="idm431447317392"></a>
         <h2>Initialization</h2>
         <p>
       <span class="emphasis"><em>instrnum</em></span> -- Number of the instrument to be called.
@@ -59,12 +60,9 @@
         <p>
       <span class="emphasis"><em><span class="quote">“<span class="quote">insname</span>”</span></em></span> -- A string (in double-quotes) representing a named instrument.
     </p>
-        <p>
-      For more information about specifying input and output interfaces, see <a class="link" href="instr.html#InstrSubinstrument" title="Calling an Instrument within an Instrument"><em class="citetitle">Calling an Instrument within an Instrument</em></a>.
-    </p>
       </div>
       <div class="refsect1">
-        <a id="idp154268240"></a>
+        <a id="idm431447314624"></a>
         <h2>Performance</h2>
         <p>
       <span class="emphasis"><em>a1, ..., a8</em></span> --  The audio output from the called instrument. This is generated using the <a class="link" href="SigioOutput.html" title="Signal Output"><em class="citetitle">signal output</em></a> opcodes.
@@ -77,92 +75,94 @@
     </p>
       </div>
       <div class="refsect1">
-        <a id="idp154273760"></a>
+        <a id="idm431447309280"></a>
         <h2>See Also</h2>
         <p>
-      <a class="link" href="instr.html#InstrSubinstrument" title="Calling an Instrument within an Instrument"><em class="citetitle">Calling an Instrument within an Instrument</em></a>,
       <a class="link" href="event.html" title="event"><em class="citetitle">event</em></a>, 
       <a class="link" href="schedule.html" title="schedule"><em class="citetitle">schedule</em></a>,
       <a class="link" href="subinstrinit.html" title="subinstrinit"><em class="citetitle">subinstrinit</em></a>
      </p>
       </div>
       <div class="refsect1">
-        <a id="idp154278816"></a>
+        <a id="idm431447305440"></a>
         <h2>Examples</h2>
         <p>
       Here is an example of the subinstr opcode. It uses the file <a class="ulink" href="examples/subinstr.csd" target="_top"><em class="citetitle">subinstr.csd</em></a>.
 
       </p>
         <div class="example">
-          <a id="idp154280592"></a>
+          <a id="idm431447303632"></a>
           <p class="title">
-            <strong>Example 883. Example of the subinstr opcode.</strong>
+            <strong>Example 979. Example of the subinstr opcode.</strong>
           </p>
           <div class="example-contents">
             <p>See the sections <a class="link" href="UsingRealTime.html" title="Real-Time Audio"><em class="citetitle">Real-time Audio</em></a> and <a class="link" href="CommandFlags.html" title="Csound command line"><em class="citetitle">Command Line Flags</em></a> for more information on using command line flags.</p>
-            <pre class="programlisting">
-<span class="csdtag">&lt;CsoundSynthesizer&gt;</span>
-<span class="csdtag">&lt;CsOptions&gt;</span>
-<span class="comment">; Select audio/midi flags here according to platform</span>
-<span class="comment">; Audio out   Audio in</span>
--odac           -iadc    <span class="comment">;;;RT audio I/O</span>
-<span class="comment">; For Non-realtime ouput leave only the line below:</span>
-<span class="comment">; -o subinstr.wav -W ;;; for file output any platform</span>
-<span class="csdtag">&lt;/CsOptions&gt;</span>
-<span class="csdtag">&lt;CsInstruments&gt;</span>
+            <div class="refsect1">
+              <a id="idm431815821728"></a>
+              <pre class="programlisting">
+<span class="nt">&lt;CsoundSynthesizer&gt;</span>
+<span class="nt">&lt;CsOptions&gt;</span>
+<span class="c1">; Select audio/midi flags here according to platform</span>
+<span class="c1">; Audio out   Audio in</span>
+-odac           -iadc    <span class="c1">;;;RT audio I/O</span>
+<span class="c1">; For Non-realtime ouput leave only the line below:</span>
+<span class="c1">; -o subinstr.wav -W ;;; for file output any platform</span>
+<span class="nt">&lt;/CsOptions&gt;</span>
+<span class="nt">&lt;CsInstruments&gt;</span>
 
-<span class="comment">; Initialize the global variables.</span>
-<span class="ohdr">sr</span> <span class="op">=</span> 44100
-<span class="ohdr">kr</span> <span class="op">=</span> 4410
-<span class="ohdr">ksmps</span> <span class="op">=</span> 10
-<span class="ohdr">nchnls</span> <span class="op">=</span> 1
+<span class="c1">; Initialize the global variables.</span>
+<span class="vg">sr</span> <span class="o">=</span> <span class="mi">44100</span>
+<span class="vg">kr</span> <span class="o">=</span> <span class="mi">4410</span>
+<span class="vg">ksmps</span> <span class="o">=</span> <span class="mi">10</span>
+<span class="vg">nchnls</span> <span class="o">=</span> <span class="mi">1</span>
 
-<span class="comment">; Instrument #1 - Creates a basic tone.</span>
-<span class="oblock">instr</span> 1
-  <span class="comment">; Print the value of p4, should be equal to</span>
-  <span class="comment">; Instrument #2's iamp field.</span>
-  <span class="opc">print</span> p4
+<span class="c1">; Instrument #1 - Creates a basic tone.</span>
+<span class="kd">instr</span> <span class="nf">1</span>
+  <span class="c1">; Print the value of p4, should be equal to</span>
+  <span class="c1">; Instrument #2's iamp field.</span>
+  <span class="nb">print</span> <span class="nb">p4</span>
 
-  <span class="comment">; Print the value of p5, should be equal to</span>
-  <span class="comment">; Instrument #2's ipitch field.</span>
-  <span class="opc">print</span> p5
+  <span class="c1">; Print the value of p5, should be equal to</span>
+  <span class="c1">; Instrument #2's ipitch field.</span>
+  <span class="nb">print</span> <span class="nb">p5</span>
 
-  <span class="comment">; Create a tone.</span>
-  asig <span class="opc">oscils</span> p4, p5, 0
+  <span class="c1">; Create a tone.</span>
+  a<span class="n">sig</span> <span class="nb">oscils</span> <span class="nb">p4</span><span class="p">,</span> <span class="nb">p5</span><span class="p">,</span> <span class="mi">0</span>
 
-  <span class="opc">out</span> asig
-<span class="oblock">endin</span>
-
-
-<span class="comment">; Instrument #2 - Demonstrates the subinstr opcode.</span>
-<span class="oblock">instr</span> 2
-  iamp <span class="op">=</span> 20000
-  ipitch <span class="op">=</span> 440
-
-  <span class="comment">; Use Instrument #1 to create a basic sine-wave tone.</span>
-  <span class="comment">; Its p4 parameter will be set using the iamp variable.</span>
-  <span class="comment">; Its p5 parameter will be set using the ipitch variable.</span>
-  abasic <span class="opc">subinstr</span> 1, iamp, ipitch
-
-  <span class="comment">; Output the basic tone that we have created.</span>
-  <span class="opc">out</span> abasic
-<span class="oblock">endin</span>
+  <span class="nb">out</span> a<span class="n">sig</span>
+<span class="kd">endin</span>
 
 
-<span class="csdtag">&lt;/CsInstruments&gt;</span>
-<span class="csdtag">&lt;CsScore&gt;</span>
+<span class="c1">; Instrument #2 - Demonstrates the subinstr opcode.</span>
+<span class="kd">instr</span> <span class="nf">2</span>
+  i<span class="n">amp</span> <span class="o">=</span> <span class="mi">20000</span>
+  i<span class="n">pitch</span> <span class="o">=</span> <span class="mi">440</span>
 
-<span class="comment">; Table #1, a sine wave.</span>
-<span class="stamnt">f</span> 1 0 16384 10 1
+  <span class="c1">; Use Instrument #1 to create a basic sine-wave tone.</span>
+  <span class="c1">; Its p4 parameter will be set using the iamp variable.</span>
+  <span class="c1">; Its p5 parameter will be set using the ipitch variable.</span>
+  a<span class="n">basic</span> <span class="nb">subinstr</span> <span class="mi">1</span><span class="p">,</span> i<span class="n">amp</span><span class="p">,</span> i<span class="n">pitch</span>
 
-<span class="comment">; Play Instrument #2 for one second.</span>
-<span class="stamnt">i</span> 2 0 1
-<span class="stamnt">e</span>
+  <span class="c1">; Output the basic tone that we have created.</span>
+  <span class="nb">out</span> a<span class="n">basic</span>
+<span class="kd">endin</span>
 
 
-<span class="csdtag">&lt;/CsScore&gt;</span>
-<span class="csdtag">&lt;/CsoundSynthesizer&gt;</span>
+<span class="nt">&lt;/CsInstruments&gt;</span>
+<span class="nt">&lt;CsScore&gt;</span>
+
+<span class="c1">; Table #1, a sine wave.</span>
+<span class="nb">f</span> <span class="mi">1</span> <span class="mi">0</span> <span class="mi">16384</span> <span class="mi">10</span> <span class="mi">1</span>
+
+<span class="c1">; Play Instrument #2 for one second.</span>
+<span class="nb">i</span> <span class="mi">2</span> <span class="mi">0</span> <span class="mi">1</span>
+<span class="nb">e</span>
+
+
+<span class="nt">&lt;/CsScore&gt;</span>
+<span class="nt">&lt;/CsoundSynthesizer&gt;</span>
 </pre>
+            </div>
           </div>
         </div>
         <p><br class="example-break" />
@@ -172,82 +172,85 @@
 
       </p>
         <div class="example">
-          <a id="idp154285984"></a>
+          <a id="idm431447298544"></a>
           <p class="title">
-            <strong>Example 884. Example of the subinstr opcode using a named instrument.</strong>
+            <strong>Example 980. Example of the subinstr opcode using a named instrument.</strong>
           </p>
           <div class="example-contents">
-            <pre class="programlisting">
-<span class="csdtag">&lt;CsoundSynthesizer&gt;</span>
-<span class="csdtag">&lt;CsOptions&gt;</span>
-<span class="comment">; Select audio/midi flags here according to platform</span>
-<span class="comment">; Audio out   Audio in</span>
--odac           -iadc    <span class="comment">;;;RT audio I/O</span>
-<span class="comment">; For Non-realtime ouput leave only the line below:</span>
-<span class="comment">; -o subinstr_named.wav -W ;;; for file output any platform</span>
-<span class="csdtag">&lt;/CsOptions&gt;</span>
-<span class="csdtag">&lt;CsInstruments&gt;</span>
+            <div class="refsect1">
+              <a id="idm431815773728"></a>
+              <pre class="programlisting">
+<span class="nt">&lt;CsoundSynthesizer&gt;</span>
+<span class="nt">&lt;CsOptions&gt;</span>
+<span class="c1">; Select audio/midi flags here according to platform</span>
+<span class="c1">; Audio out   Audio in</span>
+-odac           -iadc    <span class="c1">;;;RT audio I/O</span>
+<span class="c1">; For Non-realtime ouput leave only the line below:</span>
+<span class="c1">; -o subinstr_named.wav -W ;;; for file output any platform</span>
+<span class="nt">&lt;/CsOptions&gt;</span>
+<span class="nt">&lt;CsInstruments&gt;</span>
 
-<span class="comment">; Initialize the global variables.</span>
-<span class="ohdr">sr</span> <span class="op">=</span> 44100
-<span class="ohdr">kr</span> <span class="op">=</span> 4410
-<span class="ohdr">ksmps</span> <span class="op">=</span> 10
-<span class="ohdr">nchnls</span> <span class="op">=</span> 1
+<span class="c1">; Initialize the global variables.</span>
+<span class="vg">sr</span> <span class="o">=</span> <span class="mi">44100</span>
+<span class="vg">kr</span> <span class="o">=</span> <span class="mi">4410</span>
+<span class="vg">ksmps</span> <span class="o">=</span> <span class="mi">10</span>
+<span class="vg">nchnls</span> <span class="o">=</span> <span class="mi">1</span>
 
-<span class="comment">; Instrument "basic_tone" - Creates a basic tone.</span>
-<span class="oblock">instr</span> basic_tone
-  <span class="comment">; Print the value of p4, should be equal to</span>
-  <span class="comment">; Instrument #2's iamp field.</span>
-  <span class="opc">print</span> p4
+<span class="c1">; Instrument "basic_tone" - Creates a basic tone.</span>
+<span class="kd">instr</span> <span class="nf">basic_tone</span>
+  <span class="c1">; Print the value of p4, should be equal to</span>
+  <span class="c1">; Instrument #2's iamp field.</span>
+  <span class="nb">print</span> <span class="nb">p4</span>
 
-  <span class="comment">; Print the value of p5, should be equal to</span>
-  <span class="comment">; Instrument #2's ipitch field.</span>
-  <span class="opc">print</span> p5
+  <span class="c1">; Print the value of p5, should be equal to</span>
+  <span class="c1">; Instrument #2's ipitch field.</span>
+  <span class="nb">print</span> <span class="nb">p5</span>
 
-  <span class="comment">; Create a tone.</span>
-  asig <span class="opc">oscils</span> p4, p5, 0
+  <span class="c1">; Create a tone.</span>
+  a<span class="n">sig</span> <span class="nb">oscils</span> <span class="nb">p4</span><span class="p">,</span> <span class="nb">p5</span><span class="p">,</span> <span class="mi">0</span>
 
-  <span class="opc">out</span> asig
-<span class="oblock">endin</span>
-
-
-<span class="comment">; Instrument #1 - Demonstrates the subinstr opcode.</span>
-<span class="oblock">instr</span> 1
-  iamp <span class="op">=</span> 20000
-  ipitch <span class="op">=</span> 440
-
-  <span class="comment">; Use the "basic_tone" named instrument to create a </span>
-  <span class="comment">; basic sine-wave tone.</span>
-  <span class="comment">; Its p4 parameter will be set using the iamp variable.</span>
-  <span class="comment">; Its p5 parameter will be set using the ipitch variable.</span>
-  abasic <span class="opc">subinstr</span> "basic_tone", iamp, ipitch
-
-  <span class="comment">; Output the basic tone that we have created.</span>
-  <span class="opc">out</span> abasic
-<span class="oblock">endin</span>
+  <span class="nb">out</span> a<span class="n">sig</span>
+<span class="kd">endin</span>
 
 
-<span class="csdtag">&lt;/CsInstruments&gt;</span>
-<span class="csdtag">&lt;CsScore&gt;</span>
+<span class="c1">; Instrument #1 - Demonstrates the subinstr opcode.</span>
+<span class="kd">instr</span> <span class="nf">1</span>
+  i<span class="n">amp</span> <span class="o">=</span> <span class="mi">20000</span>
+  i<span class="n">pitch</span> <span class="o">=</span> <span class="mi">440</span>
 
-<span class="comment">; Table #1, a sine wave.</span>
-<span class="stamnt">f</span> 1 0 16384 10 1
+  <span class="c1">; Use the "basic_tone" named instrument to create a </span>
+  <span class="c1">; basic sine-wave tone.</span>
+  <span class="c1">; Its p4 parameter will be set using the iamp variable.</span>
+  <span class="c1">; Its p5 parameter will be set using the ipitch variable.</span>
+  a<span class="n">basic</span> <span class="nb">subinstr</span> <span class="s">"basic_tone"</span><span class="p">,</span> i<span class="n">amp</span><span class="p">,</span> i<span class="n">pitch</span>
 
-<span class="comment">; Play Instrument #1 for one second.</span>
-<span class="stamnt">i</span> 1 0 1
-<span class="stamnt">e</span>
+  <span class="c1">; Output the basic tone that we have created.</span>
+  <span class="nb">out</span> a<span class="n">basic</span>
+<span class="kd">endin</span>
 
 
-<span class="csdtag">&lt;/CsScore&gt;</span>
-<span class="csdtag">&lt;/CsoundSynthesizer&gt;</span>
+<span class="nt">&lt;/CsInstruments&gt;</span>
+<span class="nt">&lt;CsScore&gt;</span>
+
+<span class="c1">; Table #1, a sine wave.</span>
+<span class="nb">f</span> <span class="mi">1</span> <span class="mi">0</span> <span class="mi">16384</span> <span class="mi">10</span> <span class="mi">1</span>
+
+<span class="c1">; Play Instrument #1 for one second.</span>
+<span class="nb">i</span> <span class="mi">1</span> <span class="mi">0</span> <span class="mi">1</span>
+<span class="nb">e</span>
+
+
+<span class="nt">&lt;/CsScore&gt;</span>
+<span class="nt">&lt;/CsoundSynthesizer&gt;</span>
 </pre>
+            </div>
           </div>
         </div>
         <p><br class="example-break" />
     </p>
       </div>
       <div class="refsect1">
-        <a id="idp154287968"></a>
+        <a id="idm431447296800"></a>
         <h2>Credits</h2>
         <p>New in version 4.21</p>
       </div>

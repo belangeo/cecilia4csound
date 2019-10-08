@@ -5,7 +5,8 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <title>jacktransport</title>
     <link rel="stylesheet" type="text/css" href="csound.css" />
-    <meta name="generator" content="DocBook XSL Stylesheets V1.78.1" />
+    <link rel="stylesheet" type="text/css" href="syntax-highlighting.css" />
+    <meta name="generator" content="DocBook XSL Stylesheets V1.79.1" />
     <link rel="home" href="index.html" title="The Canonical Csound Reference Manual" />
     <link rel="up" href="OpcodesTop.html" title="Orchestra Opcodes and Operators" />
     <link rel="prev" href="JackoTransport.html" title="JackoTransport" />
@@ -37,20 +38,34 @@
       Start/stop jack_transport and can optionally relocate the playback head.
     </p>
       </div>
+      <div class="note" style="margin-left: 0.5in; margin-right: 0.5in;">
+        <table border="0" summary="Note">
+          <tr>
+            <td rowspan="2" align="center" valign="top" width="25">
+              <img alt="[Note]" src="images/note.png" />
+            </td>
+            <th align="left">Note</th>
+          </tr>
+          <tr>
+            <td align="left" valign="top">plugin: Requires jackTransport plugin</td>
+          </tr>
+        </table>
+      </div>
       <div class="refsect1">
-        <a id="idp117973888"></a>
+        <a id="idm431484782832"></a>
         <h2>Description</h2>
+        <p>Plugin opcode in jackTransport.</p>
         <p>
       Start/stop jack_transport and can optionally relocate the playback head.
     </p>
       </div>
       <div class="refsect1">
-        <a id="idp117975296"></a>
+        <a id="idm431484781088"></a>
         <h2>Syntax</h2>
         <pre class="synopsis"><span class="command"><strong>jacktransport</strong></span> icommand [, ilocation]</pre>
       </div>
       <div class="refsect1">
-        <a id="idp118037216"></a>
+        <a id="idm431484779120"></a>
         <h2>Initialization</h2>
         <p>
       <span class="emphasis"><em>icommand</em></span> -- 1 to start playing, 0 to stop.
@@ -73,59 +88,62 @@
         </div>
       </div>
       <div class="refsect1">
-        <a id="idp118040976"></a>
+        <a id="idm431484775440"></a>
         <h2>Examples</h2>
         <p>
       Here is a simple example of the jacktransport opcode. It uses the file <a class="ulink" href="examples/jacktransport.csd" target="_top"><em class="citetitle">jacktransport.csd</em></a>.
       </p>
         <div class="example">
-          <a id="idp118042768"></a>
+          <a id="idm431484773616"></a>
           <p class="title">
-            <strong>Example 411. Simple example of the jacktransport opcode.</strong>
+            <strong>Example 459. Simple example of the jacktransport opcode.</strong>
           </p>
           <div class="example-contents">
-            <pre class="programlisting">
-<span class="csdtag">&lt;CsoundSynthesizer&gt;</span>
-<span class="csdtag">&lt;CsOptions&gt;</span>
+            <div class="refsect1">
+              <a id="idm431858027824"></a>
+              <pre class="programlisting">
+<span class="nt">&lt;CsoundSynthesizer&gt;</span> 
  
+<span class="nt">&lt;CsOptions&gt;</span> 
 -+rtaudio=JACK -b 64 --sched  -o dac:system:playback_ 
-<span class="csdtag">&lt;/CsOptions&gt;</span>
-<span class="csdtag">&lt;CsInstruments&gt;</span>
+<span class="nt">&lt;/CsOptions&gt;</span> 
  
-<span class="ohdr">sr</span>      <span class="op">=</span>      	44100
-<span class="ohdr">ksmps</span>  	<span class="op">=</span>     	16
-<span class="ohdr">nchnls</span>	<span class="op">=</span>	2
+<span class="nt">&lt;CsInstruments&gt;</span> 
+<span class="vg">sr</span>      <span class="o">=</span>      	<span class="mi">44100</span>
+<span class="vg">ksmps</span>  	<span class="o">=</span>     	<span class="mi">16</span>
+<span class="vg">nchnls</span>	<span class="o">=</span>	<span class="mi">2</span>
 
 
-	<span class="oblock">instr</span> 1
-jacktransport p4, p5 
-	<span class="oblock">endin</span>
+	<span class="kd">instr</span> <span class="nf">1</span>
+<span class="n">jacktransport</span> <span class="nb">p4</span><span class="p">,</span> <span class="nb">p5</span> 
+	<span class="kd">endin</span>
 
-	<span class="oblock">instr</span> 2
-jacktransport p4 
-	<span class="oblock">endin</span>
+	<span class="kd">instr</span> <span class="nf">2</span>
+<span class="n">jacktransport</span> <span class="nb">p4</span> 
+	<span class="kd">endin</span>
 
 
-<span class="csdtag">&lt;/CsInstruments&gt;</span>
-<span class="csdtag">&lt;CsScore&gt;</span>
+<span class="nt">&lt;/CsInstruments&gt;</span> 
+<span class="nt">&lt;CsScore&gt;</span>
 
-<span class="stamnt">i</span>2 0 5 1<span class="comment">; play</span>
-<span class="stamnt">i</span>2 5 1 0<span class="comment">; stop</span>
-<span class="stamnt">i</span>1 6 5 1 2 <span class="comment">; move at 2 seconds and start playing back</span>
-<span class="stamnt">i</span>1 11 1 0 0 <span class="comment">; stop and rewind</span>
+<span class="nb">i</span><span class="mi">2</span> <span class="mi">0</span> <span class="mi">5</span> <span class="mi">1</span><span class="c1">; play</span>
+<span class="nb">i</span><span class="mi">2</span> <span class="mi">5</span> <span class="mi">1</span> <span class="mi">0</span><span class="c1">; stop</span>
+<span class="nb">i</span><span class="mi">1</span> <span class="mi">6</span> <span class="mi">5</span> <span class="mi">1</span> <span class="mi">2</span> <span class="c1">; move at 2 seconds and start playing back</span>
+<span class="nb">i</span><span class="mi">1</span> <span class="mi">11</span> <span class="mi">1</span> <span class="mi">0</span> <span class="mi">0</span> <span class="c1">; stop and rewind</span>
 
-<span class="stamnt">e</span>
+<span class="nb">e</span>
 
-<span class="csdtag">&lt;/CsScore&gt;</span>
-<span class="csdtag">&lt;/CsoundSynthesizer&gt;</span>
+<span class="nt">&lt;/CsScore&gt;</span> 
+ <span class="nt">&lt;/CsoundSynthesizer&gt;</span>
 </pre>
+            </div>
           </div>
         </div>
         <p><br class="example-break" />
     </p>
       </div>
       <div class="refsect1">
-        <a id="idp118044704"></a>
+        <a id="idm431484771824"></a>
         <h2>Credits</h2>
         <table border="0" summary="Simple list" class="simplelist">
           <tr>

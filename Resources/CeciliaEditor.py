@@ -542,14 +542,14 @@ class CeciliaEditor(wx.Frame):
                 opcodes = f.read()
             if text in opcodes and text != '':
                 page = text + '.html'
-                webbrowser.open_new_tab(os.path.join(HTML_PATH, page))
+                webbrowser.open_new_tab("file://" + os.path.join(HTML_PATH, page))
         elif isinstance(self.FindFocus(), InterfaceSTC):
             text = self.interface.editor.GetSelectedText()
             objects = ['cfilein','csampler','cgraph','cslider','ctoggle',
                        'cpopup','cbutton','cpoly','crange','cgen']
             if text in objects and text != '':
                 page = text + '.html'
-                webbrowser.open_new_tab(os.path.join(CEC_MAN_PATH, page))
+                webbrowser.open_new_tab("file://" + os.path.join(CEC_MAN_PATH, page))
 
     def openCsdFile(self, event):
         with open(os.path.join(TMP_PATH, 'temp.csd'), "r") as f:

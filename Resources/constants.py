@@ -20,20 +20,20 @@ along with Cecilia4Csound.  If not, see <http://www.gnu.org/licenses/>.
 
 import os, sys
 
-APP_NAME = 'Cecilia'
+APP_NAME = 'Cecilia4Csound'
 APP_VERSION = '4.2 beta'
 
 ENCODING = sys.getfilesystemencoding()
 
-if '/Cecilia.app' in os.getcwd():
+if '/Cecilia4Csound.app' in os.getcwd():
     RESOURCES_PATH = os.getcwd()
 else:
     RESOURCES_PATH = os.path.join(os.getcwd(), 'Resources')
 
 if not os.path.isdir(RESOURCES_PATH) and sys.platform == "win32":
-    RESOURCES_PATH = os.path.join(os.getenv("ProgramFiles"), "Cecilia", "Resources")
+    RESOURCES_PATH = os.path.join(os.getenv("ProgramFiles"), "Cecilia4Csound", "Resources")
 
-TMP_PATH = os.path.join(os.path.expanduser('~'), '.cecilia')
+TMP_PATH = os.path.join(os.path.expanduser('~'), '.cecilia4csound')
 PREFERENCES_FILE = os.path.join(TMP_PATH, 'ceciliaPrefs.txt')
 MODULES_PATH = os.path.join(RESOURCES_PATH, 'modules')
 HTML_PATH = os.path.join(RESOURCES_PATH, 'html')
