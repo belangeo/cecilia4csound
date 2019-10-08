@@ -1,5 +1,5 @@
 export DMG_DIR="Cecilia4Csound 4.3"
-export DMG_NAME="Cecilia4Csound_5.3.dmg"
+export DMG_NAME="Cecilia4Csound_4.3.dmg"
 
 rm -rf build dist
 python setup.py py2app --plist=scripts/info.plist

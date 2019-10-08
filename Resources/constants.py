@@ -21,7 +21,7 @@ along with Cecilia4Csound.  If not, see <http://www.gnu.org/licenses/>.
 import os, sys
 
 APP_NAME = 'Cecilia4Csound'
-APP_VERSION = '4.2 beta'
+APP_VERSION = '4.3 beta'
 
 ENCODING = sys.getfilesystemencoding()
 

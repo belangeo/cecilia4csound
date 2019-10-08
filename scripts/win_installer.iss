@@ -6,25 +6,25 @@
 ; Do not use the same AppId value in installers for other applications.
 ; (To generate a new GUID, click Tools | Generate GUID inside the IDE.)
 AppId={{EB2DD071-9BBC-495B-84B5-6F06E972837E}
-AppName=Cecilia
-AppVersion=4.2 beta
-;AppVerName=Cecilia 4.2 beta
+AppName=Cecilia4Csound
+AppVersion=4.3 beta
+;AppVerName=Cecilia4Csound 4.3 beta
 AppPublisher=iACT.umontreal.ca
-AppPublisherURL=http://code.google.com/p/cecilia4
-AppSupportURL=http://code.google.com/p/cecilia4
-AppUpdatesURL=http://code.google.com/p/cecilia4
-DefaultDirName={pf}\Cecilia
+AppPublisherURL=https://github.com/belangeo/cecilia4csound
+AppSupportURL=https://github.com/belangeo/cecilia4csound
+AppUpdatesURL=https://github.com/belangeo/cecilia4csound
+DefaultDirName={pf}\Cecilia4Csound
 DisableDirPage=yes
-DefaultGroupName=Cecilia
+DefaultGroupName=Cecilia4Csound
 AllowNoIcons=yes
 LicenseFile=C:\Documents and Settings\olipetwin\svn\cecilia4\Cecilia_Win\Resources\COPYING.txt
 InfoBeforeFile=C:\Documents and Settings\olipetwin\svn\cecilia4\Cecilia_Win\README.txt
-OutputBaseFilename=Cecilia_4.2_setup
+OutputBaseFilename=Cecilia4Csound_4.3_setup
 Compression=lzma
 SolidCompression=yes
 ChangesAssociations=yes
 Uninstallable=yes
-UninstallDisplayName=Uninstall Cecilia
+UninstallDisplayName=Uninstall Cecilia4Csound
 
 [Languages]
 Name: "english"; MessagesFile: "compiler:Default.isl"
@@ -42,15 +42,15 @@ Source: "C:\Documents and Settings\olipetwin\svn\cecilia4\Cecilia_Win\README.txt
 Root: HKCR; Subkey: ".cec"; ValueType: string; ValueName: ""; ValueData: "CeciliaFile"; Flags: uninsdeletevalue
 Root: HKCR; Subkey: "CeciliaFile"; ValueType: string; ValueName: ""; ValueData: "Cecilia File"; Flags: uninsdeletevalue
 Root: HKCR; Subkey: "CeciliaFile\DefaultIcon"; ValueType: string; ValueName: ""; ValueData: "{app}\Resources\CeciliaFileIcon.ico"
-Root: HKCR; Subkey: "CeciliaFile\shell\open\command"; ValueType: string; ValueName: ""; ValueData: """{app}\Cecilia.exe"" ""%1"""
+Root: HKCR; Subkey: "CeciliaFile\shell\open\command"; ValueType: string; ValueName: ""; ValueData: """{app}\Cecilia4Csound.exe"" ""%1"""
 
 [Icons]
-Name: "{group}\Cecilia"; Filename: "{app}\Cecilia.exe"; WorkingDir: "{app}"
-Name: "{group}\{cm:UninstallProgram, Cecilia}"; Filename: {uninstallexe}
-Name: "{commondesktop}\Cecilia"; Filename: "{app}\Cecilia.exe"; Tasks: desktopicon
+Name: "{group}\Cecilia4Csound"; Filename: "{app}\Cecilia4Csound.exe"; WorkingDir: "{app}"
+Name: "{group}\{cm:UninstallProgram, Cecilia4Csound}"; Filename: {uninstallexe}
+Name: "{commondesktop}\Cecilia4Csound"; Filename: "{app}\Cecilia4Csound.exe"; Tasks: desktopicon
 
 [Run]
-Filename: "{app}\Cecilia.exe"; Description: "{cm:LaunchProgram,Cecilia}"; Flags: nowait postinstall skipifsilent
+Filename: "{app}\Cecilia4Csound.exe"; Description: "{cm:LaunchProgram,Cecilia4Csound}"; Flags: nowait postinstall skipifsilent
 
 
 
